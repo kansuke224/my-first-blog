@@ -1,0 +1,19 @@
+<html>
+    <head>
+        <title>Django Girls blog</title>
+    </head>
+    <body>
+        <div>
+            <h1><a href="/">Django Girls Blog</a></h1>
+        </div>
+        {% for post in posts %}
+            <div>
+                <p>published: {{ post.published_date }}</p>
+                <h2><a href="">{{ post.title }}</a></h2>
+                <p>{{ post.text|linebreaksbr }}</p>
+                <!-- |linebreaksbr  テキスト内の改行を段落に変換してくれる -->
+            </div>
+            {{ post.title }}
+        {% endfor %}
+    </body>
+</html>
