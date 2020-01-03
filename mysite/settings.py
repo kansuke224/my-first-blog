@@ -28,7 +28,7 @@ SECRET_KEY = 'kxhitxi4q!e77x50=47yf)zcb%3d^hv)s@iqk6+-084cdbign$'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', '.pythonanywhere.com', 'receitapp.herokuapp.com']
+ALLOWED_HOSTS = ['127.0.0.1', '.pythonanywhere.com', 'healthreceiptapp.herokuapp.com']
 
 
 # Application definition
