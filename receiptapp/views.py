@@ -74,6 +74,7 @@ def index(request):
         dates = Receipt.objects.filter(user = user, receipt_date__year = month.year, receipt_date__month = month.month).dates("receipt_date", "day", order="DESC")
         # date_list => [date(日付), [レシート(日付別),[detail_list]]]
         date_list = []
+        receipts = Receipt.objects.none()
         for date in dates:
             receipts = Receipt.objects.filter(
                                                     user = user,
