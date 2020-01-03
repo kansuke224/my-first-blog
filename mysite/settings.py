@@ -89,6 +89,7 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 
 
 # Database
+
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 if "win10nhs90453" in hostname:
     # デバッグ環境
