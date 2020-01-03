@@ -54,14 +54,6 @@ CLOUDINARY_STORAGE = {
     'API_SECRET': 'tn4YEOr7szoFnKN7rQlOA8T_GdQ'
 }
 
-"""
-cloudinary.config(
-  cloud_name = "ducew1itc",
-  api_key = "578977392157752",
-  api_secret = "tn4YEOr7szoFnKN7rQlOA8T_GdQ"
-)
-"""
-
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
