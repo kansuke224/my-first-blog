@@ -1,0 +1,31 @@
+.a1, .a3, .a4 {
+    border-bottom: 3px solid white;
+}
+
+.a1:hover, .a3:hover {
+    border-bottom: 3px solid rgba(91, 192, 222, 0.3);
+}
+
+.a2 {
+    color: #5bc0de;
+    border-bottom: 3px solid #5bc0de;
+}
+
+.a2 i, .a2 span {
+    color: #5bc0de;
+}
+
+h2 {
+    font-weight: lighter;
+    margin-top: 100px;
+}
+
+h3 {
+    font-weight: lighter;
+    color: dimgray;
+
+}
+
+.form-box {
+
+}

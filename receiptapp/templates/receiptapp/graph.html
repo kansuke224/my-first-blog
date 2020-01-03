@@ -1,0 +1,158 @@
+{% extends "receiptapp/base.html" %}
+{% load i18n static %}
+
+{% block title %}健康管理アプリ|トップ{% endblock title %}
+{% block userstate %}{{ user.username }}{% endblock userstate %}
+
+{% block extra_css %}<link rel="stylesheet" href="{% static 'css/graph.css' %}">{% endblock extra_css %}
+
+{% load common %}
+
+{% block content %}
+<div class="main container text-center">
+	<h2 class="text-left text-info mb-5">
+        <i class="fas fa-chart-line"></i>
+        GRAPH
+    </h2>
+    <h3 class="text-left mb-4">食事データを分析</h3>
+	<form class="row justify-content-center mb-3" action="{% url 'graph' %}">
+		<!--
+		<select class="custom-select col-4 ml-2 mr-2">
+			<option value="1">1週間</option>
+			<option value="2">1ヶ月</option>
+			<option value="3">1年</option>
+		</select>
+		<input class="btn btn-info col-2" type="submit" value="条件変更">
+		-->
+	</form>
+
+	<div class="graph-box pr-4 pl-4 pt-4 pb-4">
+		<select class="custom-select col-4" id="seibun" onchange="change_seibun()">
+			<option value="0">塩分</option>
+			<option value="1">タンパク質</option>
+			<option value="2">エネルギー</option>
+			<option value="3">炭水化物</option>
+			<option value="4">脂質</option>
+		</select>
+		<canvas id="myLineChart"></canvas>
+	</div>
+
+</div>
+{% endblock content %}
+{% block extra_js %}
+<script src="{% static 'receiptapp/js/Chart.min.js' %}"></script>
+<script>
+	var ctx = document.getElementById("myLineChart");
+	var myLineChart = new Chart(ctx, {
+		type: 'line',
+		data: {
+			labels: ["{{date_arr.0}}", "{{date_arr.1}}", "{{date_arr.2}}", "{{date_arr.3}}", "{{date_arr.4}}", "{{date_arr.5}}", "{{date_arr.6}}"],
+			datasets: [
+				{
+					label: '塩分(g）',
+					data: [{{sum_arr.0.0}}, {{sum_arr.1.0}}, {{sum_arr.2.0}}, {{sum_arr.3.0}}, {{sum_arr.4.0}}, {{sum_arr.5.0}}, {{sum_arr.6.0}}],
+					borderColor: "rgba(255, 127, 127, 1)",
+					backgroundColor: "rgba(0,0,0,0)",
+					lineTension: 0,
+					fill: false,
+				}
+			],
+		},
+		options: {
+			title: {
+				display: true,
+				text: '塩分（{{date_arr.0}} ~ {{date_arr.6}}）'
+			},
+			scales: {
+				yAxes: [{
+					ticks: {
+						suggestedMax: 10,
+						suggestedMin: 0,
+						stepSize: 2,
+						callback: function(value, index, values){
+							return  value +  'g'
+						}
+					}
+				}]
+			},
+		},
+	});
+
+	var seibun_arr = ["塩分(g)", "タンパク質(g)", "エネルギー(kcal)", "炭水化物(g)", "脂質(g)"];
+	var sum_arr = {{sum_arr}};
+	var step_arr = [2, 10, 150, 50, 5]
+	var tani_arr = ["g", "g", "kcal", "g", "g",]
+	var color_arr = ["rgba(255, 127, 127, 1)", "rgba(127, 127, 255, 1)", "rgba(127, 255, 191, 1)", "rgba(255, 255, 127, 1)", "rgba(255, 191, 127, 1)"]
+
+	function change_seibun() {
+		var value = Number($("#seibun").val());
+		data = [sum_arr[0][value], sum_arr[1][value], sum_arr[2][value], sum_arr[3][value], sum_arr[4][value], sum_arr[5][value], sum_arr[6][value]]
+		updateData(myLineChart, data);
+		updateLabel(myLineChart, value);
+		updateAxis(myLineChart, value);
+		updateColor(myLineChart, value);
+	}
+
+	function updateData(chart, data) {
+		chart.data.datasets.forEach((dataset) => {
+			dataset.data = data;
+		});
+		chart.update();
+	}
+
+	function updateColor(chart, value) {
+		chart.data.datasets.forEach((dataset) => {
+			dataset.borderColor = color_arr[value];
+		});
+		chart.update();
+	}
+
+	function updateLabel(chart, value) {
+		chart.data.datasets.forEach((dataset) => {
+			dataset.label = seibun_arr[value];
+		});
+		chart.options.title.text = seibun_arr[value] + "（{{date_arr.0}} ~ {{date_arr.6}}）";
+		chart.update();
+	}
+
+	function updateAxis(chart, value) {
+		chart.options.scales.yAxes.forEach((yAxes) => {
+			yAxes.ticks.stepSize = step_arr[value];
+			yAxes.ticks.callback = function(v, index, values){
+				return  v + tani_arr[value];
+			}
+		});
+		chart.update();
+	}
+
+	function addData(chart, data) {
+		chart.data.datasets.forEach((dataset) => {
+			console.log("add" + data)
+			dataset.data.push(data);
+		});
+		chart.update();
+	}
+
+	function removeData(chart) {
+		chart.data.datasets.forEach((dataset) => {
+			console.log("remove" + dataset.data)
+			dataset.data.pop();
+		});
+		chart.update();
+	}
+
+	function updatelabel(chart, label) {
+		chart.data.datasets.forEach((dataset) => {
+			dataset.label = label;
+		})
+		chart.update();
+	}
+
+	function updateText(chart, text) {
+		chart.options.title.text = text;
+		chart.update();
+	}
+
+</script>
+
+{% endblock extra_js %}

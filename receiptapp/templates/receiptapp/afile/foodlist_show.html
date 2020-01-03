@@ -1,0 +1,43 @@
+{% load static %}
+<html>
+<head>
+    <link href="{% static 'css/top.css' %}" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+<body class="container">
+    <form>
+    {% for info_list, len in search_list %}
+        <p class="p1">候補が{{len}}個あります</p>
+        <p class="p1">選択してください</p>
+        <table class="table">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">食品名</th>
+                    <th scope="col" class="text-center">タンパク質</th>
+                    <th scope="col" class="text-center">亜鉛</th>
+                    <th scope="col" class="text-center">食塩相当量</th>
+                    <th scope="col" class="text-center">選択してください</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for info in info_list %}
+                <tr>
+                    <td>{{ info.0 }}</td>
+                    <td class="text-center">{{ info.1 }}</td>
+                    <td class="text-center">{{ info.2 }}</td>
+                    <td class="text-center">{{ info.3 }}</td>
+                    <td class="text-center">
+                        {% if forloop.counter == 1 %}
+                            <input type="radio" name="{{ forloop.parentloop.counter }}" checked>
+                        {% else %}
+                            <input type="radio" name="{{ forloop.parentloop.counter }}">
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endfor %}
+    </form>
+</body>
+</html>

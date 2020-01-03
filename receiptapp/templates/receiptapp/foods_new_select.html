@@ -1,0 +1,57 @@
+{% extends "receiptapp/base.html" %}
+{% block title %}健康管理アプリ|食事選択{% endblock title %}
+{% block userstate %}{{ user.username }}{% endblock userstate %}
+
+{% load common %}
+
+
+{% block content %}
+<div class="main container text-center">
+    <h2 class="text-left mt-3">食事内容選択</h2>
+    {% set count = 1 %}
+    <form action="{% url 'food_new' receiptId %}" method="POST">
+    <input type="hidden" name="0" value="0">
+    {% csrf_token %}
+    {% for info_list, len in search_list %}
+    {% if not len == 0 %}
+        <p class="p1">候補が{{len}}個あります</p>
+        <p class="p1">選択してください</p>
+        <table class="table">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">食品名</th>
+                    <th scope="col">食事量</th>
+                    <th scope="col" class="text-center">選択してください</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for info in info_list %}
+                <tr>
+                    <td>{{ info.0 }}</td>
+                    <td>
+                        {{ amount }}g
+                    </td>
+                    <td class="text-center">
+                      {% if forloop.counter == 1 %}
+                          <!-- <input type="radio" name="{{ forloop.parentloop.counter }}" checked> -->
+                          <input type="checkbox" name="food"
+                            value="{{ info.0 }},{{ info.1 }},{{ info.2 }},{{ info.3 }},{{ info.4 }},{{ info.5 }},{{ forloop.parentloop.counter }}.{{ forloop.counter }}" checked>
+                      {% else %}
+                          <input type="checkbox" name="food"
+                            value="{{ info.0 }},{{ info.1 }},{{ info.2 }},{{ info.3 }},{{ info.4 }},{{ info.5 }},{{ forloop.parentloop.counter }}.{{ forloop.counter }}">
+                      {% endif %}
+                        <input type="hidden" name="{{ forloop.parentloop.counter }}.{{ forloop.counter }}" value="{{ amount_num }}">
+
+                    </td>
+                </tr>
+
+                {% endfor %}
+            </tbody>
+        </table>
+        <input type="hidden" name="{{ forloop.counter }}" value="{{ len }}">
+    {% endif %}
+    {% endfor %}
+    <input type="submit" class="btn btn-primary" value="食事内容決定">
+    </form>
+</div>
+{% endblock content %}

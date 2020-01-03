@@ -1,0 +1,76 @@
+.a2, .a3, .a4 {
+    border-bottom: 3px solid white;
+}
+
+.a2:hover, .a3:hover {
+    border-bottom: 3px solid rgba(91, 192, 222, 0.3);
+}
+
+.a1 {
+    color: #5bc0de;
+    border-bottom: 3px solid #5bc0de;
+}
+
+.a1 i, .a1 span {
+    color: #5bc0de;
+}
+
+h2 {
+    font-weight: lighter;
+    margin-top: 100px;
+}
+
+h3 {
+    font-weight: lighter;
+    color: dimgray;
+
+}
+
+.month-box {
+    display: none;
+}
+
+.month {
+    color: white;
+    background-color: rgba(91, 192, 222, 0.8);
+    border-radius: 10px;
+}
+
+.bmonth, .amonth, .nowmonth {
+    font-weight: bolder;
+}
+
+.bmonth, .amonth {
+    display: inline;
+}
+
+.bmonth:hover, .amonth:hover {
+    cursor: pointer;
+}
+
+.oneday {
+    box-shadow: 0px 8px 3px -3px rgba(0,0,0,0.15);
+}
+
+.oneday a {
+    text-decoration: none;
+    color: black;
+}
+
+.date {
+    padding: 30px 0;
+    background-color: white;
+    font-weight: bolder;
+}
+
+.food {
+    padding: 30px 0;
+    background-color: white;
+    transition: 0.3s;
+    font-weight: bolder;
+    border-top: 1px solid whitesmoke;
+}
+
+.food:hover {
+    background-color: rgba(91, 192, 222, 0.1);
+}

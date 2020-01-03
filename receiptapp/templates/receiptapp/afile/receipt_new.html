@@ -1,0 +1,27 @@
+{% extends "receiptapp/base.html" %}
+
+
+
+
+{% block title %}レシート画像読み取り{% endblock title %}
+
+{% block content %}
+        <h1 class="bg-info text-white pt-2 mb-5" style="height: 70px;">
+            <div class="mx-auto" style="width: 80%;">
+                レシート読み取りアプリ
+            </div>
+        </h1>
+        <div class="containre">
+            <h2 class="text-center mb-5">レシート画像読み取り</h2>
+            <form action="{% url 'receipts' %}" method="POST"　enctype="multipart/form-data"
+                class="post-form text-center mx-auto " style="width: 600px;">
+                {% csrf_token %}
+                <div class="custom-file mb-3">
+                    <!-- <input type="file" class="custom-file-input" id="receiptImg" aria-describedby="receiptImg"> -->
+                    {{ form }}
+                    <label class="custom-file-label" for="receiptImg" data-browse="参照">ファイル選択...</label>
+                </div>
+                <button type="submit" class="btn btn-primary mx-auto" style="width: 200px;">レシート画像解析</button>
+            </form>
+        </div>
+{% endblock content %}

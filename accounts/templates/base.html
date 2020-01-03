@@ -1,0 +1,40 @@
+{% load i18n static %}
+<!DOCTYPE html>{% get_current_language as LANGUAGE_CODE %}
+<html lang="{{ LANGUAGE_CODE|default:"en-us" }}">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link rel="stylesheet" href="{% static 'receiptapp/css/bootstrap.min.css' %}">
+<link rel="stylesheet" href="{% static 'css/main.css' %}">
+{% block extra_css %}{% endblock %}
+<title>{% block title %}My receipt{% endblock %}</title>
+</head>
+<body>
+  <div class="container-fluid　no-gutters">
+    <!-- ヘッダー -->
+    <div class="header bg-info">
+		<div class="container">
+			<div class="row justify-content-between">
+				<div class="col-5">
+					<h1 class="pt-3 pb-3">
+						<a href="{% url 'index' %}" class="header-logo text-white">健康管理アプリ</a>
+					</h1>
+				</div>
+			</div>
+		</div>
+    </div>
+    <!-- メイン -->
+    {% block content %}
+      {{ content }}
+    {% endblock %}
+  </div>
+<script src="{% static 'receiptapp/js/jquery-3.4.1.min.js' %}"></script>
+<script src="{% static 'receiptapp/js/bootstrap.bundle.min.js' %}"></script>
+<script>
+    $('.custom-file-input').on('change',function(){
+        $(this).next('.custom-file-label').html($(this)[0].files[0].name);
+    })
+</script>
+{% block extra_js %}{% endblock %}
+</body>
+</html>

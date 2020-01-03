@@ -1,0 +1,22 @@
+{% extends "receiptapp/base.html" %}
+{% load i18n static %}
+
+{% block title %}健康管理アプリ|レシート削除確認{% endblock title %}
+{% block userstate %}{{ user.username }}{% endblock userstate %}
+
+{% block content %}
+<div class="main container text-center">
+	<h2 class="mb-5">レシート削除確認</h2>
+	<p class="font-weight-bold text-danger">削除してもよろしいですか？</p>
+	<a href="{% url 'delete' receipt.id %}" class="btn btn-danger text-white mb-5">レシート削除</a>
+	<p class="font-weight-bold">レシート日時：{{ receipt.receipt_date }}</p>
+	食品名:
+	{% for food in foods %}
+		<p>{{ food.food_name }}</p>
+	{% endfor %}
+	<div>
+		<img src="{{ receipt.image.image.url }}" alt="レシート画像です" style="width: 400px; height: 600px;">
+	</div>
+	<a href="index.html" class="btn btn-primary mb-5 mt-5">トップページへ</a>
+</div>
+{% endblock content %}

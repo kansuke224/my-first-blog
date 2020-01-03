@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+
+{% block content %}
+{# エラーメッセージを表示 #}
+{% if form.errors %}
+  <div class="bg-danger pt-3 pb-3 row justify-content-center">
+    <div class="align-celf-center d-inline">
+      {% for field in form %}
+          {% for error in field.errors %}
+              <div class="text-white d-inline">{{ error }}</div>
+              <br>
+          {% endfor %}
+       {% endfor %}
+    </div>
+  </div>
+{% endif %}
+<div class="main container text-center">
+  <h2 class="mb-5 mt-2">新規ユーザー登録</h2>
+  <section class="common-form">
+      <form method="post" action="{% url 'accounts:signup' %}">
+          {% csrf_token %}
+            {% for field in form %}
+              <div class="form-group mb-5">
+                <div class="row justify-content-center mb-3">
+                  <label for="{{ field.id_for_label }}" class="col-2">{{ field.label_tag }}</label>
+                  {{ field|add_class:"form-control col-5" }}
+                </div>
+                <div class="row justify-content-center">
+                  <div class="col-8 text-left">
+                    {{ field.help_text }}
+                  </div>
+                </div>
+              </div>
+            {% endfor %}
+            <!-- {{ form.as_p }} -->
+            <button type="submit" class="submit btn btn-primary">新規ユーザー登録</button>
+
+
+      </form>
+  </section>
+</div>
+{% endblock %}

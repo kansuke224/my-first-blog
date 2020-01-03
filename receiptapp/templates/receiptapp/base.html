@@ -1,0 +1,91 @@
+{% load i18n static %}
+<!DOCTYPE html>{% get_current_language as LANGUAGE_CODE %}
+<html lang="{{ LANGUAGE_CODE|default:"en-us" }}">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<!-- <link rel="stylesheet" href="{% static 'receiptapp/css/bulma.min.css' %}"> -->
+<link rel="stylesheet" href="{% static 'fontawesome/css/all.css' %}">
+<link rel="stylesheet" href="{% static 'receiptapp/css/bootstrap.min.css' %}">
+<link rel="stylesheet" href="{% static 'css/main.css' %}">
+{% block extra_css %}{% endblock %}
+<title>{% block title %}My receipt{% endblock %}</title>
+</head>
+<body>
+  <div class="container-fluid no-gutters wrapper">
+    <!-- ヘッダー -->
+    <div class="header">
+		<div class="container">
+			<div class="row justify-content-between no-gutters">
+				<div class="col header-left">
+					<h1 class="pt-1 pb-1">
+						<a href="{% url 'index' %}" class="header-logo small">健康管理アプリ</a>
+					</h1>
+				</div>
+				<div class="col row align-items-center justify-content-end header-right no-gutters">
+                    <a class="row justify-content-center align-items-center no-gutters pl-3 pr-3 a1" href="{% url 'index' %}">
+                        <div>
+                            <i class="fas fa-home fa-lg"></i>
+                            <span class="lead">HOME</span>
+                        </div>
+                    </a>
+                    <a class="row justify-content-center align-items-center no-gutters pl-3 pr-3 a2" href="{% url 'receipts_new' %}">
+                        <div>
+                            <i class="fas fa-receipt fa-lg"></i>
+                            <span class="lead">NEW RECEIPT</span>
+                        </div>
+                    </a>
+                    <a class="row justify-content-center align-items-center no-gutters pl-3 pr-3 a3" href="{% url 'graph' %}">
+                        <div>
+                            <i class="fas fa-chart-line fa-lg"></i>
+                            <span class="lead">GRAPH</span>
+                        </div>
+                    </a>
+                    <div class="a4-box">
+                        <a class="row justify-content-center align-items-center no-gutters pl-3 pr-3 a4">
+                            <div>
+                                <i class="fas fa-user-circle fa-lg"></i>
+                                <span class="lead">ACCOUNT</span>
+                            </div>
+                        </a>
+                        <div class="account-box">
+                            <div class="username text-center">
+                                <i class="far fa-user"></i>
+                                {{ user.username }} さん
+                            </div>
+                            <div class="logout-box text-center">
+                                <a href="{% url 'logout'%}" class="">
+                                    <i class="fas fa-sign-out-alt"></i>
+                                    ログアウト
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <!--
+					<div class="col text-white align-self-center">
+						ユーザ名：{% block userstate %}{% endblock %}
+					</div>
+					<div class="col">
+                    <a href="{% url 'logout'%}" class="btn btn-primary mb-2">ログアウト</a>
+					</div>
+                    -->
+				</div>
+			</div>
+		</div>
+    </div>
+    <!-- メイン -->
+    {% block content %}
+      {{ content }}
+    {% endblock %}
+  </div>
+<script src="{% static 'receiptapp/js/jquery-3.4.1.min.js' %}"></script>
+<script src="{% static 'receiptapp/js/bootstrap.bundle.min.js' %}"></script>
+<script>
+    $('.custom-file-input').on('change',function(){
+        $(this).next('.custom-file-label').html($(this)[0].files[0].name);
+    })
+
+</script>
+{% block extra_js %}{% endblock %}
+</body>
+</html>

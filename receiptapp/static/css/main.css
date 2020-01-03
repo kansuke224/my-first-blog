@@ -1,0 +1,87 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+    background-color: whitesmoke;
+    overflow-y: scroll;
+}
+
+
+
+.header {
+    background-color: white;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    box-shadow: 0px 3px 3px -3px rgba(0,0,0,0.1);
+    z-index: 9999;
+}
+
+.header a {
+    color: black;
+    text-decoration: none;
+}
+
+
+.header-right a {
+    height: 100%;
+}
+
+.a4-box {
+    position: relative;
+}
+
+.a4:hover {
+    cursor: pointer;
+}
+
+.account-box {
+    display: none;
+    position: absolute;
+    top: 30px;
+    left: 0;
+    background-color: white;
+    width: 150%;
+    box-shadow: 0px 0px 3px 0px rgba(0,0,0,0.1);
+}
+
+@keyframes show{
+    from{
+        opacity: 0;
+    }
+    to{
+        opacity: 1;
+    }
+}
+
+.a4-box:hover .account-box {
+    display: block;
+    animation: show 0.2s linear 0s;
+}
+
+.account-box:hover {
+    display: block;
+}
+
+.username {
+    height: 50px;
+    border-bottom: 1px solid whitesmoke;
+    line-height: 50px;
+}
+
+.logout-box {
+    height: 50px;
+    line-height: 50px;
+}
+
+.logout-box a {
+    display: block;
+    color: rgba(91, 192, 222, 1);
+}
+
+.logout-box a:hover {
+    background-color: rgba(91, 192, 222, 0.3);
+}
