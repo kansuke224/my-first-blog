@@ -5,10 +5,3 @@
 .a1:hover, .a2:hover, .a3:hover {
     border-bottom: 3px solid rgba(91, 192, 222, 0.3);
 }
-
-h3 {
-    margin-top: 100px;
-    font-weight: lighter;
-    color: dimgray;
-
-}

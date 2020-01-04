@@ -96,12 +96,14 @@ def index(request):
     context = {"user": user, "month_list": month_list,"receipts": receipts, "year_list":year_list, "msg": msg, "isMsg": isMsg}
     return render(request, "receiptapp/index.html", context)
 
+@login_required
 def receipts_new(request):
     form = ImageForm()
     user = request.user
     context = {"user": user, 'form': form}
     return render(request, "receiptapp/receipts_new.html", context)
 
+@login_required
 def receipts_food_select(request):
     image_id = request.session['image_id']
     image = Image.objects.get(pk=image_id).image.url
@@ -120,6 +122,7 @@ def receipts_food_select(request):
     context = {"user": user, "search_list": search_list}
     return render(request, "receiptapp/receipts_food_select.html", context)
 
+@login_required
 def receipts_detail(request, receiptId):
     receipt = Receipt.objects.get(id=receiptId)
     foods_detail = receipt.fooddetail_set.all()
@@ -144,6 +147,7 @@ def receipts_detail(request, receiptId):
     print(fd_arr)
     return render(request, "receiptapp/receipts_detail.html", context)
 
+@login_required
 def receipts_delcheck(request, receiptId):
     receipt = Receipt.objects.get(id=receiptId)
     foods = []
@@ -153,12 +157,14 @@ def receipts_delcheck(request, receiptId):
     context = {"user": user, "receipt": receipt, "foods": foods}
     return render(request, "receiptapp/receipts_delcheck.html", context)
 
+@login_required
 def foods_edit(request, receiptId, foodId, detailId):
     food = Food.objects.get(id = foodId)
     detail = Fooddetail.objects.get(id = detailId)
     context = {"food_name": food.food_name, "amount": detail.amount, "receiptId": receiptId, "foodId": foodId, "detailId": detailId}
     return render(request, "receiptapp/foods_edit.html", context)
 
+@login_required
 def foods_edit_select(request, receiptId, foodId, detailId):
     # request の postからsearch_word と amountのデータを取得
     food_name = request.POST.get("food_name")
@@ -167,10 +173,12 @@ def foods_edit_select(request, receiptId, foodId, detailId):
     context = {"search_list": search_list, "amount": amount, "amount_num": request.POST.get("amount"), "receiptId": receiptId, "foodId": foodId, "detailId": detailId}
     return render(request, "receiptapp/foods_edit_select.html", context)
 
+@login_required
 def foods_new(request, receiptId):
     context = {"receiptId" :receiptId,}
     return render(request, "receiptapp/foods_new.html", context)
 
+@login_required
 def foods_new_select(request, receiptId):
     # request の postからsearch_word と amountのデータを取得
     food_name = request.POST.get("food_name")
@@ -179,6 +187,7 @@ def foods_new_select(request, receiptId):
     context = {"search_list": search_list, "amount": amount, "amount_num": request.POST.get("amount"), "receiptId" :receiptId}
     return render(request, "receiptapp/foods_new_select.html", context)
 
+@login_required
 def graph(request):
     # 必要な情報
     JST = datetime.timezone(datetime.timedelta(hours=+9), 'JST')
@@ -234,6 +243,7 @@ def graph(request):
 
 
 # WEB APIの処理
+@login_required
 def new(request, *args, **kwargs):
     # 新規レシート投稿
     user = request.user
@@ -252,17 +262,20 @@ def new(request, *args, **kwargs):
     receiptId = receipt.id
     return redirect('/receipts/' + str(receiptId))
 
+@login_required
 def delete(request, receiptId):
     # レシート情報削除
     Receipt.objects.filter(id=receiptId).delete()
     request.session["msg"] = "レシートを削除しました"
     return redirect('/')
 
+@login_required
 def food_new(request, receiptId):
     receipt = Receipt.objects.get(id=receiptId)
     create_food.create_food(request, receipt)
     return redirect('/receipts/' + str(receiptId))
 
+@login_required
 def food_edit(request, receiptId, foodId, detailId):
     # 食べ物情報編集
     # receipt の foodsからfoodIdでremoveした後にaddして、foods_detailを新たに作成
@@ -274,6 +287,7 @@ def food_edit(request, receiptId, foodId, detailId):
     create_food.create_food(request, receipt)
     return redirect('/receipts/' + str(receiptId))
 
+@login_required
 def food_delete(request, detailId):
     # 食べ物情報削除(detailを削除)
     detail = Fooddetail.objects.get(id=detailId)
@@ -281,6 +295,7 @@ def food_delete(request, detailId):
     detail.delete()
     return redirect('/receipts/' + str(receiptId))
 
+@login_required
 def image_new(request, *args, **kwargs):
     form = ImageForm(request.POST, request.FILES)
     if not form.is_valid():
