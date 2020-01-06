@@ -16,7 +16,7 @@
   </div>
 {% endif %}
 <div class="main container text-center">
-  <h2 class="mb-5 mt-5">新規ユーザー登録</h2>
+  <h3 class="mb-5 mt-5 text-left">新規ユーザー登録</h3>
   <section class="common-form">
       <form method="post" action="{% url 'accounts:signup' %}">
           {% csrf_token %}
@@ -24,17 +24,17 @@
               <div class="form-group mb-5">
                 <div class="row justify-content-center mb-3">
                   <label for="{{ field.id_for_label }}" class="col-2">{{ field.label_tag }}</label>
-                  {{ field|add_class:"form-control col-5" }}
+                  {{ field|add_class:"form-control col-7" }}
                 </div>
                 <div class="row justify-content-center">
-                  <div class="col-8 text-left">
+                  <div class="text-left" style="color:dimgray;">
                     {{ field.help_text }}
                   </div>
                 </div>
               </div>
             {% endfor %}
             <!-- {{ form.as_p }} -->
-            <button type="submit" class="submit btn btn-primary">新規ユーザー登録</button>
+            <button type="submit" class="submit btn btn-info mb-5">新規ユーザー登録</button>
 
 
       </form>
