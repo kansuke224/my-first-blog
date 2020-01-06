@@ -50,12 +50,12 @@
             {% for date, receipt_list in date_list %}
                 <section class="oneday mb-5">
                     <div class="date lead">
-                        {{ date.month }}/{{ date.day }}
+                        {{ date.month }} / {{ date.day }}
                     </div>
-                    {% for receipt, detail_list in receipt_list %}
-                        <a class="row food justify-content-center no-gutters" href="{% url 'receipts_detail' receipt.id %}">
-                            <div class="col-2">
-                                {{ receipt.id }}
+                    {% for receipt, detail_list in receipt_list reversed %}
+                        <a class="row food justify-content-center align-items-center no-gutters" href="{% url 'receipts_detail' receipt.id %}">
+                            <div class="col-2 r-num">
+                                <span>{{ forloop.revcounter }}</span>
                             </div>
                             <div class="col-8">
                                 {% for detail in detail_list %}

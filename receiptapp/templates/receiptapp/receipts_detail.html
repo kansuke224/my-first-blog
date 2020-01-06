@@ -11,60 +11,71 @@
 {% block content %}
 <div class="main container text-center">
 	<h3 class="text-left mb-5">レシート詳細</h3>
-	<p class="font-weight-bold">レシート日時：{{ receipt.receipt_date }}</p>
-	<div>
-		<a href="{% url 'receipts_delcheck' receipt.id %}" class="btn btn-danger text-white mb-3">レシート削除</a>
+	<div class="receipt-date pt-3 pb-3 mb-5">
+		<div class="lead">{{ receipt.receipt_date.year }} /
+			{{ receipt.receipt_date.month }} /
+			{{ receipt.receipt_date.day }}
+			&nbsp;&nbsp;
+			{{ receipt.receipt_date.hour }}：{{ receipt.receipt_date.minute }}
+		</div>
 	</div>
-	<div>
-		<a href="{% url 'receipts_foods_new' receipt.id %}" class="btn btn-info text-white mb-5">食事情報追加</a>
+	<div class="row justify-content-center align-items-center mb-5">
+		<!--
+			<a href="{% url 'receipts_delcheck' receipt.id %}" class="btn btn-outline-danger ml-3">レシート削除</a>
+		-->
+		<button class="btn btn-outline-danger delete-receipt-modal-button"
+			data-toggle="modal" data-target="#receiptModal"
+			data-deleteurl="{% url 'delete' receipt.id %}">レシート削除</button>
+		<a href="{% url 'receipts_foods_new' receipt.id %}" class="btn btn-outline-info ml-3">食事情報追加</a>
 	</div>
 
 	{% for food in food_list %}
-		<div class="section" id="{{ forloop.counter }}">
+		<div class="food mb-5" id="{{ forloop.counter }}">
 			{{ food.0.food_name }}
 			{{ food.1.amount }}g
-			<a href="{% url 'receipts_foods_edit' receipt.id food.0.id food.1.id %}" class="btn btn-primary text-white ml-4 mr-4">編集</a>
-			<button class="btn btn-danger text-white delete-modal-button"
+			<a href="{% url 'receipts_foods_edit' receipt.id food.0.id food.1.id %}"
+			   class="btn btn-outline-info ml-4 mr-4">編集</a>
+			<button class="btn btn-outline-danger delete-modal-button"
 			data-toggle="modal" data-target="#testModal"
 			data-deleteurl="{% url 'food_delete' food.1.id %}">削除</button>
-			<table class="table mt-5 mb-5">
+			<table class="table mt-5">
+				<!--
 				<thead class="thead-dark">
 					<tr>
 						<th scope="col" class="text-center">栄養素名</th>
 						<th scope="col" class="text-center"></th>
 					</tr>
 				</thead>
+				-->
 				<tbody>
 					<tr>
 						<td class="text-center">塩分</td>
-						<td class="text-center">{{ food.2.0 }}</td>
+						<td class="text-center">{{ food.2.0 }} g</td>
 					</tr>
 					<tr>
 						<td class="text-center">タンパク質</td>
-						<td class="text-center">{{ food.2.1 }}</td>
+						<td class="text-center">{{ food.2.1 }} g</td>
 					</tr>
 					<tr>
 						<td class="text-center">エネルギー</td>
-						<td class="text-center">{{ food.2.2 }}</td>
+						<td class="text-center">{{ food.2.2 }} kcal</td>
 					</tr>
 					<tr>
 						<td class="text-center">炭水化物</td>
-						<td class="text-center">{{ food.2.3 }}</td>
+						<td class="text-center">{{ food.2.3 }} g</td>
 					</tr>
 					<tr>
 						<td class="text-center">脂質</td>
-						<td class="text-center">{{ food.2.4 }}</td>
+						<td class="text-center">{{ food.2.4 }} g</td>
 					</tr>
 				</tbody>
 			</table>
 		</div>
 	{% endfor %}
-
-	<a href="{% url 'index' %}" class="btn btn-primary mb-5 mt-5">トップページへ</a>
 </div>
 
 <div class="modal fade" id="testModal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
                 <h4><div class="modal-title" id="myModalLabel">削除確認画面</div></h4>
@@ -75,6 +86,23 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">閉じる</button>
                 <a href="" class="btn btn-danger" id="delete-link">削除</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="receiptModal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4><div class="modal-title" id="myModalLabel">レシート削除確認画面</div></h4>
+            </div>
+            <div class="modal-body">
+                <label>データを削除しますか？</label>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">閉じる</button>
+                <a href="" class="btn btn-danger" id="receipt-delete-link">削除</a>
             </div>
         </div>
     </div>
@@ -107,13 +135,22 @@
     const deleteLink = document.getElementById('delete-link');
     const modal = document.getElementById('modal');
     const deleteCancelButton = document.getElementById('delete-cancel-button');
-    const deleteModalButtons = document.getElementsByClassName('delete-modal-button');
+	const deleteModalButtons = document.getElementsByClassName('delete-modal-button');
 
     for (const button of deleteModalButtons) {
         button.addEventListener('click', () => {
             deleteLink.href = button.dataset.deleteurl;
         });
-    }
+	}
+	
+	const receipt_buttons = document.getElementsByClassName('delete-receipt-modal-button');
+	const receipt_deleteLink = document.getElementById('receipt-delete-link');
+
+	for (const receipt_button of receipt_buttons) {
+		receipt_button.addEventListener('click', () => {
+			receipt_deleteLink.href = receipt_button.dataset.deleteurl;
+		});
+	}
 
 </script>
 

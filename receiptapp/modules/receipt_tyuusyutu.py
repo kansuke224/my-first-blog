@@ -51,7 +51,6 @@ def word_search(filename):
 
 def analyse(filename, isWord, word):
 
-
     if isWord:
         search_words = []
         search_words.append(word)

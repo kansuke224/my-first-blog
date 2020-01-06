@@ -87,12 +87,12 @@ body {
 }
 
 h2 {
-    font-weight: lighter;
+    font-weight: 400;
     margin-top: 48px;
 }
 
 h3 {
-    font-weight: lighter;
+    font-weight: 400;
     margin-top: 48px;
     color: dimgray;
 

@@ -2,18 +2,8 @@
     border-bottom: 3px solid white;
 }
 
-.a1:hover, .a2:hover, .a3:hover {
+.a1:hover, .a2:hover, .a3:hover , .a4:hover{
     border-bottom: 3px solid rgba(91, 192, 222, 0.3);
-}
-
-.receipt-date {
-	color: white;
-    background-color: rgba(91, 192, 222, 0.8);
-    border-radius: 10px;
-}
-
-.receipt-date div {
-	font-weight: bolder;
 }
 
 .food {

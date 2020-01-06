@@ -1,9 +1,12 @@
 {% extends "receiptapp/base.html" %}
 {% load widget_tweaks %}
 
+{% load i18n static %}
+{% block extra_css %}<link rel="stylesheet" href="{% static 'css/foods_new.css' %}">{% endblock extra_css %}
+
 {% block content %}
 <div class="main container text-center">
-  <h2 class="mb-5 mt-2">食事内容追加</h2>
+  <h3 class="mb-5 mt-2 text-left">食事内容追加</h3>
   <section class="common-form">
       <form method="post" action="{% url 'receipts_foods_new_select' receiptId %}">
           {% csrf_token %}
@@ -25,13 +28,13 @@
                 </select>
               </div>
               <div class="row justify-content-center">
-                <div class="text-center">
+                <div class="text-center" style="color:dimgray;">
                   食事内容を編集してください<br>
                   食事名例：おにぎり
                 </div>
               </div>
             </div>
-            <button type="submit" class="submit btn btn-primary">食事内容送信</button>
+            <button type="submit" class="submit btn btn-info">食事内容送信</button>
       </form>
   </section>
 </div>

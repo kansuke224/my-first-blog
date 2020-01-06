@@ -11,15 +11,18 @@
         <i class="fas fa-receipt"></i>
         NEW RECEIPT
     </h2>
-    <h3 class="text-left mb-4">レシート投稿フォーム</h3>
-    <div class="form-box pt-5 pb-5">
+    <h3 class="text-left mb-5">レシート投稿フォーム</h3>
+    <div style="color:dimgray;" class="mb-5">
+        レシート画像を選択してください
+    </div>
+    <div class="form-box mt-3">
         <form action="{% url 'image_new' %}" method="post" enctype="multipart/form-data" class="post-form text-center mx-auto" style="width: 600px;">
             {% csrf_token %}
-            <div class="custom-file mb-3">
+            <div class="custom-file mb-5">
                 {{ form }}
                 <label class="custom-file-label" for="receiptImg" data-browse="参照">ファイル選択...</label>
             </div>
-            <button type="submit" class="btn btn-info mx-auto" style="width: 150px;">画像解析</button>
+            <button type="submit" class="btn btn-info mx-auto">画像解析</button>
         </form>
     </div>
 </div>
