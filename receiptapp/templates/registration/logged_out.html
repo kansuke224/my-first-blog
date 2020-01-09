@@ -3,10 +3,11 @@
 
 {% block content %}
 <div class="main container text-center">
-  <h3 class="text-left text-center">ログアウト</h3>
+  <h2 class="text-left text-center">ログアウト</h2>
   <div class="mx-auto mt-3 pt-3" style="width: 200px;">
-        <div>ログアウトしました</div>
-        <a href="{% url 'login' %}" class="btn btn-info mt-5">ログイン画面へ</a>
+        ログアウトしました
+        <br>
+        <a href="{% url 'login' %}" class="btn btn-primary mt-3">ログイン画面へ</a>
   </div>
 </div>
 {% endblock content %}

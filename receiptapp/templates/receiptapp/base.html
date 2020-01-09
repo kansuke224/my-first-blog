@@ -7,6 +7,7 @@
 <!-- <link rel="stylesheet" href="{% static 'receiptapp/css/bulma.min.css' %}"> -->
 <link rel="stylesheet" href="{% static 'fontawesome/css/all.css' %}">
 <link rel="stylesheet" href="{% static 'receiptapp/css/bootstrap.min.css' %}">
+<link href="https://fonts.googleapis.com/css?family=M+PLUS+Rounded+1c&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="{% static 'css/main.css' %}">
 {% block extra_css %}{% endblock %}
 <title>{% block title %}My receipt{% endblock %}</title>
@@ -19,7 +20,9 @@
 			<div class="row justify-content-between no-gutters">
 				<div class="col-4 header-left">
 					<h1 class="pt-1 pb-1">
-						<a href="{% url 'index' %}" class="header-logo small">健康管理アプリ</a>
+						<!-- レシート 健康 ヘルシー グラフ 簡単 イージー フード 栄養 -->
+						<!-- <a href="{% url 'index' %}" class="header-logo small">HEALTHEIPT</a> -->
+						<a href="{% url 'index' %}" class="header-logo small">ヘルシート</a>
 					</h1>
 				</div>
 				<div class="col-8 row align-items-center justify-content-end header-right no-gutters">

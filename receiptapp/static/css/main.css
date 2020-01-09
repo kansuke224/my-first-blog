@@ -8,8 +8,6 @@ body {
     overflow-y: scroll;
 }
 
-
-
 .header {
     background-color: white;
     width: 100%;
@@ -96,4 +94,7 @@ h3 {
     margin-top: 48px;
     color: dimgray;
 
+}
+.header-logo {
+	font-family: 'M PLUS Rounded 1c', sans-serif;
 }
