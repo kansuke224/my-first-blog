@@ -123,7 +123,8 @@ def receipts_food_select(request):
     filename = image.replace("/media/receiptapp/", "")
     print(filename)
 
-    search_list = q.enqueue(background_process, filename=filename, isWord=False, word="")
+    # search_list = q.enqueue(background_process, filename=filename, isWord=False, word="")
+    search_list = receipt_tyuusyutu.analyse(filename=filename, isWord=False, word="")[0]
 
     public_id = filename.split("/")[-1].replace(".jpg", "").replace(".png", "")
     cloudinary.uploader.destroy(public_id = public_id)
