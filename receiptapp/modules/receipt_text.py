@@ -182,7 +182,7 @@ def convert(filename = None, capture = False, CUT=False):
         im = im[..., ::-1] # RGB --> BGR
     print(filename)
     filename = filename[:-4]
-    print(im)
+    # print(im)
     print(filename)
     # 拡張子を取り除いた形で記録する
     if CUT:
@@ -223,7 +223,7 @@ def convert(filename = None, capture = False, CUT=False):
             builder=pyocr.builders.TextBuilder(tesseract_layout=6)
     )
     text = re.sub('([あ-んア-ン一-龥ー])[ 　]((?=[あ-んア-ン一-龥ー]))',r'\1\2', text)
-    print (text)
+    # print (text)
     # print(text)
 
     # rect_th のファイルを削除
