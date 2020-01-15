@@ -28,7 +28,7 @@ cloudinary.config(
   api_secret = env('API_SECRET')
 )
 
-def background_process(filename, isWord=False, word):
+def background_process(filename, isWord, word):
     # ここに時間のかかる処理を書く
     search_list = receipt_tyuusyutu.analyse(filename=filename, isWord=isWord, word=word)[0]
     return search_list
@@ -124,7 +124,7 @@ def receipts_food_select(request):
     print(filename)
 
     search_list = q.enqueue(background_process, filename=filename, isWord=False, word="")
-    
+
     public_id = filename.split("/")[-1].replace(".jpg", "").replace(".png", "")
     cloudinary.uploader.destroy(public_id = public_id)
 
