@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'widget_tweaks',
     'cloudinary',
     'cloudinary_storage',
+    'background_task',
 ]
 
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'

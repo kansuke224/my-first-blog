@@ -12,6 +12,13 @@ from dateutil.relativedelta import relativedelta
 import environ
 import cloudinary
 
+from rq import Queue
+from worker import conn
+from bottle import route, run
+
+
+q = Queue(connection=conn)
+
 env = environ.Env()
 env.read_env('.env')
 
@@ -20,6 +27,11 @@ cloudinary.config(
   api_key = env('API_KEY'),
   api_secret = env('API_SECRET')
 )
+
+def background_process(filename, isWord=False, word):
+    # ここに時間のかかる処理を書く
+    search_list = receipt_tyuusyutu.analyse(filename=filename, isWord=isWord, word=word)[0]
+    return search_list
 
 
 # Create your views here.
@@ -110,7 +122,9 @@ def receipts_food_select(request):
     print("replace")
     filename = image.replace("/media/receiptapp/", "")
     print(filename)
-    search_list = receipt_tyuusyutu.analyse(filename=filename, isWord=False, word="")[0]
+
+    search_list = q.enqueue(background_process, filename=filename, isWord=False, word="")
+    
     public_id = filename.split("/")[-1].replace(".jpg", "").replace(".png", "")
     cloudinary.uploader.destroy(public_id = public_id)
 
