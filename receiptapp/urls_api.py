@@ -1,0 +1,36 @@
+from rest_framework import routers
+from . import views_api
+from django.urls import path
+from django.conf.urls import url
+from rest_framework_jwt.views import obtain_jwt_token, verify_jwt_token, refresh_jwt_token
+
+
+router = routers.DefaultRouter()
+router.register('receipts', views_api.ReceiptViewSet)
+urlpatterns = [
+    path('token/', obtain_jwt_token),
+    path('test1/', views_api.test1, name='test1'),
+    url(r'^mypage/$', views_api.UsernameGetView.as_view()),
+    ]
+
+urlpatterns += router.urls
+
+
+# eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjo2LCJ1c2VybmFtZSI6Im5hb2RhaSIsImV4cCI6MTU3OTY4MjA2OSwiZW1haWwiOiIifQ.Vdwq3Vo_tlQbn4hUcm4ONbGOXc_Xu8xEXolMsFWxda0"
+# curl -X GET http://127.0.0.1:8000/api/mypage/ -H "Authorization: JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwiZXhwIjoxNTc5NjcwMDcwLCJlbWFpbCI6ImthbnN1a2UyMjQyMjRAZ21haWwuY29tIn0.ETFng6lQMK5unPZyB-R0c_oA3jsF-NbO8_Y_CmcBoJ0"
+
+
+# curl -X GET http://127.0.0.1:8000/api/receipts/ -H "Authorization: JWT
+
+# curl -X POST http://127.0.0.1:8000/api/test1/ -d "title=receipts_api_test!!!" -H "Authorization: JWT
+
+
+
+
+
+
+
+
+
+
+# eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjo2LCJ1c2VybmFtZSI6Im5hb2RhaSIsImV4cCI6MTU3OTY3MTUzMCwiZW1haWwiOiIifQ.2IQc_pPWVl3GNXGILVKJAQPiuhzhaBXjaVfCEieUC0U
