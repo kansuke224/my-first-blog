@@ -16,11 +16,11 @@ urlpatterns = [
 urlpatterns += router.urls
 
 
-# eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjo2LCJ1c2VybmFtZSI6Im5hb2RhaSIsImV4cCI6MTU3OTY4MjA2OSwiZW1haWwiOiIifQ.Vdwq3Vo_tlQbn4hUcm4ONbGOXc_Xu8xEXolMsFWxda0"
+# eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwiZXhwIjoxNTc5NzQ1MTgwLCJlbWFpbCI6ImVzYWthLm5hb2hpcm9AZ21haWwuY29tIn0.RE8-zqtLzeJ55dPgOeMG0aQOcGA7IixjFvqKXLSfBfs"
 # curl -X GET http://127.0.0.1:8000/api/mypage/ -H "Authorization: JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwiZXhwIjoxNTc5NjcwMDcwLCJlbWFpbCI6ImthbnN1a2UyMjQyMjRAZ21haWwuY29tIn0.ETFng6lQMK5unPZyB-R0c_oA3jsF-NbO8_Y_CmcBoJ0"
 
 
-# curl -X GET http://127.0.0.1:8000/api/receipts/ -H "Authorization: JWT
+# curl -X GET https://healthreceiptapp.herokuapp.com/api/receipts/ -H "Authorization: JWT
 
 # curl -X POST http://127.0.0.1:8000/api/test1/ -d "title=receipts_api_test!!!" -H "Authorization: JWT
 
