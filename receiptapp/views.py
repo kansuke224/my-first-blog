@@ -6,6 +6,9 @@ from .models import Receipt, Image, Food, Fooddetail
 from django.contrib.auth.decorators import login_required
 from django.db.models import Sum
 
+from .modules import receipt_tyuusyutu2
+from .modules import receipt_text2
+
 import datetime
 from dateutil.relativedelta import relativedelta
 
@@ -116,15 +119,33 @@ def receipts_new(request):
     return render(request, "receiptapp/receipts_new.html", context)
 
 @login_required
-def receipts_food_select(request):
+def receipts_analyse(request):
     image_id = request.session['image_id']
     image = Image.objects.get(pk=image_id).image.url
     print("replace")
     filename = image.replace("/media/receiptapp/", "")
     print(filename)
+    text = receipt_text2.convert(filename, CUT=True)
 
     # search_list = q.enqueue(background_process, filename=filename, isWord=False, word="")
-    search_list = receipt_tyuusyutu.analyse(filename=filename, isWord=False, word="")[0]
+    # sessionにsearch_listを保存する
+    request.session["text"] = text
+    request.session["filename"] = filename
+    return redirect('/receipts/food_select')
+
+@login_required
+def receipts_food_select(request):
+    """
+    image_id = request.session['image_id']
+    image = Image.objects.get(pk=image_id).image.url
+    print("replace")
+    filename = image.replace("/media/receiptapp/", "")
+    print(filename)
+    """
+    filename = request.session["filename"]
+    # search_list = q.enqueue(background_process, filename=filename, isWord=False, word="")
+    # search_list = receipt_tyuusyutu.analyse(filename=filename, isWord=False, word="")[0]
+    search_list = receipt_tyuusyutu2.analyse(filename=filename, isWord=False, word="", text=request.session["text"])[0]
 
     public_id = filename.split("/")[-1].replace(".jpg", "").replace(".png", "")
     cloudinary.uploader.destroy(public_id = public_id)
@@ -322,4 +343,4 @@ def image_new(request, *args, **kwargs):
     request.session['image_id'] = post.id
     print(request.session['image_id'])
 
-    return redirect('/receipts/food_select')
+    return redirect('/receipts/analyse')
