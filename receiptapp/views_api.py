@@ -8,7 +8,8 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework import status
 from .modules import receipt_tyuusyutu2
-from .modules import create_food2
+from .modules import receipt_text2
+from .modules import create_food
 import cloudinary
 from rest_framework.decorators import api_view, permission_classes
 
