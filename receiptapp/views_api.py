@@ -7,8 +7,8 @@ from rest_framework.authentication import SessionAuthentication, BasicAuthentica
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework import status
-from .modules import receipt_tyuusyutu
-from .modules import create_food
+from .modules import receipt_tyuusyutu2
+from .modules import create_food2
 import cloudinary
 from rest_framework.decorators import api_view, permission_classes
 
@@ -76,15 +76,26 @@ def new_image(request):
     # request.FILES みたいな書き方かもしれない、後で直す
     image = Image(image = request.POST.get("image"))
     image.save()
-    request.session['image_id'] = image.id
+    # request.session['image_id'] = image.id
 
     # httpheaderを取得?
     # userAgent = request.META.get('HTTP_USER_AGENT', None)
     filename = image.url.replace("/media/receiptapp/", "")
     print(filename)
+    text = receipt_text2.convert(filename, CUT=True)
 
     # search_list = q.enqueue(background_process, filename=filename, isWord=False, word="")
-    search_list = receipt_tyuusyutu.analyse(filename=filename, isWord=False, word="")[0]
+    # sessionにsearch_listを保存する
+    # request.session["text"] = text
+    # request.session["filename"] = filename
+
+    return Response({"message": "Got some data!", "text": text, "filename": filename, "image_id": image.id})
+
+def get_search_list(request):
+    filename = request.POST["filename"]
+    # search_list = q.enqueue(background_process, filename=filename, isWord=False, word="")
+    # search_list = receipt_tyuusyutu.analyse(filename=filename, isWord=False, word="")[0]
+    search_list = receipt_tyuusyutu2.analyse(filename=filename, isWord=False, word="", text=request.POST["text"])[0]
 
     public_id = filename.split("/")[-1].replace(".jpg", "").replace(".png", "")
     cloudinary.uploader.destroy(public_id = public_id)
@@ -93,9 +104,7 @@ def new_image(request):
         for info in info_list[0]:
             for i, v in enumerate(info):
                 info[i] = str(v)
-    context = {"user": user, "search_list": search_list}
-    # jsonでlistを渡すことができるのか分からない todo
-    return Response({"message": "Got some data!", "data": search_list})
+    return Response({"search_list": search_list})
 
 @api_view(['POST'])
 @permission_classes((IsAuthenticated,))

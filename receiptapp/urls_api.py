@@ -10,6 +10,7 @@ router.register('receipts', views_api.ReceiptViewSet)
 urlpatterns = [
     path('token/', obtain_jwt_token),
     path('test1/', views_api.test1, name='test1'),
+    path('new_image/', views_api.new_image, name='new_imagej'),
     url(r'^mypage/$', views_api.UsernameGetView.as_view()),
     ]
 
