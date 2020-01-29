@@ -103,19 +103,11 @@ def show_img(img):
 def cont_edge(im, filename):
     im_size = im.shape[0] * im.shape[1]
     im_gray = cv2.cvtColor(im, cv2.COLOR_BGR2GRAY)
-    # cv2.imwrite(BASE_DIR + "/receiptapp/media/receiptapp/" + filename + '_gray.jpg', im_gray)
     print(filename + '_gray.jpg')
     im_blur = cv2.fastNlMeansDenoising(im_gray) # 画像のノイズを取り除く
     _, im_th = cv2.threshold(im_blur, 127, 255, cv2.THRESH_BINARY)
-    # 以下のコマンドで2値化をする
-    #im_th = cv2.adaptiveThreshold(im_blur, 255, cv2.ADAPTIVE_THRESH_MEAN_C, cv2.THRESH_BINARY, 15, 5)
-    # im_th = cv2.Canny(im_blur, 50, 200)
     th_filename = "{:s}_th.jpg".format(filename)
-    # 2値化させた画像を表示させる。
-    # show_img(im_th)
     print(th_filename)
-    # 画像の保存
-    # cv2.imwrite(BASE_DIR + "/receiptapp/media/receiptapp/" + th_filename, im_th)
     print(filename + '_th.jpg')
 
     cnts, hierarchy = cv2.findContours(im_th, cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)
@@ -196,20 +188,8 @@ def convert(filename = None, capture = False, CUT=False):
                                       cv2.THRESH_BINARY, 63, 20)
 
     rect_th_filename = "{:s}_rect_th.jpg".format(filename)
-    # imwrite(BASE_DIR + "/receiptapp/media/receiptapp/" + rect_th_filename, im_rect_th)
     print(rect_th_filename)
-    # show_img(im_rect_th)
-    # 既存のoutput.txtファイルが存在すればそれを消去して新たにoutput.txtを作成
-    # 文字認識についてはGoogleのAPIを利用させてもらった。
-    if glob.glob('output.txt'):
-        os.remove('output.txt')
-    # 以下のコメントを外せばtesseractでの実行もできる。
-    # tesseractのインストールは
-    # rect_th_filename = "{:s}_rect_th.jpg".format(filename)
-    # os.system("tesseract {:s} output -l jpn".format(rect_th_filename))
     os.system("tesseract {:s} output -l jpn".format(rect_th_filename))
-    # text = open("output.txt").read().replace('ー', '1').replace('\\', '¥')
-    # img = Image.open(BASE_DIR + "/receiptapp/media/receiptapp/" + rect_th_filename)
     img = cv2pil(im_rect_th)
     tools = pyocr.get_available_tools()
     if len(tools) == 0:

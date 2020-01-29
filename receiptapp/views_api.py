@@ -30,8 +30,8 @@ class ReceiptSerializer(serializers.ModelSerializer):
     # apiのカスタマイズ
     # 外部キーの数値のみが表示されるのではなく、参照先の情報を取得してほしい
     # userのserializerを上書き
-    user = UserSerializer()
-    image = ImageSerializer()
+    # user = UserSerializer()
+    # image = ImageSerializer()
 
     class Meta:
         model = Receipt
@@ -55,6 +55,17 @@ class ReceiptViewSet(viewsets.ModelViewSet):
 
     # authentication_classes = (SessionAuthentication, BasicAuthentication)
     permission_classes = (IsAuthenticated,)
+
+class ImageViewSet(viewsets.ModelViewSet):
+    queryset = Image.objects.all()
+    serializer_class = ImageSerializer
+    permission_classes = (IsAuthenticated,)
+    http_method_names = ["post"]
+
+    def create(self, request):
+        image = Image(image = request.image)
+        image.save()
+        return Response(status=200, data={"msg": "ok"})
 
 # Generic View => 特定のレコードに紐づくような処理
 class UsernameGetView(generics.RetrieveAPIView):
@@ -92,11 +103,18 @@ def new_image(request):
 
     return Response({"message": "Got some data!", "text": text, "filename": filename, "image_id": image.id})
 
+@api_view(['POST'])
+@permission_classes((IsAuthenticated,))
+def get_text(request):
+    filename = request["filename"]
+    print(filename)
+    text = receipt_text2.convert(filename, CUT=True)
+    return Response({"text": text, "filename": filename})
+
 def get_search_list(request):
     filename = request.POST["filename"]
-    # search_list = q.enqueue(background_process, filename=filename, isWord=False, word="")
-    # search_list = receipt_tyuusyutu.analyse(filename=filename, isWord=False, word="")[0]
-    search_list = receipt_tyuusyutu2.analyse(filename=filename, isWord=False, word="", text=request.POST["text"])[0]
+    text = request.POST["text"]
+    search_list = receipt_tyuusyutu2.analyse(filename=filename, isWord=False, word="", text=text)[0]
 
     public_id = filename.split("/")[-1].replace(".jpg", "").replace(".png", "")
     cloudinary.uploader.destroy(public_id = public_id)
@@ -105,7 +123,9 @@ def get_search_list(request):
         for info in info_list[0]:
             for i, v in enumerate(info):
                 info[i] = str(v)
+    # 配列をjsonで返せるの？
     return Response({"search_list": search_list})
+
 
 @api_view(['POST'])
 @permission_classes((IsAuthenticated,))
@@ -119,17 +139,50 @@ def new_receipt(request):
 
     # create_foodに処理を記述
     create_food.create_food(request, receipt)
-    return Response({"message": "Got some data!",})
+    return Response({"message": "receipt OK",})
 
 @api_view(['POST'])
 @permission_classes((IsAuthenticated,))
 def test1(request):
     return Response({"title": request.POST.get("title")})
 
-# 画像をcloudinaryに保存してurlを渡す  =>  swift     or        alamofireで直接画像を渡す
-# apiでurlから画像を取得し解析  => django new_image
-# データベースに保存をする => django new_image
-# food_selectのためのデータをiphoneに返す => django new_image
+
+@api_view(['POST'])
+@permission_classes((IsAuthenticated,))
+def get_food(request):
+    receipt = Receipt.objects.get(request["receipt_id"])
+    details = receipt.fooddetail_set.all()
+    for detail in details:
+        foods_list.append(detail.food)
+
+# 画像をcloudinaryに保存してfilenameを渡す  =>  swift
+# またkeyとかをcloudinaryに教えてあげないといけない
+# 保存自体は簡単そう
+
+
+# post "filename"
+
+
+# filenameからtext.convertをしてtextを取得
+# filenamさえ正しければここはクリア
+
+
+# post "text"
+
+# textからanalyseをしてsearch_listを取得、swiftに返す
+# search_listをわかりやすいように渡す
+# [foodnamelist, foodnamelist2]みたいなかんじに加工して送ってもいいかも(uipickerで扱いやすくなるから)
+# 詳細な成分はnew_receiptまで渡すためにresponseに含めないといけない
+
+
 # iphoneで選択する => swift
+# search_listをnew_receiptに送信
+# post "search_list"
+
 # apiでreceipt保存 => django new_receipt
+# crerate_foodがうまくうごくかどうか
+# requestの形をwebと同じにすればうまく動くはず
+# 難しそうだったらcreate_food2を作る
+
 # 一覧 => swift
+# redirect?

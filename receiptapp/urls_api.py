@@ -7,6 +7,7 @@ from rest_framework_jwt.views import obtain_jwt_token, verify_jwt_token, refresh
 
 router = routers.DefaultRouter()
 router.register('receipts', views_api.ReceiptViewSet)
+router.register('images', views_api.ImageViewSet)
 urlpatterns = [
     path('token/', obtain_jwt_token),
     path('test1/', views_api.test1, name='test1'),
