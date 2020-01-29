@@ -108,7 +108,6 @@ def cont_edge(im, filename):
     _, im_th = cv2.threshold(im_blur, 127, 255, cv2.THRESH_BINARY)
     th_filename = "{:s}_th.jpg".format(filename)
     print(th_filename)
-    print(filename + '_th.jpg')
 
     cnts, hierarchy = cv2.findContours(im_th, cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)
     # 輪郭の抽出
@@ -117,7 +116,6 @@ def cont_edge(im, filename):
     # 抽出された輪郭の面積が大きい順にソートをかける
     cnt = cnts[1]
     img = cv2.drawContours(im_th, [cnt], -1, (0,255,0), 3)
-    # cv2.imwrite(BASE_DIR + "/receiptapp/media/receiptapp/" + filename+"_drawcont.jpg", img)
     im_line = im.copy()
     warp = None
     flag = 1
@@ -172,10 +170,7 @@ def convert(filename = None, capture = False, CUT=False):
         # cloudinary用のpath
         im = plt.imread(filename)
         im = im[..., ::-1] # RGB --> BGR
-    print(filename)
     filename = filename[:-4]
-    # print(im)
-    print(filename)
     # 拡張子を取り除いた形で記録する
     if CUT:
         im = cont_edge(im, filename)
