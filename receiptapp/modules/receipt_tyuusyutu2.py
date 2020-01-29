@@ -1,3 +1,4 @@
+
 import numpy as np
 import os
 import cv2
@@ -16,7 +17,8 @@ from mysite.settings import BASE_DIR
 def word_search(filename, text):
     # 本番用です
     # convertから渡されたtextをしよう
-    data2 = receipt_text.convert(filename, CUT=True)
+    # data2 = receipt_text.convert(filename, CUT=True)
+    data2 = text
     # レシートデータから文字データを抽出する。出力ファイルは`output.txt`
 
     # あらかじめ作っておいたfood_list.txtを呼び出す。

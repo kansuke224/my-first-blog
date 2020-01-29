@@ -20,7 +20,6 @@ urlpatterns = [
     path('food_edit/<int:receiptId>/<int:foodId>/<int:detailId>', views.food_edit, name='food_edit'),
     path('food_delete/<int:detailId>', views.food_delete, name='food_delete'),
     path('image_new', views.image_new, name='image_new'),
-
 ]
 
 from django.conf import settings

@@ -104,8 +104,8 @@ def cont_edge(im, filename):
     im_size = im.shape[0] * im.shape[1]
     im_gray = cv2.cvtColor(im, cv2.COLOR_BGR2GRAY)
     print(filename + '_gray.jpg')
-    im_blur = cv2.fastNlMeansDenoising(im_gray) # 画像のノイズを取り除く
-    _, im_th = cv2.threshold(im_blur, 127, 255, cv2.THRESH_BINARY)
+    # im_blur = cv2.fastNlMeansDenoising(im_gray) # 画像のノイズを取り除く
+    _, im_th = cv2.threshold(im_gray, 127, 255, cv2.THRESH_BINARY)
     th_filename = "{:s}_th.jpg".format(filename)
     print(th_filename)
 
@@ -144,8 +144,8 @@ def cont_edge(im, filename):
     else:
         return im
     # 切り取った画像の表示
-    plt.figure()
-    plt.imshow(im_line)
+    # plt.figure()
+    # plt.imshow(im_line)
     # cv2.imwrite(BASE_DIR + "/receiptapp/media/receiptapp/" + filename + '_line.jpg', im_line)
     print("warp = \n",warp[:, 0, :])
     print(filename + '_rect.jp')

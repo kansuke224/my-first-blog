@@ -126,7 +126,6 @@ def receipts_analyse(request):
     filename = image.replace("/media/receiptapp/", "")
     print(filename)
     text = receipt_text2.convert(filename, CUT=True)
-
     # search_list = q.enqueue(background_process, filename=filename, isWord=False, word="")
     # sessionにsearch_listを保存する
     request.session["text"] = text
