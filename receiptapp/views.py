@@ -124,6 +124,7 @@ def receipts_analyse(request):
     image = Image.objects.get(pk=image_id).image.url
     # print("replace")
     # filename = image.replace("/media/receiptapp/", "")
+    filename = image
     print(filename)
     text = receipt_text2.convert(filename, CUT=True)
     # search_list = q.enqueue(background_process, filename=filename, isWord=False, word="")
