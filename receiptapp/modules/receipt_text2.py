@@ -177,7 +177,7 @@ def convert(filename = None, capture = False, CUT=False):
 
     rect_th_filename = "{:s}_rect_th.jpg".format(filename)
     print(rect_th_filename)
-    # os.system("tesseract {:s} output -l jpn".format(rect_th_filename))
+    os.system("tesseract '{:s}' output -l jpn".format(rect_th_filename))
     img = cv2pil(im_rect_th)
     tools = pyocr.get_available_tools()
     if len(tools) == 0:
