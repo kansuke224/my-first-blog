@@ -153,16 +153,8 @@ def cont_edge(im, filename):
 
 
 def convert(filename = None, capture = False, CUT=False):
-    im = None
-    if filename == None and capture == False:
-        pass
-    elif capture == True:
-        # Webカメラで読み込むこともやりたかったがUbuntuがうまく認識してくれず、断念。
-        cap = cv2.VideoCapture(0)
-    elif filename:
-        # im = cv2.imread(BASE_DIR + "/receiptapp/media/receiptapp/" + filename)
-        # cloudinary用のpath
-        im = url_to_image(filename)
+	print(filename)
+    im = url_to_image(filename)
     if im is None:
         # 読み込みに失敗した場合は printする が返るようにする
         print('failed to load image.')
