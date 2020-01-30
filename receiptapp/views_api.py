@@ -121,11 +121,15 @@ def get_text(request):
     print(text)
     return Response(status=200, data=json.dumps({"text": text, "filename": filename}))
 
+@csrf_exempt
+@api_view(['POST'])
+@permission_classes((IsAuthenticated,))
 def get_search_list(request):
+    print("get_search_list")
     filename = request.POST.get("filename")
     text = request.POST.get("text")
     search_list = receipt_tyuusyutu2.analyse(filename=filename, isWord=False, word="", text=text)[0]
-
+    print(search_list)
     public_id = filename.split("/")[-1].replace(".jpg", "").replace(".png", "")
     cloudinary.uploader.destroy(public_id = public_id)
 
