@@ -118,7 +118,7 @@ def get_text(request):
     print(username)
     text = receipt_text2.convert(filename = filename, CUT=True)
     print(text)
-    return Response(status=200, data={"text": text, "filename": filename})
+    return Response(status=200, data=json.dumps({"text": text, "filename": filename}))
 
 def get_search_list(request):
     filename = request.POST.get("filename")
