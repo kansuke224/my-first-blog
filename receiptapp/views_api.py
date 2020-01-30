@@ -110,6 +110,7 @@ def new_image(request):
 @permission_classes((IsAuthenticated,))
 def get_text(request):
     print("get_text")
+    print(request)
     print(request.POST)
     filename = request.POST.get("filename")
     username = request.POST.get("username")
