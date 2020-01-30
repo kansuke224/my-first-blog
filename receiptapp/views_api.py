@@ -134,7 +134,7 @@ def get_search_list(request):
             for i, v in enumerate(info):
                 info[i] = str(v)
     # 配列をjsonで返せるの？
-    return Response(status=200, data=json.dumps(search_list)
+    return Response(status=200, data=json.dumps(search_list))
 
 
 @api_view(['POST'])
