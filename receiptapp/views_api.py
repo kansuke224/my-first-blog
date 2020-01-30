@@ -12,6 +12,7 @@ from .modules import receipt_text2
 from .modules import create_food
 import cloudinary
 from rest_framework.decorators import api_view, permission_classes
+import json
 
 from .models import Receipt, Image, Food, Fooddetail
 from django.contrib.auth.models import User
