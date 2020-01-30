@@ -106,14 +106,14 @@ def new_image(request):
 @api_view(['POST'])
 @permission_classes((IsAuthenticated,))
 def get_text(request):
-    filename = request.POST["filename"]
+    filename = request.POST.get("filename")
     print(filename)
     text = receipt_text2.convert(filename, CUT=True)
     return Response({"text": text, "filename": filename})
 
 def get_search_list(request):
-    filename = request.POST["filename"]
-    text = request.POST["text"]
+    filename = request.POST.get("filename")
+    text = request.POST.get("text")
     search_list = receipt_tyuusyutu2.analyse(filename=filename, isWord=False, word="", text=text)[0]
 
     public_id = filename.split("/")[-1].replace(".jpg", "").replace(".png", "")
