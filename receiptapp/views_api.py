@@ -16,6 +16,8 @@ from rest_framework.decorators import api_view, permission_classes
 from .models import Receipt, Image, Food, Fooddetail
 from django.contrib.auth.models import User
 
+from django.views.decorators.csrf import csrf_exempt
+
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
@@ -103,6 +105,7 @@ def new_image(request):
 
     return Response({"message": "Got some data!", "text": text, "filename": filename, "image_id": image.id})
 
+@csrf_exempt
 @api_view(['POST'])
 @permission_classes((IsAuthenticated,))
 def get_text(request):
