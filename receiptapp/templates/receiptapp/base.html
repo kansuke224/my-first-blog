@@ -15,6 +15,10 @@
 <body>
   <div class="container-fluid no-gutters wrapper">
     <!-- ヘッダー -->
+    <div id="loading" class="loaded">
+        <div class="text-white loader-text text-center h4">レシート画像を解析しています</div>
+        <div class="loader"></div>
+    </div>
     <div class="header">
 		<div class="container">
 			<div class="row justify-content-between no-gutters">
@@ -85,6 +89,11 @@
 <script src="{% static 'receiptapp/js/jquery-3.4.1.min.js' %}"></script>
 <script src="{% static 'receiptapp/js/bootstrap.bundle.min.js' %}"></script>
 <script>
+    $(function (){
+    	const spinner = document.getElementById('loading');
+     	spinner.classList.add('loaded');
+    })
+
     $('.custom-file-input').on('change',function(){
         $(this).next('.custom-file-label').html($(this)[0].files[0].name);
     })

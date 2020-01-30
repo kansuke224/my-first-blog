@@ -106,7 +106,7 @@ def new_image(request):
 @api_view(['POST'])
 @permission_classes((IsAuthenticated,))
 def get_text(request):
-    filename = request["filename"]
+    filename = request.POST["filename"]
     print(filename)
     text = receipt_text2.convert(filename, CUT=True)
     return Response({"text": text, "filename": filename})

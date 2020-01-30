@@ -122,8 +122,8 @@ def receipts_new(request):
 def receipts_analyse(request):
     image_id = request.session['image_id']
     image = Image.objects.get(pk=image_id).image.url
-    print("replace")
-    filename = image.replace("/media/receiptapp/", "")
+    # print("replace")
+    # filename = image.replace("/media/receiptapp/", "")
     print(filename)
     text = receipt_text2.convert(filename, CUT=True)
     # search_list = q.enqueue(background_process, filename=filename, isWord=False, word="")
@@ -154,7 +154,7 @@ def receipts_food_select(request):
             for i, v in enumerate(info):
                 info[i] = str(v)
     user = request.user
-    context = {"user": user, "search_list": search_list}
+    context = {"user": user, "search_list": search_list, "count": len(search_list)}
     return render(request, "receiptapp/receipts_food_select.html", context)
 
 @login_required
@@ -205,7 +205,8 @@ def foods_edit_select(request, receiptId, foodId, detailId):
     food_name = request.POST.get("food_name")
     amount = int(request.POST.get("amount")) * 100
     search_list = receipt_tyuusyutu.analyse(filename="", isWord=True, word=food_name)[0]
-    context = {"search_list": search_list, "amount": amount, "amount_num": request.POST.get("amount"), "receiptId": receiptId, "foodId": foodId, "detailId": detailId}
+    print(search_list)
+    context = {"search_list": search_list, "amount": amount, "amount_num": request.POST.get("amount"), "receiptId": receiptId, "foodId": foodId, "detailId": detailId, "count": len(search_list)}
     return render(request, "receiptapp/foods_edit_select.html", context)
 
 @login_required

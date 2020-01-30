@@ -11,6 +11,9 @@
 {% block content %}
 <div class="main container text-center">
     <h3 class="text-left mt-5 mb-5">食事内容選択</h3>
+    {% if count == 1 and search_list.0.1 == 0 %}
+        <span class="h5" style="color: dimgray">入力から食事内容を推測できませんでした</span>
+    {% else %}
     {% set count = 1 %}
     <form action="{% url 'food_edit' receiptId foodId detailId %}" method="POST">
     <input type="hidden" name="0" value="0">
@@ -60,5 +63,6 @@
     {% endfor %}
     <input type="submit" class="btn btn-info mt-5" value="食事内容決定">
     </form>
+    {% endif %}
 </div>
 {% endblock content %}

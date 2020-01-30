@@ -22,8 +22,11 @@
                 {{ form }}
                 <label class="custom-file-label" for="receiptImg" data-browse="参照">ファイル選択...</label>
             </div>
-            <button type="submit" class="btn btn-info mx-auto">画像解析</button>
+            <button type="submit" class="btn btn-info mx-auto" onclick="loadstart()">画像解析</button>
         </form>
     </div>
 </div>
 {% endblock content %}
+{% block extra_js %}
+<script src="{% static 'js/new.js' %}"></script>
+{% endblock extra_js %}

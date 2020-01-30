@@ -12,6 +12,9 @@
 {% block content %}
 <div class="main container text-center">
     <h3 class="text-left mt-5 mb-5">食事内容選択</h3>
+    {% if count == 1 and search_list.0.1 == 0 %}
+        <span class="h5" style="color: dimgray">送信されたレシート画像から食事内容を推測できませんでした</span>
+    {% else %}
     {% set count = 1 %}
     <form action="{% url 'new' %}" method="POST">
     <input type="hidden" name="0" value="0">
@@ -66,10 +69,10 @@
                             <input type="hidden" name="carb" value="{{ info.4 }}">
                             <input type="hidden" name="salt" value="{{ info.5 }}">
                             -->
-    
+
                         </td>
                     </tr>
-    
+
                     {% endfor %}
                 </tbody>
             </table>
@@ -79,5 +82,9 @@
     {% endfor %}
     <input type="submit" class="btn btn-info mb-5" value="食事内容決定">
     </form>
+    {% endif %}
 </div>
 {% endblock content %}
+{% block extra_js %}
+<script src="{% static 'js/food_select.js' %}"></script>
+{% endblock extra_js %}
