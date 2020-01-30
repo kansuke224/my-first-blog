@@ -153,6 +153,7 @@ def cont_edge(im, filename):
 
 
 def convert(filename = None, capture = False, CUT=False):
+	im = None
     if filename == None and capture == False:
         pass
     elif capture == True:

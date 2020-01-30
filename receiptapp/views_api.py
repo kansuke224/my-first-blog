@@ -108,7 +108,7 @@ def new_image(request):
 def get_text(request):
     filename = request.POST.get("filename")
     print(filename)
-    text = receipt_text2.convert(filename, CUT=True)
+    text = receipt_text2.convert(filename = filename, CUT=True)
     return Response({"text": text, "filename": filename})
 
 def get_search_list(request):
