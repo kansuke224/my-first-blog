@@ -156,7 +156,7 @@ def new_receipt(request):
     receipt = Receipt(user=user, image=image)
     # food に add する前に一度saveしないとerrorになる
     receipt.save()
-
+    print(request.POST.get("name_list"))
     # create_foodに処理を記述
     create_food.create_food_api(request.POST.get("name_list"),
     request.POST.get("energy_list"),

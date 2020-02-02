@@ -124,16 +124,12 @@ def create_food_array(post):
     return food_array
 
 def create_food_api(name, energy, protein, fat, carb, salt, amount):
-    name = name
-    energy = energy
-    protein = protein
-    fat = fat
-    carb = carb
-    salt = salt
+    print(name)
+    print(amount)
 
     # 数値化しないといけない？
     amount_arr = []
-    for i, v in enumerate(amount_arr):
+    for i, v in enumerate(amount):
         amount_arr[i] = int(v.replace("g", ""))
 
     # food 保存の処理
