@@ -11,7 +11,7 @@ router.register('images', views_api.ImageViewSet)
 urlpatterns = [
     path('token/', obtain_jwt_token),
     path('test1/', views_api.test1, name='test1'),
-    path('new_image/', views_api.new_image, name='new_image'),
+    path('new_receipt/', views_api.new_receipt, name='new_receipt'),
     path('get_text/', views_api.get_text, name='get_text'),
     path('get_search_list/', views_api.get_search_list, name='get_search_list'),
     url(r'^mypage/$', views_api.UsernameGetView.as_view()),

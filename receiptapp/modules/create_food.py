@@ -134,7 +134,7 @@ def create_food_api(name, energy, protein, fat, carb, salt, amount):
     # 数値化しないといけない？
     amount_arr = []
     for i, v in enumerate(amount_arr):
-        amount_arr[i] = int(v)
+        amount_arr[i] = int(v.replace("g", ""))
 
     # food 保存の処理
     for i, v in enumerate(name):
