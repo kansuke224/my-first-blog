@@ -94,15 +94,18 @@ def get_text(request):
     img = receipt_text3.convert(filename = filename, CUT=True)
     request.session["filename"] = filename
     request.session["img"] = img
-    # return Response(status=200, data=json.dumps({"text": text, "filename": filename}))
-    return redirect('/api/img_to_text/')
+    return Response(status=200, data=json.dumps({"filename": filename}))
 
+@csrf_exempt
+@api_view(['POST'])
+@permission_classes((IsAuthenticated,))
 def img_to_text(request):
     filename = request.session["filename"]
     img = request.session["img"]
     text = receipt_text3.img_to_text(img)
     print(text)
     return Response(status=200, data=json.dumps({"text": text, "filename": filename}))
+
 @csrf_exempt
 @api_view(['POST'])
 @permission_classes((IsAuthenticated,))
