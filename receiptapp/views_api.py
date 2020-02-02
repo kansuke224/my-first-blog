@@ -158,7 +158,7 @@ def new_receipt(request):
     receipt.save()
 
     # create_foodに処理を記述
-    create_food.create_food(request.POST.get("name_list"),
+    create_food.create_food_api(request.POST.get("name_list"),
     request.POST.get("energy_list"),
     request.POST.get("protein_list"),
     request.POST.get("carb_list"),
