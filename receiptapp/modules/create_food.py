@@ -122,3 +122,34 @@ def create_food_array(post):
     food_array.append(salt)
     food_array.append(count)
     return food_array
+
+def create_food_api(name, energy, protein, fat, carb, salt, amount):
+    name = name
+    energy = energy
+    protein = protein
+    fat = fat
+    carb = carb
+    salt = salt
+
+    # 数値化しないといけない？
+    amount_arr = []
+    for i, v in enumerate(amount_arr):
+        amount_arr[i] = int(v)
+
+    # food 保存の処理
+    for i, v in enumerate(name):
+        # info_list = list(info)
+        print(i)
+        print(name)
+        foodbool = Food.objects.filter(food_name=v).exists()
+        # food がすでにあるならそれを参照する、ないなら新規作成
+        if foodbool:
+            food = Food.objects.get(food_name=v)
+        else:
+            food = Food(food_name=v, protein=protein[i], fat=fat[i], carb=carb[i], salt=salt[i], energy=energy[i])
+            food.save()
+        #receipt.foods.add(food)
+        # foodsはなくしてdetailから参照するように保存する
+        fooddetail = Fooddetail(amount=amount_arr[i], receipt=receipt, food=food)
+        fooddetail.save()
+    #receipt.save()

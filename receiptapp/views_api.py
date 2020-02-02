@@ -133,10 +133,14 @@ def get_search_list(request):
     public_id = filename.split("/")[-1].replace(".jpg", "").replace(".png", "")
     cloudinary.uploader.destroy(public_id = public_id)
 
+    name_list = []
+
     for info_list in search_list:
+        name_list.append([])
         for info in info_list[0]:
             for i, v in enumerate(info):
                 info[i] = str(v)
+
     # 配列をjsonで返せるの？
     return Response(status=200, data=json.dumps(search_list))
 

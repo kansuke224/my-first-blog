@@ -150,10 +150,16 @@ def receipts_food_select(request):
     public_id = filename.split("/")[-1].replace(".jpg", "").replace(".png", "")
     cloudinary.uploader.destroy(public_id = public_id)
 
-    for info_list in search_list:
+    name_list = []
+
+    for i1, info_list in enumerate(search_list):
+        name_list.append([])
+        # info_list[0] => [info, info, info]
         for info in info_list[0]:
-            for i, v in enumerate(info):
-                info[i] = str(v)
+            # info => [v, v, v, v]
+            for i2, v in enumerate(info):
+                info[i2] = str(v)
+            name_list[i1].append(info[0])
     user = request.user
     context = {"user": user, "search_list": search_list, "count": len(search_list)}
     return render(request, "receiptapp/receipts_food_select.html", context)
