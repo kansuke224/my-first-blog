@@ -162,8 +162,9 @@ def new_receipt(request):
     request.POST.get("energy_list"),
     request.POST.get("protein_list"),
     request.POST.get("carb_list"),
-    request.POST.get("name_list"),
-    request.POST.get("name_list")
+    request.POST.get("fat_list"),
+    request.POST.get("salt_list"),
+    request.POST.get("amount_list")
     )
     return Response({"message": "receipt OK",})
 
