@@ -165,7 +165,7 @@ def get_search_list(request):
 @permission_classes((IsAuthenticated,))
 def new_receipt(request):
     user = request.user
-    image = Image(image = Null)
+    image = Image(image = None)
     # receipt 保存の処理
     receipt = Receipt(user=user, image=image)
     # food に add する前に一度saveしないとerrorになる
