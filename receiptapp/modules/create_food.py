@@ -123,7 +123,7 @@ def create_food_array(post):
     food_array.append(count)
     return food_array
 
-def create_food_api(name, energy, protein, fat, carb, salt, amount):
+def create_food_api(name, energy, protein, fat, carb, salt, amount, receipt):
     print(name)
     print(amount)
 

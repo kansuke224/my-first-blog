@@ -164,7 +164,8 @@ def new_receipt(request):
     request.POST.get("carb_list").split(",,"),
     request.POST.get("fat_list").split(",,"),
     request.POST.get("salt_list").split(",,"),
-    request.POST.get("amount_list").split(",,")
+    request.POST.get("amount_list").split(",,"),
+    receipt
     )
     return Response({"message": "receipt OK",})
 
