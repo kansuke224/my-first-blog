@@ -134,15 +134,31 @@ def get_search_list(request):
     cloudinary.uploader.destroy(public_id = public_id)
 
     name_list = []
+    energy_list = []
+    protein_list = []
+    fat_list = []
+    carb_list = []
+    salt_list = []
 
-    for info_list in search_list:
+    for i1, info_list in enumerate(search_list):
         name_list.append([])
+        energy_list.append([])
+        protein_list.append([])
+        fat_list.append([])
+        carb_list.append([])
+        salt_list.append([])
         for info in info_list[0]:
-            for i, v in enumerate(info):
+            for i2, v in enumerate(info):
                 info[i] = str(v)
+                name_list[i1].append(info[0])
+                energy_list[i1].append(info[1])
+                protein_list[i1].append(info[2])
+                fat_list[i1].append(info[3])
+                carb_list[i1].append(info[4])
+                salt_list[i1].append(info[5])
 
     # 配列をjsonで返せるの？
-    return Response(status=200, data=json.dumps(search_list))
+    return Response(status=200, data=json.dumps([name_list, energy_list, protein_list, fat_list, carb_list, salt_list]))
 
 
 @api_view(['POST'])
@@ -156,7 +172,13 @@ def new_receipt(request):
     receipt.save()
 
     # create_foodに処理を記述
-    create_food.create_food(request, receipt)
+    create_food.create_food(request.POST.get("name_list"),
+    request.POST.get("energy_list"),
+    request.POST.get("protein_list"),
+    request.POST.get("carb_list"),
+    request.POST.get("name_list"),
+    request.POST.get("name_list")
+    )
     return Response({"message": "receipt OK",})
 
 @api_view(['POST'])
