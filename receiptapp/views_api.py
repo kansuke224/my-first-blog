@@ -149,7 +149,7 @@ def get_search_list(request):
         salt_list.append([])
         for info in info_list[0]:
             for i2, v in enumerate(info):
-                info[i] = str(v)
+                info[i2] = str(v)
                 name_list[i1].append(info[0])
                 energy_list[i1].append(info[1])
                 protein_list[i1].append(info[2])
