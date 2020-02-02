@@ -166,6 +166,7 @@ def get_search_list(request):
 def new_receipt(request):
     user = request.user
     image = Image(image = None)
+    image.save()
     # receipt 保存の処理
     receipt = Receipt(user=user, image=image)
     # food に add する前に一度saveしないとerrorになる
