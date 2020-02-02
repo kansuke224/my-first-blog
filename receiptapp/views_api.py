@@ -91,10 +91,10 @@ def get_text(request):
     print("get_text")
     filename = request.POST.get("filename")
     username = request.POST.get("username")
-    img = receipt_text3.convert(filename = filename, CUT=True)
-    request.session["filename"] = filename
-    request.session["img"] = img
-    return Response(status=200, data=json.dumps({"filename": filename}))
+    text = receipt_text2.convert(filename = filename, CUT=True)
+    #request.session["filename"] = filename
+    #request.session["img"] = img
+    return Response(status=200, data=json.dumps({"text": text,"filename": filename}))
 
 @csrf_exempt
 @api_view(['POST'])
