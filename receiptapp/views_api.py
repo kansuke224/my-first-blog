@@ -9,6 +9,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from .modules import receipt_tyuusyutu2
 from .modules import receipt_text2
+from .modules import receipt_text3
 from .modules import create_food
 import cloudinary
 from rest_framework.decorators import api_view, permission_classes
@@ -82,45 +83,25 @@ class UsernameGetView(generics.RetrieveAPIView):
             },
             status=status.HTTP_200_OK)
 
-@api_view(['POST'])
-@permission_classes((IsAuthenticated,))
-def new_image(request):
-    user = request.user
-
-    # swift から送られてきた画像をもとにimageを作成
-    # request.FILES みたいな書き方かもしれない、後で直す
-    image = Image(image = request.POST.get("image"))
-    image.save()
-    # request.session['image_id'] = image.id
-
-    # httpheaderを取得?
-    # userAgent = request.META.get('HTTP_USER_AGENT', None)
-    filename = image.url.replace("/media/receiptapp/", "")
-    print(filename)
-    text = receipt_text2.convert(filename, CUT=True)
-
-    # search_list = q.enqueue(background_process, filename=filename, isWord=False, word="")
-    # sessionにsearch_listを保存する
-    # request.session["text"] = text
-    # request.session["filename"] = filename
-
-    return Response({"message": "Got some data!", "text": text, "filename": filename, "image_id": image.id})
-
 @csrf_exempt
 @api_view(['POST'])
 @permission_classes((IsAuthenticated,))
 def get_text(request):
     print("get_text")
-    print(request)
-    print(request.POST)
     filename = request.POST.get("filename")
     username = request.POST.get("username")
-    print(filename)
-    print(username)
-    text = receipt_text2.convert(filename = filename, CUT=True)
+    img = receipt_text3.convert(filename = filename, CUT=True)
+    request.session["filename"] = filename
+    request.session["img"] = img
+    # return Response(status=200, data=json.dumps({"text": text, "filename": filename}))
+    return redirect('/api/img_to_text/')
+
+def img_to_text(request):
+    filename = request.session["filename"]
+    img = request.session["img"]
+    text = receipt_text3.img_to_text(img)
     print(text)
     return Response(status=200, data=json.dumps({"text": text, "filename": filename}))
-
 @csrf_exempt
 @api_view(['POST'])
 @permission_classes((IsAuthenticated,))
