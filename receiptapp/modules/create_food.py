@@ -132,6 +132,12 @@ def create_food_api(name, energy, protein, fat, carb, salt, amount, receipt):
     for i, v in enumerate(amount):
         amount_arr.append(int(v.replace("g", "")))
 
+
+    list_to_float(energy)
+    list_to_float(protein)
+    list_to_float(fat)
+    list_to_float(carb)
+    list_to_float(salt)
     # food 保存の処理
     for i, v in enumerate(name):
         # info_list = list(info)
