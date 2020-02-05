@@ -16,6 +16,7 @@ urlpatterns = [
     path('new', views.new, name='new'),
     path('delete/<int:receiptId>', views.delete, name='delete'),
     path('receipts/analyse/', views.receipts_analyse, name='receipts_analyse'),
+    path('receipts/image_to_text/', views.image_to_text, name='image_to_text'),
     path('food_new/<int:receiptId>', views.food_new, name='food_new'),
     path('food_edit/<int:receiptId>/<int:foodId>/<int:detailId>', views.food_edit, name='food_edit'),
     path('food_delete/<int:detailId>', views.food_delete, name='food_delete'),

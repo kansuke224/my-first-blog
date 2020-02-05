@@ -7,7 +7,7 @@ from django.contrib.auth.decorators import login_required
 from django.db.models import Sum
 
 from .modules import receipt_tyuusyutu2
-from .modules import receipt_text2
+from .modules import receipt_text2, receipt_text3
 
 import datetime
 from dateutil.relativedelta import relativedelta
@@ -31,10 +31,10 @@ cloudinary.config(
   api_secret = env('API_SECRET')
 )
 
-def background_process(filename, isWord, word):
+def background_process(filename, CUT):
     # ここに時間のかかる処理を書く
-    search_list = receipt_tyuusyutu.analyse(filename=filename, isWord=isWord, word=word)[0]
-    return search_list
+    text = receipt_text2.convert(filename, CUT=True)
+    return text
 
 
 # Create your views here.
@@ -118,6 +118,7 @@ def receipts_new(request):
     context = {"user": user, 'form': form}
     return render(request, "receiptapp/receipts_new.html", context)
 
+
 @login_required
 def receipts_analyse(request):
     image_id = request.session['image_id']
@@ -126,11 +127,53 @@ def receipts_analyse(request):
     # filename = image.replace("/media/receiptapp/", "")
     filename = image
     print(filename)
-    text = receipt_text2.convert(filename, CUT=True)
-    # search_list = q.enqueue(background_process, filename=filename, isWord=False, word="")
+    # text = receipt_text2.convert(filename, CUT=True)
+
+    text = q.enqueue(background_process, filename, CUT=True)
     # sessionにsearch_listを保存する
     request.session["text"] = text
     request.session["filename"] = filename
+    return redirect('/receipts/food_select')
+"""
+import base64
+from io import BytesIO
+
+@login_required
+def receipts_analyse(request):
+    image_id = request.session['image_id']
+    image = Image.objects.get(pk=image_id).image.url
+    # print("replace")
+    # filename = image.replace("/media/receiptapp/", "")
+    filename = image
+    print(filename)
+    img = receipt_text3.convert(filename, CUT=True)
+
+    buffered = BytesIO()
+    img.save(buffered, format="JPEG")
+    img_str = base64.b64encode(buffered.getvalue())
+    print(img_str)
+    # encode=base64.b64encode(img.tobytes())
+    # cloudinaryにbase64でupload
+    cloudinary.uploader.upload(img_str)
+
+    # search_list = q.enqueue(background_process, filename=filename, isWord=False, word="")
+    # sessionにsearch_listを保存する
+
+    # 無理
+    # request.session["encoded_img"] = encode
+    request.session["filename"] = filename
+    return redirect('/')
+    # return redirect('/receipts/image_to_text')
+"""
+
+# base64変換するとサイズが30%増える？
+@login_required
+def image_to_text(request):
+    filename = request.session["filename"]
+    encoded_img = request.session["encoded_img"]
+    img = Image.Open(base64.b64decode(encoded_img))
+    text = receipt_text3.img_to_text(img)
+    print(text)
     return redirect('/receipts/food_select')
 
 @login_required
@@ -143,8 +186,9 @@ def receipts_food_select(request):
     print(filename)
     """
     filename = request.session["filename"]
-    # search_list = q.enqueue(background_process, filename=filename, isWord=False, word="")
+    # search_list = q.enqueue(background_process, filename, False, "", request.session["text"])[0]
     # search_list = receipt_tyuusyutu.analyse(filename=filename, isWord=False, word="")[0]
+
     search_list = receipt_tyuusyutu2.analyse(filename=filename, isWord=False, word="", text=request.session["text"])[0]
 
     public_id = filename.split("/")[-1].replace(".jpg", "").replace(".png", "")
