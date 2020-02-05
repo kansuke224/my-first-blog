@@ -128,14 +128,15 @@ def receipts_analyse(request):
     # filename = image.replace("/media/receiptapp/", "")
     filename = image
     print(filename)
-    # text = receipt_text2.convert(filename, CUT=True)
+    text = receipt_text2.convert(filename, CUT=True)
 
-    text = q.enqueue(background_process, filename, CUT=True)
-
+    # text = q.enqueue(background_process, filename, CUT=True)
+    """
     while not(isinstance(text, str)):
         print("処理待ちです")
         time.sleep(3)
     print("処理終わりました")
+    """
     # sessionにsearch_listを保存する
     request.session["text"] = text
     request.session["filename"] = filename
