@@ -132,7 +132,7 @@ def receipts_analyse(request):
 
     text = q.enqueue(background_process, filename, CUT=True)
 
-    while not(text):
+    while not(isinstance(text, str)):
         print("処理待ちです")
         time.sleep(3)
     print("処理終わりました")
