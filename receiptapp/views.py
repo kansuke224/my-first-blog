@@ -18,6 +18,7 @@ import cloudinary
 from rq import Queue
 from worker import conn
 from bottle import route, run
+import time
 
 
 q = Queue(connection=conn)
@@ -130,6 +131,11 @@ def receipts_analyse(request):
     # text = receipt_text2.convert(filename, CUT=True)
 
     text = q.enqueue(background_process, filename, CUT=True)
+
+    while !text:
+        print("処理待ちです")
+        time.sleep(3)
+    print("処理終わりました")
     # sessionにsearch_listを保存する
     request.session["text"] = text
     request.session["filename"] = filename
