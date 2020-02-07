@@ -178,13 +178,16 @@ def convert(filename = None, capture = False, CUT=False):
     rect_th_filename = "{:s}_rect_th.jpg".format(filename)
     print(rect_th_filename)
     # os.system("tesseract '{:s}' output -l jpn".format(rect_th_filename))
-    img = cv2pil(im_rect_th)
+    # img = cv2pil(im_rect_th)
 
-    return img
+    return im_rect_th
 
 # convert("./r-sample1.jpg")
 
-def img_to_text(img):
+def img_to_text(filename):
+    print(filename)
+    im_rect_th = url_to_image(filename)
+    img = cv2pil(im_rect_th)
     tools = pyocr.get_available_tools()
     if len(tools) == 0:
         print("No OCR tool found")

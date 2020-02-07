@@ -16,7 +16,7 @@
 			{{ receipt.receipt_date.month }} /
 			{{ receipt.receipt_date.day }}
 			&nbsp;&nbsp;
-			{{ receipt.receipt_date.hour }}：{{ receipt.receipt_date.minute }}
+			{{ receipt.receipt_date.hour|add:"9" }}：{{ receipt.receipt_date.minute }}
 		</div>
 	</div>
 	<div class="row justify-content-center align-items-center mb-5">
@@ -142,7 +142,7 @@
             deleteLink.href = button.dataset.deleteurl;
         });
 	}
-	
+
 	const receipt_buttons = document.getElementsByClassName('delete-receipt-modal-button');
 	const receipt_deleteLink = document.getElementById('receipt-delete-link');
 

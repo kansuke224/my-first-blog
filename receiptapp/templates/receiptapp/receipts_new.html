@@ -15,14 +15,15 @@
     <div style="color:dimgray;" class="mb-5">
         レシート画像を選択してください
     </div>
-    <div class="form-box mt-3">
+    <div class="form-box mt-3" id="receiptform">
         <form action="{% url 'image_new' %}" method="post" enctype="multipart/form-data" class="post-form text-center mx-auto" style="width: 600px;">
             {% csrf_token %}
             <div class="custom-file mb-5">
                 {{ form }}
                 <label class="custom-file-label" for="receiptImg" data-browse="参照">ファイル選択...</label>
             </div>
-            <button type="submit" class="btn btn-info mx-auto" onclick="loadstart()">画像解析</button>
+            <div class="preview mb-5"></div>
+            <button type="submit" class="btn btn-info mx-auto mb-5" onclick="loadstart()">画像解析</button>
         </form>
     </div>
 </div>

@@ -21,6 +21,18 @@ from django.contrib.auth.models import User
 
 from django.views.decorators.csrf import csrf_exempt
 
+import environ
+import cloudinary
+
+env = environ.Env()
+env.read_env('.env')
+
+cloudinary.config(
+  cloud_name = env('CLOUD_NAME'),
+  api_key = env('API_KEY'),
+  api_secret = env('API_SECRET')
+)
+
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
@@ -99,11 +111,37 @@ def get_text(request):
 @csrf_exempt
 @api_view(['POST'])
 @permission_classes((IsAuthenticated,))
+def receipts_analyse(request):
+    filename = request.POST.get("filename")
+    print(filename)
+    img = receipt_text3.convert(filename, CUT=True)
+
+    _, frame = cv2.imencode('.JPEG', img)
+    print(frame)
+    img_str = base64.b64encode(frame)
+    b64str = "data:image/jpeg;base64," + str(img_str).replace("b'", "").replace("'", "")
+    # print(b64str)
+    # cloudinaryにbase64でupload
+    public_id = filename.split("/")[-1].replace(".jpg", "").replace(".png", "") + "_rect_th"
+    cloudinary.uploader.upload(b64str, public_id = public_id)
+
+    # search_list = q.enqueue(background_process, filename=filename, isWord=False, word="")
+    # sessionにsearch_listを保存する
+    request.session["filename"] = filename[::-1].replace(".", ".ht_tcer_", 1)[::-1]
+    request.session["public_id"] = public_id
+    # return redirect('/')
+    return Response(status=200, data=json.dumps({"text": text, "filename": filename}))
+
+@csrf_exempt
+@api_view(['POST'])
+@permission_classes((IsAuthenticated,))
 def img_to_text(request):
     filename = request.session["filename"]
-    img = request.session["img"]
-    text = receipt_text3.img_to_text(img)
+    text = receipt_text3.img_to_text(filename)
     print(text)
+    public_id = request.session["public_id"]
+    cloudinary.uploader.destroy(public_id = public_id)
+    cloudinary.uploader.destroy(public_id = public_id.replace("_rect_th", ""))
     return Response(status=200, data=json.dumps({"text": text, "filename": filename}))
 
 @csrf_exempt
@@ -180,9 +218,10 @@ def test1(request):
 def get_food(request):
     receipt = Receipt.objects.get(request["receipt_id"])
     details = receipt.fooddetail_set.all()
+    foods_list = []
     for detail in details:
         foods_list.append(detail.food)
-
+    return Response(status=200, data=json.dumps(foods_list))
 # 画像をcloudinaryに保存してfilenameを渡す  =>  swift
 # またkeyとかをcloudinaryに教えてあげないといけない
 # 保存自体は簡単そう

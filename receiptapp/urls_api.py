@@ -13,6 +13,7 @@ urlpatterns = [
     path('test1/', views_api.test1, name='test1'),
     path('new_receipt/', views_api.new_receipt, name='new_receipt'),
     path('get_text/', views_api.get_text, name='get_text'),
+    path('receipts_analyse/', views_api.receipts_analyse, name='receipts_analyse'),
     path('img_to_text/', views_api.img_to_text, name='img_to_text'),
     path('get_search_list/', views_api.get_search_list, name='get_search_list'),
     url(r'^mypage/$', views_api.UsernameGetView.as_view()),
