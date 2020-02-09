@@ -127,19 +127,19 @@ def receipts_analyse(request):
 
     # search_list = q.enqueue(background_process, filename=filename, isWord=False, word="")
     # sessionにsearch_listを保存する
-    request.session["filename"] = filename[::-1].replace(".", ".ht_tcer_", 1)[::-1]
-    request.session["public_id"] = public_id
+    filename = filename[::-1].replace(".", ".ht_tcer_", 1)[::-1]
+    # request.session["public_id"] = public_id
     # return redirect('/')
-    return Response(status=200, data=json.dumps({"text": text, "filename": filename}))
+    return Response(status=200, data=json.dumps({"text": text, "filename": filename, "public_id": public_id}))
 
 @csrf_exempt
 @api_view(['POST'])
 @permission_classes((IsAuthenticated,))
 def img_to_text(request):
-    filename = request.session["filename"]
+    filename = request.POST.get("filename")
     text = receipt_text3.img_to_text(filename)
     print(text)
-    public_id = request.session["public_id"]
+    public_id = request.POST.get("public_id")
     cloudinary.uploader.destroy(public_id = public_id)
     cloudinary.uploader.destroy(public_id = public_id.replace("_rect_th", ""))
     return Response(status=200, data=json.dumps({"text": text, "filename": filename}))
