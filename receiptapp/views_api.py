@@ -130,7 +130,7 @@ def receipts_analyse(request):
     filename = filename[::-1].replace(".", ".ht_tcer_", 1)[::-1]
     # request.session["public_id"] = public_id
     # return redirect('/')
-    return Response(status=200, data=json.dumps({"text": text, "filename": filename, "public_id": public_id}))
+    return Response(status=200, data=json.dumps({"filename": filename, "public_id": public_id}))
 
 @csrf_exempt
 @api_view(['POST'])
