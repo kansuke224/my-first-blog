@@ -6,6 +6,7 @@ from .models import Receipt, Image, Food, Fooddetail
 from django.contrib.auth.decorators import login_required
 from django.db.models import Sum
 import cv2
+import base64
 
 from .modules import receipt_tyuusyutu2
 from .modules import receipt_text2, receipt_text3
@@ -141,9 +142,6 @@ def receipts_analyse(request):
     request.session["filename"] = filename
     return redirect('/receipts/food_select')
 """
-
-import base64
-from io import BytesIO
 
 @login_required
 def receipts_analyse(request):

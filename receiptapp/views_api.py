@@ -15,6 +15,8 @@ import cloudinary
 from rest_framework.decorators import api_view, permission_classes
 import json
 from django.shortcuts import redirect
+import cv2
+import base64
 
 from .models import Receipt, Image, Food, Fooddetail
 from django.contrib.auth.models import User
