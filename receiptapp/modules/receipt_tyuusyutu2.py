@@ -50,6 +50,8 @@ def word_search(filename, text):
                     continue
                 search_words.append(word)
                 print("True")
+            if len(receipt) >= 3 and receipt in word:
+                search_words.append(word)
 
     return search_words
 
