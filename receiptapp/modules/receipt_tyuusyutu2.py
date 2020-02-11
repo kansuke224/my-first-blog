@@ -42,6 +42,9 @@ def word_search(filename, text):
 
     for word in lines:
         for receipt in receipt_data:
+            if len(receipt) <= 1:
+                continue
+            receipt.replace("※", "")
             if word in receipt:
                 if len(word) <= 1:
                     continue

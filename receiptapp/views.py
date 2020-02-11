@@ -276,7 +276,7 @@ def foods_new_select(request, receiptId):
     # request の postからsearch_word と amountのデータを取得
     food_name = request.POST.get("food_name")
     amount = int(request.POST.get("amount")) * 100
-    search_list = receipt_tyuusyutu.analyse(filename="", isWord=True, word=food_name)[0]
+    search_list = receipt_tyuusyutu2.analyse(filename="", isWord=True, word=food_name)[0]
     context = {"search_list": search_list, "amount": amount, "amount_num": request.POST.get("amount"), "receiptId" :receiptId}
     return render(request, "receiptapp/foods_new_select.html", context)
 
