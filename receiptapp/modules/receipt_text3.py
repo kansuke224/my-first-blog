@@ -104,10 +104,16 @@ def cont_edge(im, filename):
     im_size = im.shape[0] * im.shape[1]
     im_gray = cv2.cvtColor(im, cv2.COLOR_BGR2GRAY)
     print(filename + '_gray.jpg')
-    # im_blur = cv2.fastNlMeansDenoising(im_gray) # 画像のノイズを取り除く
-    _, im_th = cv2.threshold(im_gray, 127, 255, cv2.THRESH_BINARY)
+    im_blur = cv2.fastNlMeansDenoising(im_gray) # 画像のノイズを取り除く
+    # _, im_th = cv2.threshold(im_gray, 127, 255, cv2.THRESH_BINARY)
+    im_th = cv2.adaptiveThreshold(im_blur, 255, \
+                                      cv2.ADAPTIVE_THRESH_MEAN_C,\
+                                      cv2.THRESH_BINARY, 63, 20)
+
+    # 2値化処理まで終了
     th_filename = "{:s}_th.jpg".format(filename)
     print(th_filename)
+    # cv2.imwrite(BASE_DIR + "/receiptapp/media/receiptapp/" + filename.split("/")[-1] + '_th.jpg', im_th)
 
     cnts, hierarchy = cv2.findContours(im_th, cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)
     # 輪郭の抽出
@@ -115,48 +121,61 @@ def cont_edge(im, filename):
     cnts.sort(key=cv2.contourArea, reverse=True)
     # 抽出された輪郭の面積が大きい順にソートをかける
     cnt = cnts[1]
-    img = cv2.drawContours(im_th, [cnt], -1, (0,255,0), 3)
-    im_line = im.copy()
+    img = cv2.drawContours(im_th, [cnt], -1, (255,0,0), 3)
+    im_line = cv2.cvtColor(im_th.copy(), cv2.COLOR_GRAY2BGR)
+    #im_line_b = np.zeros(im_line.shape)
     warp = None
     flag = 1
     # 以下のループで抽出された輪郭を描画する
     for c in cnts[1:]:
+		# 周囲長
         arclen = cv2.arcLength(c, True)
         approx = cv2.approxPolyDP(c, 0.02*arclen, True)
     # 輪郭を少ない点で表現（臨界点は0.02*arclen)
         if len(approx) == 4:
-            cv2.drawContours(im_line, [approx], -1, (0, 0, 255), 2)
+			# drqwContours(image, 輪郭情報, 2引数のどの輪郭を指定するのか、全輪郭を描画するなら-1, )
+            cv2.drawContours(im_line, [approx], -1, (0, 0, 255), 10)
+            #cv2.drawContours(im_line_b, [approx], -1, (0, 0, 255), 2)
+            # cnts[1]が2番目に大きい輪郭 => つまりレシートの輪郭情報になるはず
             if flag: # 1番面積が大きいものがレシートの輪郭だと考えられるのでその輪郭情報を保存
                 warp = approx.copy()
                 flag = 0
+        """
         else:
-            cv2.drawContours(im_line, [approx], -1, (0, 255, 0), 2)
+            print("else")
+            #cv2.drawContours(im_line, [approx], -1, (0, 255, 0), 2)
+            #cv2.drawContours(im_line_b, [approx], -1, (0, 255, 0), 2)
         for pos in approx:
+            # circle(image, 円の中心座標, 半径, 色)
             cv2.circle(im_line, tuple(pos[0]), 4, (255, 0, 0))
+            #cv2.circle(im_line_b, tuple(pos[0]), 4, (255, 0, 0))
+        """
     # レシートと思われる輪郭の面積を算出。
     # 正しくレシートの輪郭を認識できないことがあるため、元の画像に対してある一定以上の大きさでないとトリミングをしないようにした。
+    # cv2.imwrite(BASE_DIR + "/receiptapp/media/receiptapp/" + filename.split("/")[-1] + '_line.jpg', im_line)
     area = cv2.contourArea(warp)
     print("area = ", area)
+    print("im_size =", im_size)
     if area > im_size//5:
         print("now cutting....")
-        im_rect = transform_by4(im, warp[:, 0, :])
-        # cv2.imwrite(BASE_DIR + "/receiptapp/media/receiptapp/" + filename + '_rect.jpg', im_rect)
+        im_rect_th = transform_by4(im_th, warp[:, 0, :])
     else:
-        return im
+        return im_th
     # 切り取った画像の表示
     # plt.figure()
     # plt.imshow(im_line)
-    # cv2.imwrite(BASE_DIR + "/receiptapp/media/receiptapp/" + filename + '_line.jpg', im_line)
+    #cv2.imwrite(BASE_DIR + "/receiptapp/media/receiptapp/" + filename.split("/")[-1] + '_line.jpg', im_line)
+    #cv2.imwrite(BASE_DIR + "/receiptapp/media/receiptapp/" + filename.split("/")[-1] + '_line_b.jpg', im_line_b)
     print("warp = \n",warp[:, 0, :])
-    print(filename + '_rect.jp')
-    return im_rect
+    print(filename + '_rect.jpg')
+    return im_rect_th
 
 
 def convert(filename = None, capture = False, CUT=False):
     print(filename)
     im = url_to_image(filename)
     if im is None:
-        # 読み込みに失敗した場合は printする が返るようにする
+        # 読み込みに失敗した場合は printする
         print('failed to load image.')
         print("use pyplot.imread")
         # im = plt.imread(BASE_DIR + "/receiptapp/media/receiptapp/" + filename)
@@ -165,16 +184,21 @@ def convert(filename = None, capture = False, CUT=False):
         im = im[..., ::-1] # RGB --> BGR
     filename = filename[:-4]
     # 拡張子を取り除いた形で記録する
-    if CUT:
-        im = cont_edge(im, filename)
+    print("CUT")
+    """
+    im = cont_edge(im, filename)
     # print(im.shape)
     im_rect_gray = cv2.cvtColor(im, cv2.COLOR_BGR2GRAY)
     print(filename+'_rect_gray.jpg')
+    cv2.imwrite(BASE_DIR + "/receiptapp/media/receiptapp/" + filename.split("/")[-1] + 'rect_gray.jpg', im_rect_gray)
     im_rect_blur = cv2.fastNlMeansDenoising(im_rect_gray)
+    cv2.imwrite(BASE_DIR + "/receiptapp/media/receiptapp/" + filename.split("/")[-1] + 'rect_blur.jpg', im_rect_blur)
     im_rect_th = cv2.adaptiveThreshold(im_rect_blur, 255, \
                                       cv2.ADAPTIVE_THRESH_MEAN_C,\
                                       cv2.THRESH_BINARY, 63, 20)
-
+    """
+    im_rect_th = cont_edge(im, filename)
+    # cv2.imwrite(BASE_DIR + "/receiptapp/media/receiptapp/" + filename.split("/")[-1] + 'rect_th.jpg', im_rect_th)
     rect_th_filename = "{:s}_rect_th.jpg".format(filename)
     print(rect_th_filename)
     # os.system("tesseract '{:s}' output -l jpn".format(rect_th_filename))
@@ -206,4 +230,4 @@ def img_to_text(filename):
     # rect_th のファイルを削除
     # os.remove(BASE_DIR + "/receiptapp/media/receiptapp/" + rect_th_filename)
 
-    return text
+    return text.replace("※", "").replace("＊", "")

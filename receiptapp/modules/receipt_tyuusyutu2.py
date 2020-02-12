@@ -44,13 +44,15 @@ def word_search(filename, text):
         for receipt in receipt_data:
             if len(receipt) <= 1:
                 continue
-            receipt.replace("※", "")
+            # receipt.replace("※", "")
             if word in receipt:
                 if len(word) <= 1:
                     continue
                 search_words.append(word)
                 print("True")
+                continue
             if len(receipt) >= 3 and receipt in word:
+                print("BTrue")
                 search_words.append(word)
 
     return search_words
