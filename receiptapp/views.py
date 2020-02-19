@@ -299,8 +299,10 @@ def graph(request):
 
     receipts = Receipt.objects.filter(
                                         user = user,
-                                        receipt_date__range = (one_week_ago, today)
+                                        receipt_date__range = (one_week_ago, today),
                                     )
+    print("receiptsです")
+    print(receipts)
     datetime_arr = [one_week_ago + datetime.timedelta(days=day) for day in range(7)]
     date_arr = []
     for d in datetime_arr:
@@ -322,9 +324,12 @@ def graph(request):
         sum_carb = 0.0
         sum_fat = 0.0
         for detail in details:
+            if detail.after_eat == True:
+                continue
             amount = detail.amount
             amount_num = amount // 100
             salt = detail.food.salt
+            print(salt)
             print("saltです")
             print(round(salt*amount_num, 1))
             sum_salt = round(sum_salt + salt * amount_num, 1)
