@@ -301,7 +301,7 @@ def graph(request):
 
     receipts = Receipt.objects.filter(
                                         user = user,
-                                        receipt_date__range = (one_week_ago, today.replace(hour=0,minute=0,second=0,microsecond=0)),
+                                        receipt_date__range = (one_week_ago, today.replace(hour=23,minute=59,second=59,microsecond=59)),
                                     )
     print("receiptsです")
     print(receipts)
