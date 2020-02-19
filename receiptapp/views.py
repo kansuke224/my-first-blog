@@ -343,7 +343,7 @@ def graph(request):
             sum_carb = round(sum_carb + carb * amount_num, 1)
             fat = detail.food.fat
             sum_fat = round(sum_fat + fat* amount_num, 1)
-        sum_arr[index] = [sum_salt, sum_protein, sum_energy, sum_carb, sum_fat]
+        sum_arr[index] = [sum_arr[index][0] + sum_salt, sum_arr[index][1] + sum_protein, sum_arr[index][2] + sum_energy, sum_arr[index][3] + sum_carb, sum_arr[index][4] + sum_fat]
     context = {"sum_arr": sum_arr, "date_arr": date_arr}
     print(date_arr)
     print(sum_arr)
