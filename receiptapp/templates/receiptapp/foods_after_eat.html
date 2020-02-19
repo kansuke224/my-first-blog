@@ -1,0 +1,22 @@
+{% extends "receiptapp/base.html" %}
+{% load i18n static %}
+
+{% block title %}健康管理アプリ|トップ{% endblock title %}
+{% block userstate %}{{ user.username }}{% endblock userstate %}
+
+{% block extra_css %}<link rel="stylesheet" href="{% static 'css/receipts_detail.css' %}">{% endblock extra_css %}
+
+{% load common %}
+
+{% block content %}
+<div class="main container text-center">
+	<h3 class="text-left mb-5">後で食べるリスト</h3>
+	{% for fd in fd_arr reversed %}
+		<div class="food mb-5" id="{{ forloop.counter }}">
+			{{ fd.food.food_name }}
+			{{ fd.amount }}g
+			<a href="{% url 'food_after_eat_new' receiptId fd.id %}" class="btn btn-info ml-4 mr-4">レシートに追加</a>
+		</div>
+	{% endfor %}
+
+{% endblock content %}

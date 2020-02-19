@@ -27,6 +27,7 @@
 			data-toggle="modal" data-target="#receiptModal"
 			data-deleteurl="{% url 'delete' receipt.id %}">レシート削除</button>
 		<a href="{% url 'receipts_foods_new' receipt.id %}" class="btn btn-outline-info ml-3">食事情報追加</a>
+		<a href="{% url 'after_eat' receipt.id %}" class="btn btn-outline-success ml-3">後で食べるリスト</a>
 	</div>
 
 	{% for food in food_list %}
@@ -35,9 +36,13 @@
 			{{ food.1.amount }}g
 			<a href="{% url 'receipts_foods_edit' receipt.id food.0.id food.1.id %}"
 			   class="btn btn-outline-info ml-4 mr-4">編集</a>
+
 			<button class="btn btn-outline-danger delete-modal-button"
 			data-toggle="modal" data-target="#testModal"
 			data-deleteurl="{% url 'food_delete' food.1.id %}">削除</button>
+
+			<a href="{% url 'food_after_eat' food.1.id %}"
+			   class="btn btn-outline-success ml-4 mr-4">後で食べる</a>
 			<table class="table mt-5">
 				<!--
 				<thead class="thead-dark">

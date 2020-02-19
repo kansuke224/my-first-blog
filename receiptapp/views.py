@@ -103,7 +103,7 @@ def index(request):
             receipt_list = []
             for receipt in receipts:
                 foods_list = []
-                details = receipt.fooddetail_set.all()
+                details = receipt.fooddetail_set.all().filter(after_eat=False)
                 for detail in details:
                     foods_list.append(detail.food)
                 receipt_list.append([receipt, details])
@@ -217,7 +217,7 @@ def receipts_food_select(request):
 @login_required
 def receipts_detail(request, receiptId):
     receipt = Receipt.objects.get(id=receiptId)
-    foods_detail = receipt.fooddetail_set.all()
+    foods_detail = receipt.fooddetail_set.all().filter(after_eat=False)
     user = request.user
     fd_arr = []
     for food_detail in foods_detail:
@@ -281,6 +281,12 @@ def foods_new_select(request, receiptId):
     return render(request, "receiptapp/foods_new_select.html", context)
 
 @login_required
+def foods_after_eat(request, receiptId):
+    foods_detail = Fooddetail.objects.all().filter(after_eat=True)
+    context = {"receiptId" :receiptId, "fd_arr" :foods_detail}
+    return render(request, "receiptapp/foods_after_eat.html", context)
+
+@login_required
 def graph(request):
     # 必要な情報
     JST = datetime.timezone(datetime.timedelta(hours=+9), 'JST')
@@ -307,6 +313,7 @@ def graph(request):
         print(day.replace(hour=0,minute=0,second=0,microsecond=0))
         index = 6 - (today.replace(hour=0,minute=0,second=0,microsecond=0) - day.replace(hour=0,minute=0,second=0,microsecond=0)).days
 
+        print("indexです")
         print(index)
         details = receipt.fooddetail_set.all()
         sum_salt = 0.0
@@ -318,15 +325,19 @@ def graph(request):
             amount = detail.amount
             amount_num = amount // 100
             salt = detail.food.salt
-            sum_salt += round(salt * amount_num, 1)
+            print("saltです")
+            print(round(salt*amount_num, 1))
+            sum_salt = round(sum_salt + salt * amount_num, 1)
+            print("sum_saltです")
+            print(sum_salt)
             protein = detail.food.protein
-            sum_protein += round(protein * amount_num, 1)
+            sum_protein = round(sum_protein + protein * amount_num, 1)
             energy = detail.food.energy
-            sum_energy += round(energy * amount_num, 1)
+            sum_energy = round(sum_energy + energy * amount_num, 1)
             carb = detail.food.carb
-            sum_carb += round(carb * amount_num, 1)
+            sum_carb = round(sum_carb + carb * amount_num, 1)
             fat = detail.food.fat
-            sum_fat += round(fat* amount_num, 1)
+            sum_fat = round(sum_fat + fat* amount_num, 1)
         sum_arr[index] = [sum_salt, sum_protein, sum_energy, sum_carb, sum_fat]
     context = {"sum_arr": sum_arr, "date_arr": date_arr}
     print(date_arr)
@@ -385,6 +396,25 @@ def food_delete(request, detailId):
     # 食べ物情報削除(detailを削除)
     detail = Fooddetail.objects.get(id=detailId)
     receiptId = detail.receipt.id
+    detail.delete()
+    return redirect('/receipts/' + str(receiptId))
+
+@login_required
+def food_after_eat(request, detailId):
+    # 後で食べる処理
+    detail = Fooddetail.objects.get(id=detailId)
+    receiptId = detail.receipt.id
+
+    detail.after_eat = True
+    detail.save()
+    return redirect('/receipts/' + str(receiptId))
+
+@login_required
+def food_after_eat_new(request, receiptId, detailId):
+    detail = Fooddetail.objects.get(id=detailId)
+    receipt = Receipt.objects.get(id=receiptId)
+    new_detail = Fooddetail(amount=detail.amount, food=detail.food, receipt=receipt, after_eat=False)
+    new_detail.save()
     detail.delete()
     return redirect('/receipts/' + str(receiptId))
 

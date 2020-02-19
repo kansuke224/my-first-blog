@@ -44,6 +44,7 @@ class Food(models.Model):
 
 class Fooddetail(models.Model):
     amount = models.PositiveSmallIntegerField()
+    after_eat = models.BooleanField(default=False)
     receipt = models.ForeignKey("Receipt", on_delete=models.CASCADE, default=0)
     food = models.ForeignKey("Food", on_delete=models.CASCADE, default=0)
 
@@ -55,3 +56,24 @@ class Image(models.Model):
 @receiver(post_delete, sender=Image)
 def delete_file(sender, instance, **kwargs):
     instance.image.delete(False)
+
+
+"""
+後で食べるボタン
+=>
+after_eatをtrueにする
+=>
+detailではaftere_eatがtrueをはじくようにする
+OK!!!!
+
+
+detailで、後で食べるボタンから追加する処理
+
+detialで、後で食べるから取り出すボタン
+=>
+after_eat = true の fooddetailをすべて並べて、１つ選択する
+=>
+food_detailを消す処理
+food_detailを作る処理
+=> 取り出し完了
+"""

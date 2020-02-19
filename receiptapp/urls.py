@@ -11,6 +11,7 @@ urlpatterns = [
     path('receipts/foods_edit/food_select/<int:receiptId>/<int:foodId>/<int:detailId>', views.foods_edit_select, name='receipts_foods_edit_select'),
     path('receipts/foods_new/<int:receiptId>', views.foods_new, name='receipts_foods_new'),
     path('receipts/foods_new/food_select/<int:receiptId>', views.foods_new_select, name='receipts_foods_new_select'),
+    path('receipts/foods_new/after_eat/<int:receiptId>', views.foods_after_eat, name='after_eat'),
     path('graph', views.graph, name='graph'),
 
     path('new', views.new, name='new'),
@@ -20,6 +21,8 @@ urlpatterns = [
     path('food_new/<int:receiptId>', views.food_new, name='food_new'),
     path('food_edit/<int:receiptId>/<int:foodId>/<int:detailId>', views.food_edit, name='food_edit'),
     path('food_delete/<int:detailId>', views.food_delete, name='food_delete'),
+    path('food_after_eat/<int:detailId>', views.food_after_eat, name='food_after_eat'),
+    path('food_after_eat_new/<int:receiptId></int>/<int:detailId>', views.food_after_eat_new, name='food_after_eat_new'),
     path('image_new', views.image_new, name='image_new'),
 ]
 
