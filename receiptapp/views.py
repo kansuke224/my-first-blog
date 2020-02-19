@@ -294,12 +294,14 @@ def graph(request):
     user = request.user
     today = datetime.datetime.now(JST)
     print(today)
-    one_week_ago = today - datetime.timedelta(days=7)
+    one_week_ago = (today - datetime.timedelta(days=6)).replace(hour=0,minute=0,second=0,microsecond=0)
+    print("1week ago")
+    print(one_week_ago)
     one_month_ago = today - relativedelta(months=1)
 
     receipts = Receipt.objects.filter(
                                         user = user,
-                                        receipt_date__range = (one_week_ago, today),
+                                        receipt_date__range = (one_week_ago, today.replace(hour=0,minute=0,second=0,microsecond=0)),
                                     )
     print("receiptsです")
     print(receipts)
