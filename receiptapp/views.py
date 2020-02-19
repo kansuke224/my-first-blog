@@ -294,7 +294,7 @@ def graph(request):
     user = request.user
     today = datetime.datetime.now(JST)
     print(today)
-    one_week_ago = today - datetime.timedelta(days=6)
+    one_week_ago = today - datetime.timedelta(days=7)
     one_month_ago = today - relativedelta(months=1)
 
     receipts = Receipt.objects.filter(
