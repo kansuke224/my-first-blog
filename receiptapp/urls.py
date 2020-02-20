@@ -15,6 +15,7 @@ urlpatterns = [
     path('graph', views.graph, name='graph'),
 
     path('new', views.new, name='new'),
+    path('newZero', views.newZero, name='newZero'),
     path('delete/<int:receiptId>', views.delete, name='delete'),
     path('receipts/analyse/', views.receipts_analyse, name='receipts_analyse'),
     path('receipts/image_to_text/', views.image_to_text, name='image_to_text'),

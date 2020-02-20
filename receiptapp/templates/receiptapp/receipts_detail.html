@@ -9,6 +9,13 @@
 {% load common %}
 
 {% block content %}
+{% if isMsg %}
+  <div class="bg-info pt-3 pb-3 row justify-content-center">
+    <div class="align-celf-center d-inline">
+        <div class="text-white d-inline">{{ msg }}</div>
+    </div>
+  </div>
+{% endif %}
 <div class="main container text-center">
 	<h3 class="text-left mb-5">レシート詳細</h3>
 	<div class="receipt-date pt-3 pb-3 mb-5">

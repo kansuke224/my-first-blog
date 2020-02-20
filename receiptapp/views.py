@@ -235,7 +235,14 @@ def receipts_detail(request, receiptId):
         detail_list = [fd[0], fd[1], seibun]
         food_list.append(detail_list)
         # print(amount_num)
-    context = {"user": user, "receipt": receipt, "food_list": food_list}
+
+    isMsg = False
+    msg = "00"
+    if "msg" in request.session:
+        isMsg = True
+        msg = request.session["msg"]
+        del request.session["msg"]
+    context = {"user": user, "receipt": receipt, "food_list": food_list, "msg": msg, "isMsg": isMsg}
     print(fd_arr)
     return render(request, "receiptapp/receipts_detail.html", context)
 
@@ -373,6 +380,18 @@ def new(request, *args, **kwargs):
     receiptId = receipt.id
     return redirect('/receipts/' + str(receiptId))
 
+def newZero(request):
+    # 新規レシート投稿
+    user = request.user
+    image = Image(image = None)
+    image.save()
+    # receipt 保存の処理
+    receipt = Receipt(user=user, image=image)
+    # food に add する前に一度saveしないとerrorになる
+    receipt.save()
+    receiptId = receipt.id
+    return redirect('/receipts/' + str(receiptId))
+
 @login_required
 def delete(request, receiptId):
     # レシート情報削除
@@ -414,6 +433,8 @@ def food_after_eat(request, detailId):
 
     detail.after_eat = True
     detail.save()
+
+    request.session["msg"] = "後で食べるに追加しました"
     return redirect('/receipts/' + str(receiptId))
 
 @login_required
