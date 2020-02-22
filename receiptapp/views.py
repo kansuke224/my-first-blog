@@ -36,7 +36,7 @@ cloudinary.config(
 
 def background_process(filename, CUT):
     # ここに時間のかかる処理を書く
-    text = receipt_text2.convert(filename, CUT=True)
+    text = receipt_text3.img_to_text(filename)
     return text
 
 
@@ -174,7 +174,8 @@ def receipts_analyse(request):
 @login_required
 def image_to_text(request):
     filename = request.session["filename"]
-    text = receipt_text3.img_to_text(filename)
+    #text = receipt_text3.img_to_text(filename)
+    text = q.enqueue(background_process, filename)
     print(text)
     public_id = request.session["public_id"]
     request.session["text"] = text
@@ -242,7 +243,8 @@ def receipts_detail(request, receiptId):
         isMsg = True
         msg = request.session["msg"]
         del request.session["msg"]
-    context = {"user": user, "receipt": receipt, "food_list": food_list, "msg": msg, "isMsg": isMsg}
+    print(receipt.receipt_date.day)
+    context = {"user": user, "receipt": receipt, "food_list": food_list, "day": receipt.receipt_date.day, "msg": msg, "isMsg": isMsg}
     print(fd_arr)
     return render(request, "receiptapp/receipts_detail.html", context)
 
