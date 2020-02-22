@@ -2,7 +2,7 @@ import os
 
 import redis
 from rq import Worker, Queue, Connection
-import django
+from django.conf import settings
 
 settings.configure()
 
