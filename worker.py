@@ -4,7 +4,7 @@ import redis
 from rq import Worker, Queue, Connection
 from django.conf import settings
 
-settings.configure()
+# settings.configure()
 
 listen = ['high', 'default', 'low']
 
