@@ -18,7 +18,7 @@ import environ
 import cloudinary
 
 from rq import Queue
-from worker import conn
+from .worker import conn
 from bottle import route, run
 import time
 
@@ -34,7 +34,7 @@ cloudinary.config(
   api_secret = env('API_SECRET')
 )
 
-def background_process(filename, CUT):
+def background_process(filename):
     # ここに時間のかかる処理を書く
     text = receipt_text3.img_to_text(filename)
     return text
