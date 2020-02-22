@@ -4,8 +4,7 @@ import redis
 from rq import Worker, Queue, Connection
 import django
 
-django.setup()
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'mysite.settings')
+settings.configure()
 
 listen = ['high', 'default', 'low']
 
