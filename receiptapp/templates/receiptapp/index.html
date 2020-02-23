@@ -14,6 +14,15 @@
     </div>
   </div>
 {% endif %}
+<form method="post" action="celery">
+    {% csrf_token %}
+    <input type="text" name="input_a">
+    <input type="text" name="input_b">
+    <input type="submit" name="add_button" value="計算!">
+</form>
+<div>
+    結果: {{ result }}
+</div>
 <div class="main container text-center">
     <h2 class="text-left text-info mb-5">
         <i class="fas fa-home"></i>

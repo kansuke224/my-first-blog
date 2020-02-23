@@ -22,6 +22,34 @@ from worker import conn
 from bottle import route, run
 import time
 
+from django_celery_results.models import TaskResult
+from mysite.tasks import add
+from django.template import loader
+from django.http import HttpResponse
+
+@login_required
+def celery(request):
+    template = loader.get_template('receiptapp/index.html')
+    x = int(request.POST['input_a'])
+    y = int(request.POST["input_b"])
+    task = add.delay(x,y)
+    task_id = task.id
+
+    """
+    while not task.ready():
+        pass
+    """
+    if task.ready():
+        print("taskおわった")
+    else:
+        print("taskおわってないです")
+    try:
+        tr = TaskResult.objects.get(task_id=task_id)
+        result = tr.result
+    except:
+        result = 0
+    context = {'result': result}
+    return HttpResponse(template.render(context, request))
 
 q = Queue(connection=conn)
 

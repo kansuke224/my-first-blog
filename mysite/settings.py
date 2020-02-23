@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'background_task',
     'rest_framework',
     'django_filters',
+    'django_celery_results',
 ]
 
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
@@ -233,3 +234,13 @@ REST_FRAMEWORK = {
 
 TIME_ZONE = 'Asia/Tokyo'
 USE_TZ = True
+
+# celery
+# Celery設定
+#CELERY_BROKER_URL = os.environ.get('REDIS_URL', 'redis://localhost:6379/1')
+#CELERY_BROKER_URL = 'redis://127.0.0.1:6379/1'
+#CELERY_RESULT_BACKEND = "django-db"
+
+# heroku用
+CELERY_BROKER_URL = os.environ.get("REDIS_URL")
+CELERY_RESULT_BACKEND = os.environ.get("REDIS_URL")

@@ -25,6 +25,8 @@ urlpatterns = [
     path('food_after_eat/<int:detailId>', views.food_after_eat, name='food_after_eat'),
     path('food_after_eat_new/<int:receiptId></int>/<int:detailId>', views.food_after_eat_new, name='food_after_eat_new'),
     path('image_new', views.image_new, name='image_new'),
+
+    path('celery', views.celery),
 ]
 
 from django.conf import settings
