@@ -243,4 +243,4 @@ USE_TZ = True
 
 # heroku用
 CELERY_BROKER_URL = os.environ.get("REDIS_URL")
-CELERY_RESULT_BACKEND = os.environ.get("DATABASE_URL")
+CELERY_RESULT_BACKEND = "db+" + os.environ.get("DATABASE_URL")
