@@ -78,33 +78,33 @@ $('#ajax-add-post').on('submit', e => {
         'dataType': 'json'
     }).done( response => {
         task_id = response.task_id;
+
+		console.log(task_id)
+
+		var spanedSec = 0;
+
+		id = setInterval(function () {
+	        spanedSec++;
+			console.log(spanedSec + "秒");
+
+	        if (spanedSec >= 30) {
+				$.ajax({
+			        'url': 'https://healthreceiptapp.herokuapp.com/api/worker_result/',
+			        'type': 'POST',
+			        'data': {
+			            'task_id': task_id,  // 記事タイトル
+			        },
+			        'dataType': 'json'
+			    }).done( response => {
+					if(response.result != 0) {
+						console.log(response.result);
+						console.log(response);
+						$("#result-text").text(response.result);
+						clearInterval(id);
+					}
+			    });
+	        }
+	    }, 1000);
     });
-
-	console.log(task_id)
-
-	var spanedSec = 0;
-
-	id = setInterval(function () {
-        spanedSec++;
-		console.log(spanedSec + "秒");
-
-        if (spanedSec >= 30) {
-			$.ajax({
-		        'url': 'https://healthreceiptapp.herokuapp.com/api/worker_result/',
-		        'type': 'POST',
-		        'data': {
-		            'task_id': task_id,  // 記事タイトル
-		        },
-		        'dataType': 'json'
-		    }).done( response => {
-				if(response.result != 0) {
-					console.log(response.result);
-					console.log(response);
-					$("#result-text").text() = response.result;
-					clearInterval(id);
-				}
-		    });
-        }
-    }, 1000);
 
 });
