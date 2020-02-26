@@ -13,6 +13,7 @@ from .modules import receipt_text3
 from .modules import create_food
 import cloudinary
 from rest_framework.decorators import api_view, permission_classes
+from rest_framework.decorators import renderer_classes
 import json
 from django.shortcuts import redirect
 import cv2
@@ -232,7 +233,7 @@ from mysite.tasks import add
 
 # ajaxでこのapiを1秒間隔などで呼び出す？
 # レシート解析は始めは15秒ほど待っても良いと思う
-api_view(['POST'])
+@api_view(['POST'])
 @permission_classes((IsAuthenticated,))
 def worker_result(request):
     task_id = request.POST.get("task_id")
@@ -244,7 +245,7 @@ def worker_result(request):
     return Response(status=200, data=json.dumps({"result": result}))
 
 
-api_view(['POST'])
+@api_view(['POST'])
 @permission_classes((IsAuthenticated,))
 def worker_add(request):
     x = int(request.POST.get('input_a'))
@@ -253,16 +254,8 @@ def worker_add(request):
     task_id = task.id
     return Response(status=200, data=json.dumps({"task_id": task_id}))
 
-api_view(['POST'])
-@permission_classes((IsAuthenticated,))
-def worker_add(request):
-    x = int(request.POST.get('input_a'))
-    y = int(request.POST.get("input_b"))
-    task = add.delay(x,y)
-    task_id = task.id
-    return Response(status=200, data=json.dumps({"task_id": task_id}))
 
-api_view(['POST'])
+@api_view(['POST'])
 @permission_classes((IsAuthenticated,))
 def worker_analyse(request):
     form = ImageForm(request.POST, request.FILES)
@@ -271,7 +264,7 @@ def worker_analyse(request):
     post = form.save()
     post.save()
 
-    
+
     request.session['image_id'] = post.id
     print(request.session['image_id'])
     return "ok"

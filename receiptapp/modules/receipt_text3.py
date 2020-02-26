@@ -231,3 +231,37 @@ def img_to_text(filename):
     # os.remove(BASE_DIR + "/receiptapp/media/receiptapp/" + rect_th_filename)
 
     return text.replace("※", "").replace("＊", "")
+
+
+def convert_ajax(filename = None, capture = False, CUT=False):
+    print(filename)
+    im = url_to_image(filename)
+    if im is None:
+        # 読み込みに失敗した場合は printする
+        print('failed to load image.')
+        print("use pyplot.imread")
+        # im = plt.imread(BASE_DIR + "/receiptapp/media/receiptapp/" + filename)
+        # cloudinary用のpath
+        im = plt.imread(filename)
+        im = im[..., ::-1] # RGB --> BGR
+    filename = filename[:-4]
+    # 拡張子を取り除いた形で記録する
+    print("CUT")
+    im_rect_th = cont_edge(im, filename)
+    # cv2.imwrite(BASE_DIR + "/receiptapp/media/receiptapp/" + filename.split("/")[-1] + 'rect_th.jpg', im_rect_th)
+
+	img = cv2pil(im_rect_th)
+    tools = pyocr.get_available_tools()
+    if len(tools) == 0:
+        print("No OCR tool found")
+        sys.exit(1)
+
+    tool = tools[0]
+    text = tool.image_to_string(
+            img,
+            lang="jpn",
+            builder=pyocr.builders.TextBuilder(tesseract_layout=6)
+    )
+    text = re.sub('([あ-んア-ン一-龥ー])[ 　]((?=[あ-んア-ン一-龥ー]))',r'\1\2', text)
+
+    return text.replace("※", "").replace("＊", "")
