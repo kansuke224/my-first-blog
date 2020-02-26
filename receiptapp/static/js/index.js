@@ -71,6 +71,7 @@ $('#ajax-add-post').on('submit', e => {
     $.ajax({
         'url': 'https://healthreceiptapp.herokuapp.com/api/worker_add/',
         'type': 'POST',
+		'dataType':'json', 
         'data': {
             "input_a": $("#input_a").val(),
 			"input_b": $("#input_b").val()
@@ -91,6 +92,7 @@ $('#ajax-add-post').on('submit', e => {
 				$.ajax({
 			        'url': 'https://healthreceiptapp.herokuapp.com/api/worker_result/',
 			        'type': 'POST',
+					'dataType':'json',
 			        'data': {
 			            'task_id': task_id,  // 記事タイトル
 			        },
