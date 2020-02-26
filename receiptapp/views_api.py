@@ -247,8 +247,8 @@ def worker_result(request):
 api_view(['POST'])
 @permission_classes((IsAuthenticated,))
 def worker_add(request):
-    x = int(request.POST['input_a'])
-    y = int(request.POST["input_b"])
+    x = int(request.POST.get('input_a'))
+    y = int(request.POST.get("input_b"))
     task = add.delay(x,y)
     task_id = task.id
     return Response(status=200, data=json.dumps({"task_id": task_id}))
