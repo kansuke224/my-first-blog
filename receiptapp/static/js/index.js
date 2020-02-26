@@ -71,14 +71,14 @@ $('#ajax-add-post').on('submit', e => {
     $.ajax({
         'url': 'https://healthreceiptapp.herokuapp.com/api/worker_add/',
         'type': 'POST',
-		'dataType':'json', 
+		'dataType':'json',
         'data': {
             "input_a": $("#input_a").val(),
 			"input_b": $("#input_b").val()
         },
         'dataType': 'json'
     }).done( response => {
-        task_id = response.task_id;
+        task_id = response.["task_id"];
 
 		console.log(task_id)
 
@@ -98,10 +98,10 @@ $('#ajax-add-post').on('submit', e => {
 			        },
 			        'dataType': 'json'
 			    }).done( response => {
-					if(response.result != 0) {
-						console.log(response.result);
+					if(response["result"] != 0) {
+						console.log(response["result"]);
 						console.log(response);
-						$("#result-text").text(response.result);
+						$("#result-text").text(response["result"]);
 						clearInterval(id);
 					}
 			    });
