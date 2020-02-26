@@ -261,3 +261,17 @@ def worker_add(request):
     task = add.delay(x,y)
     task_id = task.id
     return Response(status=200, data=json.dumps({"task_id": task_id}))
+
+api_view(['POST'])
+@permission_classes((IsAuthenticated,))
+def worker_analyse(request):
+    form = ImageForm(request.POST, request.FILES)
+    if not form.is_valid():
+        raise ValueError('invalid form')
+    post = form.save()
+    post.save()
+    print(post.id)
+    print(post.image.url)
+    request.session['image_id'] = post.id
+    print(request.session['image_id'])
+    return "ok"

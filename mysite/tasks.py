@@ -17,3 +17,8 @@ def add(x, y):
     print("40秒")
     print("処理完了")
     return z
+
+@shared_task
+def get_search_list:
+    search_list = []
+    return search_list
