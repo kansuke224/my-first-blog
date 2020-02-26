@@ -202,6 +202,7 @@ def receipts_analyse(request):
 @login_required
 def image_to_text(request):
     filename = request.session["filename"]
+    print("itotext => " + filename)
     text = receipt_text3.img_to_text(filename)
     #text = q.enqueue(background_process, filename)
     print(text)

@@ -224,34 +224,18 @@ def get_food(request):
     for detail in details:
         foods_list.append(detail.food)
     return Response(status=200, data=json.dumps(foods_list))
-# 画像をcloudinaryに保存してfilenameを渡す  =>  swift
-# またkeyとかをcloudinaryに教えてあげないといけない
-# 保存自体は簡単そう
 
 
-# post "filename"
 
-
-# filenameからtext.convertをしてtextを取得
-# filenamさえ正しければここはクリア
-
-
-# post "text"
-
-# textからanalyseをしてsearch_listを取得、swiftに返す
-# search_listをわかりやすいように渡す
-# [foodnamelist, foodnamelist2]みたいなかんじに加工して送ってもいいかも(uipickerで扱いやすくなるから)
-# 詳細な成分はnew_receiptまで渡すためにresponseに含めないといけない
-
-
-# iphoneで選択する => swift
-# search_listをnew_receiptに送信
-# post "search_list"
-
-# apiでreceipt保存 => django new_receipt
-# crerate_foodがうまくうごくかどうか
-# requestの形をwebと同じにすればうまく動くはず
-# 難しそうだったらcreate_food2を作る
-
-# 一覧 => swift
-# redirect?
+# ajaxでこのapiを1秒間隔などで呼び出す？
+# レシート解析は始めは15秒ほど待っても良いと思う
+api_view(['POST'])
+@permission_classes((IsAuthenticated,))
+def worker_result(request):
+    task_id = request.POST.get("task_id")
+    try:
+        tr = TaskResult.objects.get(task_id=task_id)
+        result = tr.result
+    except:
+        result = 0
+    return Response(status=200, data=json.dumps({"result": result}))

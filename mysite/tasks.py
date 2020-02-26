@@ -6,6 +6,14 @@ import time
 def add(x, y):
     print("処理中")
     z = x + y
-    #time.sleep(10)
+    print("0秒")
+    time.sleep(10)
+    print("10秒")
+    time.sleep(10)
+    print("20秒")
+    time.sleep(10)
+    print("30秒")
+    time.sleep(10)
+    print("40秒")
     print("処理完了")
     return z
