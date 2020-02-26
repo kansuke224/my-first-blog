@@ -78,7 +78,8 @@ $('#ajax-add-post').on('submit', e => {
         },
         'dataType': 'json'
     }).done( response => {
-        task_id = response.["task_id"];
+		var json = JSON.stringify(response);
+        task_id = json.task_id;
 
 		console.log(task_id)
 
@@ -97,11 +98,12 @@ $('#ajax-add-post').on('submit', e => {
 			            'task_id': task_id,  // 記事タイトル
 			        },
 			        'dataType': 'json'
-			    }).done( response => {
-					if(response["result"] != 0) {
-						console.log(response["result"]);
-						console.log(response);
-						$("#result-text").text(response["result"]);
+			    }).done( response2 => {
+					var json2 = JSON.stringify(response2);
+					if(json.result != 0) {
+						console.log(json.result);
+						console.log(json);
+						$("#result-text").text(json.result);
 						clearInterval(id);
 					}
 			    });
