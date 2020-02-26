@@ -80,9 +80,11 @@ $('#ajax-add-post').on('submit', e => {
         task_id = response.task_id;
     });
 
+	console.log(task_id)
+
 	var spanedSec = 0;
 
-	setInterval(function () {
+	id = setInterval(function () {
         spanedSec++;
 		console.log(spanedSec + "秒");
 
@@ -95,7 +97,12 @@ $('#ajax-add-post').on('submit', e => {
 		        },
 		        'dataType': 'json'
 		    }).done( response => {
-		        $("#result-text").text() = response.result;
+				if(response.result != 0) {
+					console.log(response.result);
+					console.log(response);
+					$("#result-text").text() = response.result;
+					clearInterval(id);
+				}
 		    });
         }
     }, 1000);
