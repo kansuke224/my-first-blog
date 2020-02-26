@@ -18,6 +18,7 @@ import json
 from django.shortcuts import redirect
 import cv2
 import base64
+from django.http import JsonResponse
 
 from .models import Receipt, Image, Food, Fooddetail
 from django.contrib.auth.models import User
@@ -242,7 +243,7 @@ def worker_result(request):
         result = tr.result
     except:
         result = 0
-    return Response(status=200, data=json.dumps({"result": result}))
+    return JsonResponse({"result": result})
 
 
 @api_view(['POST'])
@@ -252,7 +253,7 @@ def worker_add(request):
     y = int(request.POST.get("input_b"))
     task = add.delay(x,y)
     task_id = task.id
-    return Response(status=200, data=json.dumps({"task_id": task_id}))
+    return JsonResponse({"task_id": task_id})
 
 
 @api_view(['POST'])

@@ -78,8 +78,9 @@ $('#ajax-add-post').on('submit', e => {
         },
         'dataType': 'json'
     }).done( response => {
-		var json = JSON.stringify(response);
-        task_id = json.task_id;
+		console.log(response);
+		console.log(typeof response);
+        task_id = response.task_id;
 
 		console.log(task_id)
 
@@ -99,11 +100,10 @@ $('#ajax-add-post').on('submit', e => {
 			        },
 			        'dataType': 'json'
 			    }).done( response2 => {
-					var json2 = JSON.stringify(response2);
-					if(json.result != 0) {
-						console.log(json.result);
-						console.log(json);
-						$("#result-text").text(json.result);
+					if(response2.result != 0) {
+						console.log(response2.result);
+						console.log(response2);
+						$("#result-text").text(response2.result);
 						clearInterval(id);
 					}
 			    });
