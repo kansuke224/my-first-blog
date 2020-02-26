@@ -36,7 +36,7 @@ $('#ajax-add-post').on('submit', e => {
 	var task_id = 0;
 
     $.ajax({
-        'url': 'https://healthreceiptapp.herokuapp.com/api/worker_add',
+        'url': 'https://healthreceiptapp.herokuapp.com/api/worker_add/',
         'type': 'POST',
         'data': {
             "input_a": $("#input_a").val(),
@@ -55,7 +55,7 @@ $('#ajax-add-post').on('submit', e => {
 
         if (spanedSec >= 30) {
 			$.ajax({
-		        'url': 'https://healthreceiptapp.herokuapp.com/api/worker_result',
+		        'url': 'https://healthreceiptapp.herokuapp.com/api/worker_result/',
 		        'type': 'POST',
 		        'data': {
 		            'task_id': task_id,  // 記事タイトル
