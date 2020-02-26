@@ -38,7 +38,8 @@ $('#ajax-add-post').on('submit', e => {
         'url': '{% url "add" %}',
         'type': 'POST',
         'data': {
-            'title': $('#id_title').val(),  // 記事タイトル
+            "input_a": $("#input_a").value(),
+			"input_b": $("#input_b").value()
         },
         'dataType': 'json'
     }).done( response => {
