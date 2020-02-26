@@ -19,6 +19,13 @@ def add(x, y):
     return z
 
 @shared_task
-def get_search_list:
+def get_search_list(image_id):
     search_list = []
+    # receipts_analyse部分
+    image_id = request.session['image_id']
+    image = Image.objects.get(pk=image_id).image.url
+    filename = image
+    print(filename)
+    img = receipt_text3.convert(filename, CUT=True)
+
     return search_list

@@ -270,8 +270,8 @@ def worker_analyse(request):
         raise ValueError('invalid form')
     post = form.save()
     post.save()
-    print(post.id)
-    print(post.image.url)
+
+    
     request.session['image_id'] = post.id
     print(request.session['image_id'])
     return "ok"
