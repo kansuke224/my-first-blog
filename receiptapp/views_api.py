@@ -227,6 +227,9 @@ def get_food(request):
 
 
 
+from django_celery_results.models import TaskResult
+from mysite.tasks import add
+
 # ajaxでこのapiを1秒間隔などで呼び出す？
 # レシート解析は始めは15秒ほど待っても良いと思う
 api_view(['POST'])
@@ -239,3 +242,13 @@ def worker_result(request):
     except:
         result = 0
     return Response(status=200, data=json.dumps({"result": result}))
+
+
+api_view(['POST'])
+@permission_classes((IsAuthenticated,))
+def worker_add(request):
+    x = int(request.POST['input_a'])
+    y = int(request.POST["input_b"])
+    task = add.delay(x,y)
+    task_id = task.id
+    return Response(status=200, data=json.dumps({"task_id": task_id}))

@@ -27,3 +27,42 @@ function afterMonth(year, month) {
 	}
 	$("."+year+"."+(month+1)).css("display","block");
 }
+
+$('#ajax-add-post').on('submit', e => {
+    // デフォルトのイベントをキャンセルし、ページ遷移しないように!
+    e.preventDefault();
+
+	var task_id = 0;
+
+    $.ajax({
+        'url': '{% url "add" %}',
+        'type': 'POST',
+        'data': {
+            'title': $('#id_title').val(),  // 記事タイトル
+        },
+        'dataType': 'json'
+    }).done( response => {
+        task_id = response.task_id;
+    });
+
+	var spanedSec = 0;
+
+	setInterval(function () {
+        spanedSec++;
+		console.log(spanedSec + "秒");
+
+        if (spanedSec >= 30) {
+			$.ajax({
+		        'url': '{% url "worker_result" %}',
+		        'type': 'POST',
+		        'data': {
+		            'task_id': task_id,  // 記事タイトル
+		        },
+		        'dataType': 'json'
+		    }).done( response => {
+		        $("#result-text").text() = response.result;
+		    });
+        }
+    }, 1000);
+
+});
