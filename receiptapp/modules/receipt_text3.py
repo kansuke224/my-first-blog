@@ -250,7 +250,7 @@ def convert_ajax(filename = None, capture = False, CUT=False):
     im_rect_th = cont_edge(im, filename)
     # cv2.imwrite(BASE_DIR + "/receiptapp/media/receiptapp/" + filename.split("/")[-1] + 'rect_th.jpg', im_rect_th)
 
-	img = cv2pil(im_rect_th)
+    img = cv2pil(im_rect_th)
     tools = pyocr.get_available_tools()
     if len(tools) == 0:
         print("No OCR tool found")
