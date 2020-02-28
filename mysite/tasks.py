@@ -18,9 +18,12 @@ def add(x, y):
     print("処理完了")
     return z
 
-from .models import Receipt, Image, Food, Fooddetail
-from .modules import receipt_tyuusyutu2
-from .modules import receipt_text2, receipt_text3
+import sys
+sys.path.append('../')
+
+from receiptapp.models import Receipt, Image, Food, Fooddetail
+from receiptapp.modules import receipt_tyuusyutu2
+from receiptapp.modules import receipt_text2, receipt_text3
 import environ
 import cloudinary
 
