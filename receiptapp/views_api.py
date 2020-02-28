@@ -238,6 +238,7 @@ from mysite.tasks import add, get_search_list
 @api_view(['POST'])
 @permission_classes((IsAuthenticated,))
 def worker_result(request):
+    print("worker_resultにajaxがきました")
     task_id = request.POST.get("task_id")
     try:
         tr = TaskResult.objects.get(task_id=task_id)
@@ -261,6 +262,7 @@ def worker_add(request):
 @api_view(['POST'])
 @permission_classes((IsAuthenticated,))
 def worker_analyse(request):
+    print("worker_analyseにajaxがきました")
     form = ImageForm(request.POST, request.FILES)
     if not form.is_valid():
         raise ValueError('invalid form')

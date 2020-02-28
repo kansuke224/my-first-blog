@@ -94,8 +94,9 @@ $('#ajax-analyse').on('submit', e => {
         'processData' : false,
         'dataType': 'json'
     }).done( response => {
+        console.log("worker_analyse 終了");
 		console.log(response);
-		console.log(typeof response);
+		// console.log(typeof response);
         task_id = response.task_id;
 
 		console.log(task_id)
@@ -107,16 +108,18 @@ $('#ajax-analyse').on('submit', e => {
 			console.log(spanedSec + "秒");
 
 	        if (spanedSec >= 15) {
+                console.log("worker_resultにajaxトライ");
 				$.ajax({
 			        'url': 'https://healthreceiptapp.herokuapp.com/api/worker_result/',
 			        'type': 'POST',
 					'dataType':'json',
 			        'data': {
-			            'task_id': task_id,  // 記事タイトル
+			            'task_id': task_id,
 			        },
 			        'dataType': 'json'
 			    }).done( response2 => {
 					if(response2.result != 0) {
+                        console.log("成功!")
 						console.log(response2.result);
 						console.log(response2);
 						$("#result-text").text(response2.result);
