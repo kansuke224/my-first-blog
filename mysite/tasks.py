@@ -18,6 +18,21 @@ def add(x, y):
     print("処理完了")
     return z
 
+from .models import Receipt, Image, Food, Fooddetail
+from .modules import receipt_tyuusyutu2
+from .modules import receipt_text2, receipt_text3
+import environ
+import cloudinary
+
+env = environ.Env()
+env.read_env('.env')
+
+cloudinary.config(
+  cloud_name = env('CLOUD_NAME'),
+  api_key = env('API_KEY'),
+  api_secret = env('API_SECRET')
+)
+
 @shared_task
 def get_search_list(image_id):
     search_list = []
@@ -42,7 +57,7 @@ def get_search_list(image_id):
             for i2, v in enumerate(info):
                 info[i2] = str(v)
             name_list[i1].append(info[0])
-    user = request.user
-    context = {"user": user, "search_list": search_list, "count": len(search_list)}
+    #user = request.user
+    #context = {"user": user, "search_list": search_list, "count": len(search_list)}
 
     return [search_list, count]

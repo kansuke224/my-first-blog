@@ -490,3 +490,16 @@ def image_new(request, *args, **kwargs):
     print(request.session['image_id'])
 
     return redirect('/receipts/analyse')
+
+
+def worker_analyse(request):
+    form = ImageForm(request.POST, request.FILES)
+    if not form.is_valid():
+        raise ValueError('invalid form')
+    post = form.save()
+    post.save()
+
+    task = get_search_list.delay(image_id = post.id)
+    task_id = task.id
+
+    return JsonResponse({"task_id": task_id})

@@ -19,6 +19,7 @@ from django.shortcuts import redirect
 import cv2
 import base64
 from django.http import JsonResponse
+from .forms import ImageForm
 
 from .models import Receipt, Image, Food, Fooddetail
 from django.contrib.auth.models import User
@@ -230,7 +231,7 @@ def get_food(request):
 
 
 from django_celery_results.models import TaskResult
-from mysite.tasks import add
+from mysite.tasks import add, get_search_list
 
 # ajaxでこのapiを1秒間隔などで呼び出す？
 # レシート解析は始めは15秒ほど待っても良いと思う
@@ -241,6 +242,7 @@ def worker_result(request):
     try:
         tr = TaskResult.objects.get(task_id=task_id)
         result = tr.result
+        tr.delete()
     except:
         result = 0
     return JsonResponse({"result": result})
@@ -265,7 +267,7 @@ def worker_analyse(request):
     post = form.save()
     post.save()
 
+    task = get_search_list.delay(image_id = post.id)
+    task_id = task.id
 
-    request.session['image_id'] = post.id
-    print(request.session['image_id'])
-    return "ok"
+    return JsonResponse({"task_id": task_id})
