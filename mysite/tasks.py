@@ -63,4 +63,4 @@ def get_search_list(image_id):
     #user = request.user
     #context = {"user": user, "search_list": search_list, "count": len(search_list)}
 
-    return [search_list, count]
+    return [search_list, len(search_list)]
