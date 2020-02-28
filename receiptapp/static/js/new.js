@@ -99,9 +99,10 @@ $('#ajax-analyse').on('submit', e => {
 		// console.log(typeof response);
         task_id = response.task_id;
 
-		console.log(task_id)
+		console.log(task_id);
 
 		var spanedSec = 0;
+        var analyse_result;
 
 		id = setInterval(function () {
 	        spanedSec++;
@@ -122,12 +123,61 @@ $('#ajax-analyse').on('submit', e => {
                         console.log("成功!")
 						console.log(response2.result);
 						console.log(response2);
-						$("#result-text").text(response2.result);
+						analyse_result = response2.result;
 						clearInterval(id);
 					}
 			    });
 	        }
-	    }, 1000);
+	    }, 3000);
+
+        var search_list = analyse_result[0];
+        var count = analyse_result[1];
+        // food_select を作る処理
+        for (var i in search_list) {
+            // 各食べ物リストについての処理
+            info_list = search_list[i];
+            len = count[i];
+            if (len = 0) {
+                continue;
+            }
+            var ftag = $("<div>", {class: "food mb-5"}).appendTo("#result_fs");
+            $("<p>", {class: "p1", text: "候補が" + len + "個あります"}).appendTo(ftag);
+            $("<p2>", {class: "p1", text: "選択してください"}).appendTo(ftag);
+
+            var ftbl = $("<table>", {class: "table"}).appendTo(ftag);
+            for (var j in info_list) {
+                info = info_list[j];
+                var ftr = $("<tr>").appendTo(ftbl);
+                $("<td>", {text: info[0]}).appendTo(ftr);
+
+                var ftd1 = $("<td>").appendTo(ftr);
+                var fs = $("<select>", {class: "custom-select", name: "i.j").appendTo(ftd1);
+                for (var k = 1; i<=10; i++) {
+                    $("<option>", {value: k, text: k + "00g"}).appendTo(fs);
+                }
+
+                var ftd2 = $("<td>", {text: "text-center"}).appendTo(ftr);
+                if (j == 1) {
+                    var fch = $("<input>", {
+                        type: "checkbox",
+                        name: "food",
+                        value: info[0] + "," + info[1] + "," + info[2] + "," + info[3] + "," + info[4] + "," + info[5] + "," + i + "." + j
+                    }).appendTo(ftd2);
+                    fch.checked = true;
+                } else {
+                    $("<input>", {
+                        type: "checkbox",
+                        name: "food",
+                        value: info[0] + "," + info[1] + "," + info[2] + "," + info[3] + "," + info[4] + "," + info[5] + "," + i + "." + j
+                    }).appendTo(ftd2);
+                }
+            }
+            $("<input>", {
+                type: "hidden",
+                name: i,
+                value: len
+            }).appendTo("#result_fs");
+        }
     });
 
 });
