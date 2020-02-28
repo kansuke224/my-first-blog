@@ -42,7 +42,7 @@ def get_search_list(image_id):
     image = Image.objects.get(pk=image_id).image.url
     filename = image
     print(filename)
-    text = receipt_text3.convert2(filename, CUT=True)
+    text = receipt_text3.convert_ajax(filename, CUT=True)
 
     search_list = receipt_tyuusyutu2.analyse(filename=filename, isWord=False, word="", text=text)[0]
 
