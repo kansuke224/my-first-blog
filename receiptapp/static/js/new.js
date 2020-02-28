@@ -9,7 +9,7 @@ var spinner = document.getElementById('loading');
 $(function (){
  	spinner.classList.add('loaded');
 
-    $('#receiptform').on('change', 'input[type="file"]', function(e) {
+    $('#ajax-analyse').on('change', 'input[type="file"]', function(e) {
     var file = e.target.files[0],
         reader = new FileReader(),
         $preview = $(".preview");
@@ -151,7 +151,7 @@ $('#ajax-analyse').on('submit', e => {
                 $("<td>", {text: info[0]}).appendTo(ftr);
 
                 var ftd1 = $("<td>").appendTo(ftr);
-                var fs = $("<select>", {class: "custom-select", name: "i.j").appendTo(ftd1);
+                var fs = $("<select>", {class: "custom-select", name: i + "." + "j"}).appendTo(ftd1);
                 for (var k = 1; i<=10; i++) {
                     $("<option>", {value: k, text: k + "00g"}).appendTo(fs);
                 }
