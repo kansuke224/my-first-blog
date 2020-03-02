@@ -123,7 +123,7 @@ $('#ajax-analyse').on('submit', e => {
                         console.log("成功!")
 						console.log(response2.result);
 						console.log(response2);
-						analyse_result = response2.result;
+						analyse_result = JSON.parse(response2.result);
                         console.log("1");
                         console.log(analyse_result[0]);
                         console.log("2");
@@ -144,7 +144,7 @@ $('#ajax-analyse').on('submit', e => {
                             info_list = search_list[i][0];
                             len = search_list[i][1];
                             console.log(info_list);
-                            console.lgo(len);
+                            console.log(len);
                             if (len = 0) {
                                 continue;
                             }
