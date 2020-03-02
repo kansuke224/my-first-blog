@@ -396,8 +396,11 @@ def graph(request):
 def new(request, *args, **kwargs):
     # 新規レシート投稿
     user = request.user
-    image_id = request.session['image_id']
-    image = Image.objects.get(pk=image_id)
+    try:
+        image_id = request.session['image_id']
+        image = Image.objects.get(pk=image_id)
+    except:
+        image = Image(image = None)
     # receipt 保存の処理
     receipt = Receipt(user=user, image=image)
     # food に add する前に一度saveしないとerrorになる
