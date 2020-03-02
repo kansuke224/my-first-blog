@@ -161,7 +161,7 @@ $('#ajax-analyse').on('submit', e => {
                                 $("<td>", {text: info[0]}).appendTo(ftr);
 
                                 var ftd1 = $("<td>").appendTo(ftr);
-                                var fs = $("<select>", {class: "custom-select", name: i + "." + "j"}).appendTo(ftd1);
+                                var fs = $("<select>", {class: "custom-select", name: i + "." + j}).appendTo(ftd1);
                                 for (var k = 1; k<=10; k++) {
                                     $("<option>", {value: k, text: k + "00g"}).appendTo(fs);
                                 }
