@@ -124,8 +124,8 @@ $('#ajax-analyse').on('submit', e => {
 			    }).done( response2 => {
 					if(response2.result != 0) {
                         console.log("成功!")
-                        $("#h3-select").classList.remove('h3-select-before');
-                        $("#h3-select").classList.add('h3-select-after');
+                        $("#h3-select").removeClass('h3-select-before');
+                        $("#h3-select").addClass('h3-select-after');
 						//console.log(response2.result);
 						//console.log(response2);
 						analyse_result = JSON.parse(response2.result);
