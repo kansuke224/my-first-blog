@@ -124,14 +124,27 @@ $('#ajax-analyse').on('submit', e => {
 						console.log(response2.result);
 						console.log(response2);
 						analyse_result = response2.result;
-
-                        var search_list = analyse_result[0];
-                        var count = analyse_result[1];
+                        console.log("1");
+                        console.log(analyse_result[0]);
+                        console.log("2");
+                        console.log(analyse_result[0][0]);
+                        console.log("3");
+                        console.log(analyse_result[0][0][0]);
+                        var search_list = analyse_result;
+                        // var count = analyse_result[1];
                         // food_select を作る処理
+                        console.log(search_list);
                         for (var i in search_list) {
                             // 各食べ物リストについての処理
-                            info_list = search_list[i];
-                            len = count[i];
+                            /*
+                            [
+                                []
+                            ]
+                            */
+                            info_list = search_list[i][0];
+                            len = search_list[i][1];
+                            console.log(info_list);
+                            console.lgo(len);
                             if (len = 0) {
                                 continue;
                             }
