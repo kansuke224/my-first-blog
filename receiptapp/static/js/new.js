@@ -142,7 +142,8 @@ $('#ajax-analyse').on('submit', e => {
                             ]
                             */
                             info_list = search_list[i][0];
-                            len = search_list[i][1];
+                            var len = search_list[i][1];
+                            // len = info_list.length;
                             console.log(info_list);
                             console.log(len);
                             if (len = 0) {
@@ -160,11 +161,11 @@ $('#ajax-analyse').on('submit', e => {
 
                                 var ftd1 = $("<td>").appendTo(ftr);
                                 var fs = $("<select>", {class: "custom-select", name: i + "." + "j"}).appendTo(ftd1);
-                                for (var k = 1; i<=10; i++) {
+                                for (var k = 1; k<=10; k++) {
                                     $("<option>", {value: k, text: k + "00g"}).appendTo(fs);
                                 }
 
-                                var ftd2 = $("<td>", {text: "text-center"}).appendTo(ftr);
+                                var ftd2 = $("<td>", {class: "text-center"}).appendTo(ftr);
                                 if (j == 1) {
                                     var fch = $("<input>", {
                                         type: "checkbox",
