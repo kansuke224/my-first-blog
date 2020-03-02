@@ -412,7 +412,10 @@ def new(request, *args, **kwargs):
     create_food.create_food(request, receipt)
 
     # image_id session の削除
-    del request.session["image_id"]
+    try:
+        del request.session["image_id"]
+    except:
+        pass
     receiptId = receipt.id
     return redirect('/receipts/' + str(receiptId))
 

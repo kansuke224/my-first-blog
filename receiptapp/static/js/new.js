@@ -81,6 +81,8 @@ $('#ajax-analyse').on('submit', e => {
     // デフォルトのイベントをキャンセルし、ページ遷移しないように!
     e.preventDefault();
 
+    spinner.classList.remove('loaded');
+
     $("<p>", {class: "p_load", text: "画像解析中です、しばらくお待ちください・・・"}).appendTo("#load");
     var formdata = new FormData($('#ajax-analyse').get(0));
 	var task_id = 0;
@@ -193,6 +195,7 @@ $('#ajax-analyse').on('submit', e => {
                             class: "btn btn-info mb-5",
                             value: "食事内容決定"
                         }).appendTo("#result_fs");
+                        spinner.classList.add('loaded');
 						clearInterval(id);
 					}
 			    });
