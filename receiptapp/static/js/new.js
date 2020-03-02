@@ -105,10 +105,10 @@ $('#ajax-analyse').on('submit', e => {
         var analyse_result;
 
 		id = setInterval(function () {
-	        spanedSec++;
+	        spanedSec = spanedSec + 3;
 			console.log(spanedSec + "秒");
 
-	        if (spanedSec >= 15) {
+	        if (spanedSec >= 30) {
                 console.log("worker_resultにajaxトライ");
 				$.ajax({
 			        'url': 'https://healthreceiptapp.herokuapp.com/api/worker_result/',
@@ -121,15 +121,15 @@ $('#ajax-analyse').on('submit', e => {
 			    }).done( response2 => {
 					if(response2.result != 0) {
                         console.log("成功!")
-						console.log(response2.result);
-						console.log(response2);
+						//console.log(response2.result);
+						//console.log(response2);
 						analyse_result = JSON.parse(response2.result);
-                        console.log("1");
-                        console.log(analyse_result[0]);
-                        console.log("2");
-                        console.log(analyse_result[0][0]);
-                        console.log("3");
-                        console.log(analyse_result[0][0][0]);
+                        //console.log("1");
+                        //console.log(analyse_result[0]);
+                        //console.log("2");
+                        //console.log(analyse_result[0][0]);
+                        //console.log("3");
+                        //console.log(analyse_result[0][0][0]);
                         var search_list = analyse_result;
                         // var count = analyse_result[1];
                         // food_select を作る処理
