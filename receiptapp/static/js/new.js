@@ -155,7 +155,7 @@ $('#ajax-analyse').on('submit', e => {
                                 continue;
                             }
                             var ftag = $("<div>", {class: "food mb-5"}).appendTo("#result_fs");
-                            $("<p>", {class: "p1", text: "候補が" + count + "個あります"}).appendTo(ftag);
+                            $("<p>", {class: "p1", text: `候補が${count}個あります`}).appendTo(ftag);
                             $("<p2>", {class: "p1", text: "選択してください"}).appendTo(ftag);
 
                             var ftbl = $("<table>", {class: "table"}).appendTo(ftag);
@@ -189,7 +189,7 @@ $('#ajax-analyse').on('submit', e => {
                             $("<input>", {
                                 type: "hidden",
                                 name: i,
-                                value: len
+                                value: count
                             }).appendTo("#result_fs");
                         }
                         $("<input>", {

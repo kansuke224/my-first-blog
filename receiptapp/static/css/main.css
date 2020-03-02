@@ -119,10 +119,10 @@ h3 {
   /* background-color: rgba(91, 192, 222, 0.9); */
 
   position: fixed;
-  top: 0;
-  left: 0;
+  top: 100;
+  left: 100;
   z-index: 9999;
-  color: rgba(91, 192, 222, 1.0);
+  color: #5bc0de;
 }
 .spinner {
   width: 100px;
