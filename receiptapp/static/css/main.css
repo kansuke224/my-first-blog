@@ -6,7 +6,7 @@
 body {
     background-color: whitesmoke;
     overflow-y: scroll;
-	
+
 }
 
 .header {
@@ -113,15 +113,16 @@ h3 {
 
 
 #loading {
-  width: 100vw;
-  height: 100vh;
+  width: 50vw;
+  height: 50vh;
   transition: all 1s;
-  background-color: rgba(91, 192, 222, 0.9);
+  /* background-color: rgba(91, 192, 222, 0.9); */
 
   position: fixed;
   top: 0;
   left: 0;
   z-index: 9999;
+  color: rgba(91, 192, 222, 1.0);
 }
 .spinner {
   width: 100px;

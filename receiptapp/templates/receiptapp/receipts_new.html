@@ -39,6 +39,7 @@
     </div>
     <div id="load"></div>
     <div id="analyse_result">
+        <h3 class="text-left mt-5 mb-5 h3-select-before" id="h3-select">食事内容選択</h3>
         <form action="{% url 'new' %}" method="POST" id="result_fs">
             <input type="hidden" name="0" value="0">
             {% csrf_token %}

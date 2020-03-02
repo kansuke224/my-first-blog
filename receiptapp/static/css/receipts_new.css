@@ -18,3 +18,11 @@
 .form-box {
 
 }
+
+.h3-select-before {
+    display: none;
+}
+
+.h3-select-after {
+    display: block;
+}

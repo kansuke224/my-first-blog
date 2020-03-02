@@ -83,7 +83,7 @@ $('#ajax-analyse').on('submit', e => {
 
     spinner.classList.remove('loaded');
 
-    $("<p>", {class: "p_load", text: "画像解析中です、しばらくお待ちください・・・"}).appendTo("#load");
+    // $("<p>", {class: "p_load", text: "画像解析中です、しばらくお待ちください・・・"}).appendTo("#load");
     var formdata = new FormData($('#ajax-analyse').get(0));
 	var task_id = 0;
 
@@ -124,6 +124,8 @@ $('#ajax-analyse').on('submit', e => {
 			    }).done( response2 => {
 					if(response2.result != 0) {
                         console.log("成功!")
+                        $("#h3-select").classList.remove('h3-select-before');
+                        $("#h3-select").classList.add('h3-select-after');
 						//console.log(response2.result);
 						//console.log(response2);
 						analyse_result = JSON.parse(response2.result);
@@ -145,15 +147,15 @@ $('#ajax-analyse').on('submit', e => {
                             ]
                             */
                             info_list = search_list[i][0];
-                            var len = search_list[i][1];
+                            var count = search_list[i][1];
                             // len = info_list.length;
                             console.log(info_list);
-                            console.log(len);
-                            if (len = 0) {
+                            console.log(count);
+                            if (count = 0) {
                                 continue;
                             }
                             var ftag = $("<div>", {class: "food mb-5"}).appendTo("#result_fs");
-                            $("<p>", {class: "p1", text: "候補が" + len + "個あります"}).appendTo(ftag);
+                            $("<p>", {class: "p1", text: "候補が" + count + "個あります"}).appendTo(ftag);
                             $("<p2>", {class: "p1", text: "選択してください"}).appendTo(ftag);
 
                             var ftbl = $("<table>", {class: "table"}).appendTo(ftag);
