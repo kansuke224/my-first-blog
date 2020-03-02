@@ -243,7 +243,7 @@ def worker_result(request):
     try:
         tr = TaskResult.objects.get(task_id=task_id)
         result = tr.result
-        # tr.delete()
+        tr.delete()
     except:
         result = 0
     return JsonResponse({"result": result})
