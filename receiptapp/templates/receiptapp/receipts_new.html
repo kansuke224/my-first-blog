@@ -37,7 +37,7 @@
             <button type="submit" class="btn btn-info mx-auto mb-5"">非同期で画像解析</button>
         </form>
     </div>
-
+    <div id="load"></div>
     <div id="analyse_result">
         <form action="{% url 'new' %}" method="POST" id="result_fs">
             <input type="hidden" name="0" value="0">
@@ -46,7 +46,7 @@
             <input type="submit" class="btn btn-info mb-5" value="食事内容決定">
         </form>
     </div>
-    
+
 </div>
 {% endblock content %}
 {% block extra_js %}
