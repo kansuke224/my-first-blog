@@ -202,7 +202,7 @@ $('#ajax-analyse').on('submit', e => {
                         // メッセージ表示
 
                         // h3-selectまでスクロール
-                        var element = $("#h3-select")
+                        var element = $("#h3-select");
                         var rect = element.getBoundingClientRect();
                         var elemtop = rect.top + window.pageYOffset;
                         document.documentElement.scrollTop = elemtop;
