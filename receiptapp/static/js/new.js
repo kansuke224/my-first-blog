@@ -207,7 +207,15 @@ $('#ajax-analyse').on('submit', e => {
                         var element = document.getElementById("h3-select");
                         var rect = element.getBoundingClientRect();
                         var elemtop = rect.top + window.pageYOffset;
-                        document.documentElement.scrollTop = elemtop;
+
+                        var nowTop = window.pageYOffset;
+                        var buffer = 50;
+                        var top = elemtop + nowTop - buffer
+                        //document.documentElement.scrollTop = elemtop;
+                        window.scrollTo({
+                            top,
+                            behavior: "smooth"
+                        });
 						clearInterval(id);
 					}
 			    });
