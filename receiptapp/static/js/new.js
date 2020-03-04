@@ -197,7 +197,12 @@ $('#ajax-analyse').on('submit', e => {
                             class: "btn btn-info mb-5",
                             value: "食事内容決定"
                         }).appendTo("#result_fs");
+                        // スピナー消す
                         spinner.classList.add('loaded');
+                        // メッセージ表示
+
+                        // h3-selectまでスクロール
+                        ScrollWindow("#h3-select");
 						clearInterval(id);
 					}
 			    });
@@ -206,3 +211,10 @@ $('#ajax-analyse').on('submit', e => {
     });
 
 });
+
+function ScrollWindow(elem) {
+    var element = $(elem);
+    var rect = element.getBoundingClientRect();
+    var elemtop = rect.top + window.pageYOffset;
+    document.documentElement.scrollTop = elemtop;
+}
