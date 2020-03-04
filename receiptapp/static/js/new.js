@@ -202,7 +202,7 @@ $('#ajax-analyse').on('submit', e => {
                         // メッセージ表示
 
                         // h3-selectまでスクロール
-                        ScrollWindow("#h3-select");
+                        scrollWindow($("#h3-select"));
 						clearInterval(id);
 					}
 			    });
@@ -212,8 +212,7 @@ $('#ajax-analyse').on('submit', e => {
 
 });
 
-function ScrollWindow(elem) {
-    var element = $(elem);
+function scrollWindow(element) {
     var rect = element.getBoundingClientRect();
     var elemtop = rect.top + window.pageYOffset;
     document.documentElement.scrollTop = elemtop;
