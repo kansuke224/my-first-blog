@@ -119,14 +119,14 @@ h3 {
   /* background-color: rgba(91, 192, 222, 0.9); */
 
   position: fixed;
-  top: 45%;
-  left: 45%;
+  top: 38%;
+  left: 28%;
   z-index: 9999;
   color: #5bc0de;
 }
 
 #spintext {
-    color: #5bc0de;
+    color: #ff8243;
 }
 
 .spinner {
@@ -155,7 +155,7 @@ h3 {
 
 
 .loader {
-  color: #ffffff;
+  color: #ff8243;
   font-size: 90px;
   text-indent: -9999em;
   overflow: hidden;
