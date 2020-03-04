@@ -126,7 +126,7 @@ $('#ajax-analyse').on('submit', e => {
                         console.log("成功!")
                         $("#h3-select").removeClass('h3-select-before');
                         $("#h3-select").addClass('h3-select-after');
-                        $("#result_fs").empty();
+                        $("#result_fs_child").empty();
 						//console.log(response2.result);
 						//console.log(response2);
 						analyse_result = JSON.parse(response2.result);
@@ -155,7 +155,7 @@ $('#ajax-analyse').on('submit', e => {
                             if (count = 0) {
                                 continue;
                             }
-                            var ftag = $("<div>", {class: "food mb-5"}).appendTo("#result_fs");
+                            var ftag = $("<div>", {class: "food mb-5"}).appendTo("#result_fs_child");
                             $("<p>", {class: "p1", text: `候補が${count}個あります`}).appendTo(ftag);
                             $("<p2>", {class: "p1", text: "選択してください"}).appendTo(ftag);
 
@@ -191,13 +191,13 @@ $('#ajax-analyse').on('submit', e => {
                                 type: "hidden",
                                 name: i,
                                 value: count
-                            }).appendTo("#result_fs");
+                            }).appendTo("#result_fs_child");
                         }
                         $("<input>", {
                             type: "submit",
                             class: "btn btn-info mb-5",
                             value: "食事内容決定"
-                        }).appendTo("#result_fs");
+                        }).appendTo("#result_fs_child");
                         // スピナー消す
                         spinner.classList.add('loaded');
                         // メッセージ表示

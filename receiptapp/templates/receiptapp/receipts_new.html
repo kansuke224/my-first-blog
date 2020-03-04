@@ -42,6 +42,9 @@
         <h3 class="text-left mt-5 mb-5 h3-select-before" id="h3-select">食事内容選択</h3>
         <form action="{% url 'new' %}" method="POST" id="result_fs">
             {% csrf_token %}
+            <div id="result_fs_child">
+                  
+            </div>
 
             <!-- <input type="submit" class="btn btn-info mb-5" value="食事内容決定"> -->
         </form>
