@@ -126,7 +126,8 @@ h3 {
   top: calc(50% - calc(40vh / 2));
   left: calc(50% - calc(40vw / 2));
   z-index: 9999;
-  color: #5bc0de;
+  /*color: #5bc0de;*/
+  color: orange;
 }
 
 .spinner {
@@ -155,7 +156,7 @@ h3 {
 
 
 .loader {
-  color: #5bc0de;
+  color: orange;
   font-size: 90px;
   text-indent: -9999em;
   overflow: hidden;
