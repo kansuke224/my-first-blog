@@ -126,6 +126,7 @@ $('#ajax-analyse').on('submit', e => {
                         console.log("成功!")
                         $("#h3-select").removeClass('h3-select-before');
                         $("#h3-select").addClass('h3-select-after');
+                        $("#result_fs").empty();
 						//console.log(response2.result);
 						//console.log(response2);
 						analyse_result = JSON.parse(response2.result);
@@ -202,7 +203,8 @@ $('#ajax-analyse').on('submit', e => {
                         // メッセージ表示
 
                         // h3-selectまでスクロール
-                        var element = $("#h3-select");
+                        // jqueryのオブジェクトだとエラーになる
+                        var element = document.getElementById("h3-select");
                         var rect = element.getBoundingClientRect();
                         var elemtop = rect.top + window.pageYOffset;
                         document.documentElement.scrollTop = elemtop;
