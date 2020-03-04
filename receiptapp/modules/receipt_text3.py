@@ -230,7 +230,7 @@ def img_to_text(filename):
     # rect_th のファイルを削除
     # os.remove(BASE_DIR + "/receiptapp/media/receiptapp/" + rect_th_filename)
 
-    return text.replace("※", "").replace("＊", "")
+    return text.replace("※", "").replace("＊", "").replace("*", "")
 
 
 def convert_ajax(filename = None, capture = False, CUT=False):
@@ -264,4 +264,4 @@ def convert_ajax(filename = None, capture = False, CUT=False):
     )
     text = re.sub('([あ-んア-ン一-龥ー])[ 　]((?=[あ-んア-ン一-龥ー]))',r'\1\2', text)
 
-    return text.replace("※", "").replace("＊", "")
+    return text.replace("※", "").replace("＊", "").replace("*", "")
