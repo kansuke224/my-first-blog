@@ -26,6 +26,7 @@ from receiptapp.modules import receipt_tyuusyutu2
 from receiptapp.modules import receipt_text2, receipt_text3
 import environ
 import cloudinary
+import celery
 
 env = environ.Env()
 env.read_env('.env')
@@ -38,6 +39,7 @@ cloudinary.config(
 
 @shared_task
 def get_search_list(image_id):
+    print("task_idは"+celery.current_task.task_id)
     search_list = []
     image = Image.objects.get(pk=image_id).image.url
     filename = image

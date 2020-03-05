@@ -26,3 +26,16 @@
 .h3-select-after {
     display: block;
 }
+
+
+/* loadアニメーション */
+#circle {
+    width: 80px;
+    height: 80px;
+    /*display: inline-block;*/
+}
+
+#circle-text {
+    /*display: inline-block;*/
+    color: dimgray;
+}

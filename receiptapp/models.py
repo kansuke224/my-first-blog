@@ -57,6 +57,9 @@ class Image(models.Model):
 def delete_file(sender, instance, **kwargs):
     instance.image.delete(False)
 
+class Progress(models.Model):
+    task_id = models.CharField(max_length=50)
+    progress_no = models.PositiveSmallIntegerField()
 
 """
 後で食べるボタン

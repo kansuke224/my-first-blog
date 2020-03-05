@@ -37,6 +37,7 @@ $(function (){
 
     reader.readAsDataURL(file);
   });
+
 })
 
 function loadstart() {
@@ -81,7 +82,35 @@ $('#ajax-analyse').on('submit', e => {
     // デフォルトのイベントをキャンセルし、ページ遷移しないように!
     e.preventDefault();
 
-    spinner.classList.remove('loaded');
+    var circle = new ProgressBar.Circle('#circle', {
+          color: '#5bc0de',
+          trailColor: '#eee',
+          strokeWidth: 10,
+          duration: 2500,
+          easing: 'easeInOut'
+      });
+
+      $("#circle-text").text("レシート画像を解析しています。しばらくお待ちください...(50%)");
+
+      circle.set(0.05);
+
+      setTimeout(function() {
+          circle.animate(0.3);
+      }, 1000);
+
+      setTimeout(function() {
+          circle.animate(0.4);
+      }, 3500);
+
+      setTimeout(function() {
+          circle.animate(0.8);
+      }, 5500);
+
+      setTimeout(function() {
+          circle.animate(1);
+      }, 8000);
+
+    //spinner.classList.remove('loaded');
 
     // $("<p>", {class: "p_load", text: "画像解析中です、しばらくお待ちください・・・"}).appendTo("#load");
     var formdata = new FormData($('#ajax-analyse').get(0));

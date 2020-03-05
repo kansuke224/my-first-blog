@@ -34,16 +34,20 @@
                 <label class="custom-file-label" for="receiptImg" data-browse="参照">ファイル選択...</label>
             </div>
             <div class="preview mb-5"></div>
-            <button type="submit" class="btn btn-info mx-auto mb-5"">非同期で画像解析</button>
+            <button type="submit" class="btn btn-info mx-auto mb-5">非同期で画像解析</button>
         </form>
     </div>
     <div id="load"></div>
+    <div class="row justify-content-center align-items-center mb-5">
+        <div id="circle"></div>
+        <div id="circle-text" class="ml-3"></div>
+    </div>
     <div id="analyse_result">
         <h3 class="text-left mt-5 mb-5 h3-select-before" id="h3-select">食事内容選択</h3>
         <form action="{% url 'new' %}" method="POST" id="result_fs">
             {% csrf_token %}
             <div id="result_fs_child">
-                  
+
             </div>
 
             <!-- <input type="submit" class="btn btn-info mb-5" value="食事内容決定"> -->
@@ -53,5 +57,6 @@
 </div>
 {% endblock content %}
 {% block extra_js %}
+<script src="https://rawgit.com/kimmobrunfeldt/progressbar.js/master/dist/progressbar.min.js"></script>
 <script src="{% static 'js/new.js' %}"></script>
 {% endblock extra_js %}
