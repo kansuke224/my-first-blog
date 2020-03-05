@@ -37,9 +37,9 @@ cloudinary.config(
   api_secret = env('API_SECRET')
 )
 
-@shared_task
-def get_search_list(image_id):
-    print("task_idは"+celery.current_task.task_id)
+@shared_task(bind=True)
+def get_search_list(self, image_id):
+    print("task_idは"+self.request.id)
     search_list = []
     image = Image.objects.get(pk=image_id).image.url
     filename = image
