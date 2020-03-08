@@ -53,6 +53,8 @@ INSTALLED_APPS = [
     'django_celery_results'
 ]
 
+SITE_ID = 1
+
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 

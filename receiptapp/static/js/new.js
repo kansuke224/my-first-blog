@@ -94,25 +94,7 @@ $('#ajax-analyse').on('submit', e => {
 
       circle.set(0.05);
 
-      var circle_arr = [0.05, 0.2, 0.3, 0.5, 0.8, 0.9, 1]
-/*
-      setTimeout(function() {
-          circle.animate(0.3);
-      }, 1000);
-
-      setTimeout(function() {
-          circle.animate(0.4);
-      }, 3500);
-
-      setTimeout(function() {
-          circle.animate(0.8);
-      }, 5500);
-
-      setTimeout(function() {
-          circle.animate(1);
-      }, 8000);
-*/
-
+      var circle_arr = [0.05, 0.2, 0.3, 0.5, 0.8, 0.9, 1];
     //spinner.classList.remove('loaded');
 
     // $("<p>", {class: "p_load", text: "画像解析中です、しばらくお待ちください・・・"}).appendTo("#load");
@@ -257,10 +239,9 @@ $('#ajax-analyse').on('submit', e => {
             		    });
                     }, 1000);
                 }
-            }
+            });
 	    }, 3000);
     });
-
 });
 
 function scrollWindow(element) {
