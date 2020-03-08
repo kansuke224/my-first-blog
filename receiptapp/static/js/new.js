@@ -136,9 +136,9 @@ $('#ajax-analyse').on('submit', e => {
 		    }).done( response2 => {
                 // progresscircleを変化させる
                 $("#circle-text").text(
-                    "レシート画像を解析しています。しばらくお待ちください...(" + (circle_arr[progress.progress_no] * 100) + "%)"
+                    "レシート画像を解析しています。しばらくお待ちください...(" + (circle_arr[response2.progress_no] * 100) + "%)"
                 );
-                circle.animate(circle_arr[progress.progress_no]);
+                circle.animate(circle_arr[response2.progress_no]);
 
                 if(response2.progress_no == 6) {
                     id2 = setInterval(function () {
