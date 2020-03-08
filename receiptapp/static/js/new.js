@@ -229,7 +229,7 @@ $('#ajax-analyse').on('submit', e => {
                                 var elemtop = rect.top + window.pageYOffset;
 
                                 var nowTop = window.pageYOffset;
-                                var buffer = 0;
+                                var buffer = screen.height / 2;
                                 var top = elemtop + nowTop - buffer
                                 //document.documentElement.scrollTop = elemtop;
                                 window.scrollTo({
