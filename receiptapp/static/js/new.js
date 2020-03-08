@@ -141,6 +141,9 @@ $('#ajax-analyse').on('submit', e => {
                 circle.animate(circle_arr[response2.progress_no]);
 
                 if(response2.progress_no == 6) {
+                    $("#circle-text").text(
+                        "画像解析が完了しました。フォームより食事内容を選択してください"
+                    );
                     id2 = setInterval(function () {
                         console.log("worker_resultにajaxトライ");
             			$.ajax({
@@ -167,9 +170,9 @@ $('#ajax-analyse').on('submit', e => {
                                     info_list = search_list[i][0];
                                     var count = search_list[i][1];
                                     // len = info_list.length;
-                                    console.log(info_list);
-                                    console.log(count);
-                                    if (count = 0) {
+                                    //console.log(info_list);
+                                    //console.log(count);
+                                    if (count == 0) {
                                         continue;
                                     }
                                     var ftag = $("<div>", {class: "food mb-5"}).appendTo("#result_fs_child");
@@ -226,7 +229,7 @@ $('#ajax-analyse').on('submit', e => {
                                 var elemtop = rect.top + window.pageYOffset;
 
                                 var nowTop = window.pageYOffset;
-                                var buffer = 100;
+                                var buffer = 0;
                                 var top = elemtop + nowTop - buffer
                                 //document.documentElement.scrollTop = elemtop;
                                 window.scrollTo({
