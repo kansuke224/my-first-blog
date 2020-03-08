@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'receiptapp.apps.ReceiptappConfig',
     'django.contrib.admin',
     'django.contrib.auth',
+    'django.contrib.sites',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
@@ -49,7 +50,7 @@ INSTALLED_APPS = [
     'background_task',
     'rest_framework',
     'django_filters',
-    'django_celery_results',
+    'django_celery_results'
 ]
 
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'

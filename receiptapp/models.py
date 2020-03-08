@@ -52,14 +52,15 @@ class Image(models.Model):
     # image = models.ImageField(upload_to=get_image_path)
     image = CloudinaryField('image', blank=True, null=True)
 
+class Progress(models.Model):
+    task_id = models.CharField(max_length=60, primary_key=True)
+    progress_no = models.PositiveSmallIntegerField()
+
 # モデル削除後に`file_field`を削除する。
 @receiver(post_delete, sender=Image)
 def delete_file(sender, instance, **kwargs):
     instance.image.delete(False)
 
-class Progress(models.Model):
-    task_id = models.CharField(max_length=50)
-    progress_no = models.PositiveSmallIntegerField()
 
 """
 後で食べるボタン

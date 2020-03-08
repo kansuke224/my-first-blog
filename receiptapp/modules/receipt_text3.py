@@ -233,7 +233,7 @@ def img_to_text(filename):
     return text.replace("※", "").replace("＊", "").replace("*", "")
 
 
-def convert_ajax(filename = None, capture = False, CUT=False):
+def convert_ajax(filename = None, capture = False, CUT=False, task_id="task_id"):
     print(filename)
     im = url_to_image(filename)
     if im is None:
@@ -247,15 +247,21 @@ def convert_ajax(filename = None, capture = False, CUT=False):
     filename = filename[:-4]
     # 拡張子を取り除いた形で記録する
     print("CUT")
+
+    # 2
+    progress_update(task_id=task_id, progress_no=2)
+
     im_rect_th = cont_edge(im, filename)
     # cv2.imwrite(BASE_DIR + "/receiptapp/media/receiptapp/" + filename.split("/")[-1] + 'rect_th.jpg', im_rect_th)
+
+    # 3
+    progress_update(task_id=task_id, progress_no=3)
 
     img = cv2pil(im_rect_th)
     tools = pyocr.get_available_tools()
     if len(tools) == 0:
         print("No OCR tool found")
         sys.exit(1)
-
     tool = tools[0]
     text = tool.image_to_string(
             img,
@@ -264,4 +270,17 @@ def convert_ajax(filename = None, capture = False, CUT=False):
     )
     text = re.sub('([あ-んア-ン一-龥ー])[ 　]((?=[あ-んア-ン一-龥ー]))',r'\1\2', text)
 
+    # 4
+    progress_update(task_id=task_id, progress_no=4)
+
     return text.replace("※", "").replace("＊", "").replace("*", "")
+
+import sys
+sys.path.append('../../')
+
+from receiptapp.models import Progress
+
+def progress_update(task_id, progress_no):
+    progress = Progress.objects.get(task_id=task_id)
+    progress.progress_no = progress_no
+    progress.save()

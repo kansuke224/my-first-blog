@@ -90,10 +90,12 @@ $('#ajax-analyse').on('submit', e => {
           easing: 'easeInOut'
       });
 
-      $("#circle-text").text("レシート画像を解析しています。しばらくお待ちください...(50%)");
+      $("#circle-text").text("レシート画像を解析しています。しばらくお待ちください...(5%)");
 
       circle.set(0.05);
 
+      var circle_arr = [0.05, 0.2, 0.3, 0.5, 0.8, 0.9, 1]
+/*
       setTimeout(function() {
           circle.animate(0.3);
       }, 1000);
@@ -109,6 +111,7 @@ $('#ajax-analyse').on('submit', e => {
       setTimeout(function() {
           circle.animate(1);
       }, 8000);
+*/
 
     //spinner.classList.remove('loaded');
 
@@ -139,116 +142,122 @@ $('#ajax-analyse').on('submit', e => {
 		id = setInterval(function () {
 	        spanedSec = spanedSec + 3;
 			console.log(spanedSec + "秒");
+            console.log("get_progressにajax");
+            $.ajax({
+		        'url': 'https://healthreceiptapp.herokuapp.com/api/get_progress/',
+		        'type': 'POST',
+				'dataType':'json',
+		        'data': {
+		            'task_id': task_id,
+		        },
+		        'dataType': 'json'
+		    }).done( response2 => {
+                // progresscircleを変化させる
+                $("#circle-text").text(
+                    "レシート画像を解析しています。しばらくお待ちください...(" + (circle_arr[progress.progress_no] * 100) + "%)"
+                );
+                circle.animate(circle_arr[progress.progress_no]);
 
-	        if (spanedSec >= 30) {
-                console.log("worker_resultにajaxトライ");
-				$.ajax({
-			        'url': 'https://healthreceiptapp.herokuapp.com/api/worker_result/',
-			        'type': 'POST',
-					'dataType':'json',
-			        'data': {
-			            'task_id': task_id,
-			        },
-			        'dataType': 'json'
-			    }).done( response2 => {
-					if(response2.result != 0) {
-                        console.log("成功!")
-                        $("#h3-select").removeClass('h3-select-before');
-                        $("#h3-select").addClass('h3-select-after');
-                        $("#result_fs_child").empty();
-						//console.log(response2.result);
-						//console.log(response2);
-						analyse_result = JSON.parse(response2.result);
-                        //console.log("1");
-                        //console.log(analyse_result[0]);
-                        //console.log("2");
-                        //console.log(analyse_result[0][0]);
-                        //console.log("3");
-                        //console.log(analyse_result[0][0][0]);
-                        var search_list = analyse_result;
-                        // var count = analyse_result[1];
-                        // food_select を作る処理
-                        console.log(search_list);
-                        for (var i in search_list) {
-                            // 各食べ物リストについての処理
-                            /*
-                            [
-                                []
-                            ]
-                            */
-                            info_list = search_list[i][0];
-                            var count = search_list[i][1];
-                            // len = info_list.length;
-                            console.log(info_list);
-                            console.log(count);
-                            if (count = 0) {
-                                continue;
-                            }
-                            var ftag = $("<div>", {class: "food mb-5"}).appendTo("#result_fs_child");
-                            $("<p>", {class: "p1", text: `候補が${count}個あります`}).appendTo(ftag);
-                            $("<p2>", {class: "p1", text: "選択してください"}).appendTo(ftag);
+                if(response2.progress_no == 6) {
+                    id2 = setInterval(function () {
+                        console.log("worker_resultにajaxトライ");
+            			$.ajax({
+            		        'url': 'https://healthreceiptapp.herokuapp.com/api/worker_result/',
+            		        'type': 'POST',
+            				'dataType':'json',
+            		        'data': {
+            		            'task_id': task_id,
+            		        },
+            		        'dataType': 'json'
+            		    }).done( response2 => {
+            				if(response2.result != 0) {
+                                console.log("成功!")
+                                $("#h3-select").removeClass('h3-select-before');
+                                $("#h3-select").addClass('h3-select-after');
+                                $("#result_fs_child").empty();
+            					analyse_result = JSON.parse(response2.result);
+                                var search_list = analyse_result;
+                                // var count = analyse_result[1];
+                                // food_select を作る処理
+                                console.log(search_list);
+                                for (var i in search_list) {
+                                    // 各食べ物リストについての処理
+                                    info_list = search_list[i][0];
+                                    var count = search_list[i][1];
+                                    // len = info_list.length;
+                                    console.log(info_list);
+                                    console.log(count);
+                                    if (count = 0) {
+                                        continue;
+                                    }
+                                    var ftag = $("<div>", {class: "food mb-5"}).appendTo("#result_fs_child");
+                                    $("<p>", {class: "p1", text: `候補が${count}個あります`}).appendTo(ftag);
+                                    $("<p2>", {class: "p1", text: "選択してください"}).appendTo(ftag);
 
-                            var ftbl = $("<table>", {class: "table"}).appendTo(ftag);
-                            for (var j in info_list) {
-                                info = info_list[j];
-                                var ftr = $("<tr>").appendTo(ftbl);
-                                $("<td>", {text: info[0]}).appendTo(ftr);
+                                    var ftbl = $("<table>", {class: "table"}).appendTo(ftag);
+                                    for (var j in info_list) {
+                                        info = info_list[j];
+                                        var ftr = $("<tr>").appendTo(ftbl);
+                                        $("<td>", {text: info[0]}).appendTo(ftr);
 
-                                var ftd1 = $("<td>").appendTo(ftr);
-                                var fs = $("<select>", {class: "custom-select", name: i + "." + j}).appendTo(ftd1);
-                                for (var k = 1; k<=10; k++) {
-                                    $("<option>", {value: k, text: k + "00g"}).appendTo(fs);
-                                }
+                                        var ftd1 = $("<td>").appendTo(ftr);
+                                        var fs = $("<select>", {class: "custom-select", name: i + "." + j}).appendTo(ftd1);
+                                        for (var k = 1; k<=10; k++) {
+                                            $("<option>", {value: k, text: k + "00g"}).appendTo(fs);
+                                        }
 
-                                var ftd2 = $("<td>", {class: "text-center"}).appendTo(ftr);
-                                if (j == 1) {
-                                    var fch = $("<input>", {
-                                        type: "checkbox",
-                                        name: "food",
-                                        value: info[0] + "," + info[1] + "," + info[2] + "," + info[3] + "," + info[4] + "," + info[5] + "," + i + "." + j
-                                    }).appendTo(ftd2);
-                                    fch.checked = true;
-                                } else {
+                                        var ftd2 = $("<td>", {class: "text-center"}).appendTo(ftr);
+                                        if (j == 1) {
+                                            var fch = $("<input>", {
+                                                type: "checkbox",
+                                                name: "food",
+                                                value: info[0] + "," + info[1] + "," + info[2] + "," + info[3] + "," + info[4] + "," + info[5] + "," + i + "." + j
+                                            }).appendTo(ftd2);
+                                            fch.checked = true;
+                                        } else {
+                                            $("<input>", {
+                                                type: "checkbox",
+                                                name: "food",
+                                                value: info[0] + "," + info[1] + "," + info[2] + "," + info[3] + "," + info[4] + "," + info[5] + "," + i + "." + j
+                                            }).appendTo(ftd2);
+                                        }
+                                    }
                                     $("<input>", {
-                                        type: "checkbox",
-                                        name: "food",
-                                        value: info[0] + "," + info[1] + "," + info[2] + "," + info[3] + "," + info[4] + "," + info[5] + "," + i + "." + j
-                                    }).appendTo(ftd2);
+                                        type: "hidden",
+                                        name: i,
+                                        value: count
+                                    }).appendTo("#result_fs_child");
                                 }
-                            }
-                            $("<input>", {
-                                type: "hidden",
-                                name: i,
-                                value: count
-                            }).appendTo("#result_fs_child");
-                        }
-                        $("<input>", {
-                            type: "submit",
-                            class: "btn btn-info mb-5",
-                            value: "食事内容決定"
-                        }).appendTo("#result_fs_child");
-                        // スピナー消す
-                        spinner.classList.add('loaded');
-                        // メッセージ表示
+                                $("<input>", {
+                                    type: "submit",
+                                    class: "btn btn-info mb-5",
+                                    value: "食事内容決定"
+                                }).appendTo("#result_fs_child");
+                                // スピナー消す
+                                spinner.classList.add('loaded');
+                                // メッセージ表示
 
-                        // h3-selectまでスクロール
-                        // jqueryのオブジェクトだとエラーになる
-                        var element = document.getElementById("h3-select");
-                        var rect = element.getBoundingClientRect();
-                        var elemtop = rect.top + window.pageYOffset;
+                                // h3-selectまでスクロール
+                                // jqueryのオブジェクトだとエラーになる
+                                var element = document.getElementById("h3-select");
+                                var rect = element.getBoundingClientRect();
+                                var elemtop = rect.top + window.pageYOffset;
 
-                        var nowTop = window.pageYOffset;
-                        var buffer = 200;
-                        var top = elemtop + nowTop - buffer
-                        //document.documentElement.scrollTop = elemtop;
-                        window.scrollTo({
-                            top,
-                            behavior: "smooth"
-                        });
-						clearInterval(id);
-					}
-			    });
-	        }
+                                var nowTop = window.pageYOffset;
+                                var buffer = 200;
+                                var top = elemtop + nowTop - buffer
+                                //document.documentElement.scrollTop = elemtop;
+                                window.scrollTo({
+                                    top,
+                                    behavior: "smooth"
+                                });
+            					clearInterval(id);
+                                clearInterval(id2);
+            				}
+            		    });
+                    }, 1000);
+                }
+            }
 	    }, 3000);
     });
 

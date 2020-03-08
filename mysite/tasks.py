@@ -21,7 +21,7 @@ def add(x, y):
 import sys
 sys.path.append('../')
 
-from receiptapp.models import Receipt, Image, Food, Fooddetail
+from receiptapp.models import Receipt, Image, Food, Fooddetail, Progress
 from receiptapp.modules import receipt_tyuusyutu2
 from receiptapp.modules import receipt_text2, receipt_text3
 import environ
@@ -39,14 +39,23 @@ cloudinary.config(
 
 @shared_task(bind=True)
 def get_search_list(self, image_id):
-    print("task_idは"+self.request.id)
+    task_id = self.request.id
+    print("task_idは"+task_id)
+
+    # 1
+    progress = Progress(task_id=task_id, progress_no=1)
+    progress.save()
+
     search_list = []
     image = Image.objects.get(pk=image_id).image.url
     filename = image
     print(filename)
-    text = receipt_text3.convert_ajax(filename, CUT=True)
+    text = receipt_text3.convert_ajax(filename, CUT=True, task_id=task_id)
 
     search_list = receipt_tyuusyutu2.analyse(filename=filename, isWord=False, word="", text=text)[0]
+
+    # 5
+    receipt_text3.progress_update(task_id=task_id, progress_no=5)
 
     public_id = filename.split("/")[-1].replace(".jpg", "").replace(".png", "")
     cloudinary.uploader.destroy(public_id = public_id)
@@ -64,5 +73,8 @@ def get_search_list(self, image_id):
             name_list[i1].append(info[0])
     #user = request.user
     #context = {"user": user, "search_list": search_list, "count": len(search_list)}
+
+    # 6
+    receipt_text3.progress_update(task_id=task_id, progress_no=6)
 
     return search_list

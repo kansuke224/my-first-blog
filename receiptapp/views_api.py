@@ -21,7 +21,7 @@ import base64
 from django.http import JsonResponse
 from .forms import ImageForm
 
-from .models import Receipt, Image, Food, Fooddetail
+from .models import Receipt, Image, Food, Fooddetail, Progress
 from django.contrib.auth.models import User
 
 from django.views.decorators.csrf import csrf_exempt
@@ -273,3 +273,10 @@ def worker_analyse(request):
     task_id = task.id
 
     return JsonResponse({"task_id": task_id})
+
+@api_view(['POST'])
+@permission_classes((IsAuthenticated,))
+def get_progress(request):
+    task_id = request.Post.get('task_id')
+    progress = Progress.objects.get(task_id=task_id)
+    return JsonResponse({"progress_no": progress.progress_no})
