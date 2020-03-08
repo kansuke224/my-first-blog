@@ -21,6 +21,7 @@ urlpatterns = [
     path('worker_result/', views_api.worker_result, name='worker_result'),
     path('worker_add/', views_api.worker_add, name='worker_add'),
     path('worker_analyse/', views_api.worker_analyse, name='worker_analyse'),
+    path('get_progress/', views_api.get_progress, name='get_progress'),
     ]
 
 urlpatterns += router.urls
