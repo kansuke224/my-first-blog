@@ -277,6 +277,6 @@ def worker_analyse(request):
 @api_view(['POST'])
 @permission_classes((IsAuthenticated,))
 def get_progress(request):
-    task_id = request.Post.get('task_id')
+    task_id = request.POST.get('task_id')
     progress = Progress.objects.get(task_id=task_id)
     return JsonResponse({"progress_no": progress.progress_no})
