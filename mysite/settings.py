@@ -50,10 +50,11 @@ INSTALLED_APPS = [
     'background_task',
     'rest_framework',
     'django_filters',
-    'django_celery_results'
+    'django_celery_results',
 ]
 
-SITE_ID = 1
+
+#SITE_ID = 1
 
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
