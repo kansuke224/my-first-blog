@@ -225,7 +225,7 @@ def get_food(request):
     details = receipt.fooddetail_set.all()
     foods_list = []
     for detail in details:
-        foods_list.append(detail.food)
+        foods_list.append([detail.food, detail])
     return Response(status=200, data=json.dumps(foods_list))
 
 

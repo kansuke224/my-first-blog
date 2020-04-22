@@ -8,8 +8,7 @@ from django.db.models import Sum
 import cv2
 import base64
 
-from .modules import receipt_tyuusyutu2
-from .modules import receipt_text2, receipt_text3
+from .modules import receipt_text2, receipt_text3, receipt_tyuusyutu2
 
 import datetime
 from dateutil.relativedelta import relativedelta
