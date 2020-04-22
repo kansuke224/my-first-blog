@@ -16,6 +16,7 @@ urlpatterns = [
     path('receipts_analyse/', views_api.receipts_analyse, name='receipts_analyse'),
     path('img_to_text/', views_api.img_to_text, name='img_to_text'),
     path('get_search_list/', views_api.get_search_list, name='get_search_list'),
+    path('get_food/', views_api.get_food, name='get_food'),
 
     url(r'^mypage/$', views_api.UsernameGetView.as_view()),
     path('worker_result/', views_api.worker_result, name='worker_result'),
