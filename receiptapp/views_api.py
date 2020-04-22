@@ -247,7 +247,7 @@ def get_month_receipts(request):
         details = receipt.fooddetail_set.all()
         foodname_list = []
         for detail in details:
-            foodsname_list.append(detail.food.food_name)
+            foodname_list.append(detail.food.food_name)
         receipt_list.append([
                             receipt.id,
                             receipt.date,
