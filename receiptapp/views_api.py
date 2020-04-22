@@ -221,7 +221,7 @@ def test1(request):
 @api_view(['POST'])
 @permission_classes((IsAuthenticated,))
 def get_food(request):
-    receipt = Receipt.objects.get(int(request.POST.get("receipt_id")))
+    receipt = Receipt.objects.get(id=int(request.POST.get("receipt_id")))
     details = receipt.fooddetail_set.all()
     foods_list = []
     for detail in details:
