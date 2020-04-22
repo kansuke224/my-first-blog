@@ -250,7 +250,7 @@ def get_month_receipts(request):
             foodname_list.append(detail.food.food_name)
         receipt_list.append([
                             receipt.id,
-                            receipt.receipt_date,
+                            str(receipt.receipt_date),
                             foodname_list
                             ])
     return Response(status=200, data=json.dumps(receipt_list))
