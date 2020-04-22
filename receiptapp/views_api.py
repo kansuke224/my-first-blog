@@ -218,6 +218,10 @@ def test1(request):
     return Response({"title": request.POST.get("title")})
 
 
+
+
+
+
 @api_view(['POST'])
 @permission_classes((IsAuthenticated,))
 def get_food(request):
@@ -227,6 +231,31 @@ def get_food(request):
     for detail in details:
         foods_list.append(detail.food.food_name)
     return Response(status=200, data=json.dumps(foods_list))
+
+@api_view(['POST'])
+@permission_classes((IsAuthenticated,))
+def get_month_receipts(request):
+    receipts = Receipt.objects.filter(
+        user = request.user,
+        receipt_date__year = int(request.POST.get("year")),
+        receipt_date__month = int(request.POST.get("month"))
+    )
+    receipt_list = []
+    for receipt in receipts:
+        details = receipt.fooddetail_set.all()
+        foodname_list = []
+        for detail in details:
+            foodsname_list.append(detail.food.food_name)
+        receipt_list.append([
+                            "id": receipt.id,
+                            "receipt_date": receipt.date,
+                            "foodnames": foodname_list
+                            ])
+    return Response(status=200, data=json.dumps(receipt_list))
+
+
+
+
 
 
 
