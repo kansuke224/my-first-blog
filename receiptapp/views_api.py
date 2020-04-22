@@ -235,7 +235,7 @@ def get_food(request):
 @api_view(['POST'])
 @permission_classes((IsAuthenticated,))
 def get_month_receipts(request):
-    print(request.POST.get("year")
+    print(request.POST.get("year"))
     receipts = Receipt.objects.filter(
         user = request.user,
         receipt_date__year = int(request.POST.get("year")),
