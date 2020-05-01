@@ -253,13 +253,22 @@ def get_month_receipts(request):
     receipt_list = []
     for receipt in receipts:
         details = receipt.fooddetail_set.all()
-        foodname_list = []
+        foods_list = []
         for detail in details:
-            foodname_list.append(detail.food.food_name)
+            foods_list.append([
+                detail.id,
+                detail.food.food_name,
+                detail.amount,
+                detail.food.salt,
+                detail.food.protein,
+                detail.food.energy,
+                detail.food.carb,
+                detail.food.fat
+            ])
         receipt_list.append([
                             receipt.id,
                             str(receipt.receipt_date),
-                            foodname_list
+                            foods_list
                             ])
     return Response(status=200, data=json.dumps(receipt_list))
 
