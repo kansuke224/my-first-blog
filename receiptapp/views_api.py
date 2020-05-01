@@ -221,22 +221,30 @@ def test1(request):
 
 
 
-
+# receipt_idを受け取り、食べ物情報のリストを返す
 @api_view(['POST'])
 @permission_classes((IsAuthenticated,))
-def get_food(request):
+def get_foods(request):
     receipt = Receipt.objects.get(id=int(request.POST.get("receipt_id")))
     details = receipt.fooddetail_set.all()
     foods_list = []
     for detail in details:
-        foods_list.append(detail.food.food_name)
+        foods_list.append([
+            detail.id,
+            detail.food.food_name,
+            detail.amount,
+            detail.food.salt,
+            detail.food.protein,
+            detail.food.energy,
+            detail.food.carb,
+            detail.food.fat
+        ])
     return Response(status=200, data=json.dumps(foods_list))
 
+# 1月分のレシート情報(+食べ物名の情報)のリストを返す
 @api_view(['POST'])
 @permission_classes((IsAuthenticated,))
 def get_month_receipts(request):
-    print(request.POST.get("year"))
-    print(request.POST)
     receipts = Receipt.objects.filter(
         user = request.user,
         receipt_date__year = int(request.POST.get("year")),
