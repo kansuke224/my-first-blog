@@ -3,7 +3,7 @@ anyjson==0.3.3
 beautifulsoup4==4.8.1
 billiard==3.6.2.0
 bottle==0.12.18
-celery==4.4.0
+celery==5.2.2
 certifi==2019.11.28
 chardet==3.0.4
 Click==7.0
